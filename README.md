@@ -1,3 +1,4 @@
+<img width="1897" height="979" alt="333" src="https://github.com/user-attachments/assets/23648d5b-0537-4ea8-a0d1-f956b442701f" />
 # CB-VIDEO Analog TV V8 — ESP8266 2.4 GHz FM Video
 
 **Experimental analog-style video transmitted over two ESP8266 radios, using a browser for video generation and display.** The system supports a webcam or built-in test pattern, progressive black-and-white and YUV color modes, automatic horizontal/vertical sync acquisition, and a live receiver picture that shows transmission defects instead of concealing them.
