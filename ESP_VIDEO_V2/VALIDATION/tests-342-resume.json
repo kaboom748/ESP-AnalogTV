@@ -1,0 +1,6414 @@
+{
+  "sourceSha256": "68a183d2aa2cd07c59b36d9cb89177ba2c5f4f84e3a4fcd0b467eab6f5ad20fa",
+  "modeCount": 19,
+  "caseCount": 342,
+  "passed": 342,
+  "failed": [],
+  "oracle": "Absolute source reconstructed from transmitted Y/U/V quantization; no identity comparison with old Decoder.",
+  "testingOnly": "Timing/gain/sync faults are injected only in this offline harness. No generated noise is added to production.",
+  "cases": [
+    {
+      "mode": "bw64",
+      "kind": "ideal",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.8550554319262972,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 8.227241335952167,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.627975730477651,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 19.606023534979414,
+      "topMeanShift": 0,
+      "bottomMeanShift": -0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 17.635875043265266,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "hburst",
+      "pass": true,
+      "H": 104,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 104,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 18.044054162659787,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 192,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "midfield",
+      "pass": true,
+      "H": 172,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "motion",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 8.227241335952167,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 192,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 96.28464440083805,
+      "topMeanShift": -0.3333333333333333,
+      "bottomMeanShift": -0.5833333333333334,
+      "maxAbsShift": 5,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "fade06",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 8.366405727172612,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "fade03",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 12.446513170529595,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw64",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 192,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 2.806706996939058,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "ideal",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.8552533737631985,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 13.143360174120874,
+      "topMeanShift": -0.06666666666666667,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.453089654897893,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 18.068181055841418,
+      "topMeanShift": -0.13333333333333333,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 16.94073001181866,
+      "topMeanShift": 0.06666666666666667,
+      "bottomMeanShift": 0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "hburst",
+      "pass": true,
+      "H": 152,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 152,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 16.502468249729596,
+      "topMeanShift": -0.06666666666666667,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 240,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "midfield",
+      "pass": true,
+      "H": 214,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "motion",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 13.09347802024606,
+      "topMeanShift": -0.06666666666666667,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 240,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 80.74858615893325,
+      "topMeanShift": -0.06666666666666667,
+      "bottomMeanShift": 0.13333333333333333,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "fade06",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 7.286946091013253,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "fade03",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 10.581784663593691,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw80",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 240,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "ideal",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.8557742325152335,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 11.523721257491886,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.682577901303702,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 15.630114903549115,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 14.511549519070817,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "hburst",
+      "pass": true,
+      "H": 200,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 200,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 22.838746950490048,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 288,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "midfield",
+      "pass": true,
+      "H": 257,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "motion",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 11.452637473202083,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 288,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 75.29708809571885,
+      "topMeanShift": -0.2222222222222222,
+      "bottomMeanShift": 0.16666666666666666,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "fade06",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 7.7051701467742255,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "fade03",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 12.011177038183751,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw96",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 288,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 5.721269810168084,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "ideal",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.85667188511705,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.689541115617912,
+      "topMeanShift": -0.041666666666666664,
+      "bottomMeanShift": -0.041666666666666664,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.291590228292387,
+      "topMeanShift": 0.041666666666666664,
+      "bottomMeanShift": 0.041666666666666664,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 14.944509992176057,
+      "topMeanShift": -0.08333333333333333,
+      "bottomMeanShift": -0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 15.773435565254958,
+      "topMeanShift": 0.08333333333333333,
+      "bottomMeanShift": 0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "hburst",
+      "pass": true,
+      "H": 296,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 296,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 27.188658380494797,
+      "topMeanShift": -0.20833333333333334,
+      "bottomMeanShift": -0.041666666666666664,
+      "maxAbsShift": 2,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 384,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "midfield",
+      "pass": true,
+      "H": 343,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "motion",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.745554375104835,
+      "topMeanShift": -0.041666666666666664,
+      "bottomMeanShift": -0.041666666666666664,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 384,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 65.64026856108096,
+      "topMeanShift": -0.125,
+      "bottomMeanShift": 0.125,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "fade06",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 5.801463817165026,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "fade03",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 8.613769295980418,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw128",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "ideal",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.8552838222874712,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.963576897045224,
+      "topMeanShift": -0.03333333333333333,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 11.003034619291777,
+      "topMeanShift": 0.03333333333333333,
+      "bottomMeanShift": 0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 14.08808968005717,
+      "topMeanShift": -0.1,
+      "bottomMeanShift": -0.1,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 14.894552975277014,
+      "topMeanShift": 0.1,
+      "bottomMeanShift": 0.1,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "hburst",
+      "pass": true,
+      "H": 392,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 392,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 16.583555798340313,
+      "topMeanShift": -0.13333333333333333,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 480,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "midfield",
+      "pass": true,
+      "H": 428,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "motion",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.01113962876688,
+      "topMeanShift": -0.03333333333333333,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 480,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 57.76137424063478,
+      "topMeanShift": -0.03333333333333333,
+      "bottomMeanShift": 0.16666666666666666,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "fade06",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 5.8786602073374965,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "fade03",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 9.104900809454215,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw160",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 4.05415810208071,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "ideal",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.8552457614627506,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.000940349305678,
+      "topMeanShift": -0.05555555555555555,
+      "bottomMeanShift": -0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.69286435387066,
+      "topMeanShift": 0.05555555555555555,
+      "bottomMeanShift": 0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 13.7484203111936,
+      "topMeanShift": -0.08333333333333333,
+      "bottomMeanShift": -0.1111111111111111,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 14.52923248638821,
+      "topMeanShift": 0.08333333333333333,
+      "bottomMeanShift": 0.1111111111111111,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "hburst",
+      "pass": true,
+      "H": 488,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 488,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 13.569635912870705,
+      "topMeanShift": 0.1111111111111111,
+      "bottomMeanShift": -0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 576,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "midfield",
+      "pass": true,
+      "H": 514,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "motion",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.02182586329753,
+      "topMeanShift": -0.05555555555555555,
+      "bottomMeanShift": -0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 576,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 53.25291279689935,
+      "topMeanShift": 0.05555555555555555,
+      "bottomMeanShift": 0.1388888888888889,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "fade06",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 4.822207921285758,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "fade03",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 7.15821075354237,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw192",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.9923207751696693,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "ideal",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.8559234664786041,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.148182893906528,
+      "topMeanShift": -0.10416666666666667,
+      "bottomMeanShift": -0.10416666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.391284831806372,
+      "topMeanShift": 0.08333333333333333,
+      "bottomMeanShift": 0.10416666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 14.250858749480898,
+      "topMeanShift": -0.16666666666666666,
+      "bottomMeanShift": -0.20833333333333334,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 14.844300291334816,
+      "topMeanShift": 0.14583333333333334,
+      "bottomMeanShift": 0.20833333333333334,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "hburst",
+      "pass": true,
+      "H": 680,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 680,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.794564412200247,
+      "topMeanShift": -0.08333333333333333,
+      "bottomMeanShift": -0.10416666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 768,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "midfield",
+      "pass": true,
+      "H": 685,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "motion",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.208690735665291,
+      "topMeanShift": -0.10416666666666667,
+      "bottomMeanShift": -0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 768,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 46.039679621054866,
+      "topMeanShift": 0.0625,
+      "bottomMeanShift": 0.14583333333333334,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "fade06",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 4.283307177591186,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "fade03",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 6.426574719880594,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw256",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 1.71875,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "ideal",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.856143545693906,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.20738989322345,
+      "topMeanShift": -0.1,
+      "bottomMeanShift": -0.03333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.870345685857883,
+      "topMeanShift": 0.03333333333333333,
+      "bottomMeanShift": 0.05,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 13.53332018420954,
+      "topMeanShift": -0.15,
+      "bottomMeanShift": -0.13333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 14.24735172760187,
+      "topMeanShift": 0.08333333333333333,
+      "bottomMeanShift": 0.11666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "hburst",
+      "pass": true,
+      "H": 872,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 872,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.798187179066987,
+      "topMeanShift": 0.016666666666666666,
+      "bottomMeanShift": -0.03333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 960,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "midfield",
+      "pass": true,
+      "H": 857,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "motion",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.262714375611864,
+      "topMeanShift": -0.1,
+      "bottomMeanShift": -0.016666666666666666,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 960,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 41.09367506330303,
+      "topMeanShift": 0.06666666666666667,
+      "bottomMeanShift": 0.15,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "fade06",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 3.8911642029303604,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "fade03",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 5.900599148603471,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw320",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 2.109702906611892,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "ideal",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.856143545693906,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 6.624616734196779,
+      "topMeanShift": -0.016666666666666666,
+      "bottomMeanShift": -0.016666666666666666,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 7.004759356739768,
+      "topMeanShift": 0.03333333333333333,
+      "bottomMeanShift": 0.03333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.299475651660869,
+      "topMeanShift": -0.03333333333333333,
+      "bottomMeanShift": -0.016666666666666666,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.917756855341164,
+      "topMeanShift": 0.05,
+      "bottomMeanShift": 0.03333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "hburst",
+      "pass": true,
+      "H": 872,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 872,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 7.878920155230665,
+      "topMeanShift": -0.18333333333333332,
+      "bottomMeanShift": -0.016666666666666666,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 960,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "midfield",
+      "pass": true,
+      "H": 856,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "motion",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 6.645123721258569,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 960,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 27.080281398556405,
+      "topMeanShift": 0.06666666666666667,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 2,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "fade06",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 3.791236811714615,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "fade03",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 5.683078638598976,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw320stable",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 1.4886025325787942,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "ideal",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.8556795545062416,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.287923036013847,
+      "topMeanShift": -0.16666666666666666,
+      "bottomMeanShift": -0.11666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.82878492087569,
+      "topMeanShift": 0.18333333333333332,
+      "bottomMeanShift": 0.18333333333333332,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 13.077100218710887,
+      "topMeanShift": -0.3,
+      "bottomMeanShift": -0.25,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 13.859489265782248,
+      "topMeanShift": 0.35833333333333334,
+      "bottomMeanShift": 0.3416666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "hburst",
+      "pass": true,
+      "H": 1832,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 1832,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.052508302761224,
+      "topMeanShift": -0.275,
+      "bottomMeanShift": -0.11666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 1920,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "midfield",
+      "pass": true,
+      "H": 1701,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "motion",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.256568086195607,
+      "topMeanShift": -0.13333333333333333,
+      "bottomMeanShift": -0.13333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 1920,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 28.92648126474036,
+      "topMeanShift": 0.11666666666666667,
+      "bottomMeanShift": 0.14166666666666666,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "fade06",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 2.7432344570704004,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "fade03",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 4.142209995380887,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw640",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 1.054851453305946,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "ideal",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.8556795545062416,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 6.355778569456171,
+      "topMeanShift": -0.025,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 6.779196357622954,
+      "topMeanShift": 0.075,
+      "bottomMeanShift": 0.075,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.51179229737137,
+      "topMeanShift": -0.08333333333333333,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.294610588140687,
+      "topMeanShift": 0.175,
+      "bottomMeanShift": 0.2,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "hburst",
+      "pass": true,
+      "H": 1832,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 1832,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 6.232964805003848,
+      "topMeanShift": -0.016666666666666666,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 1920,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "midfield",
+      "pass": true,
+      "H": 1713,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "motion",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 6.343590412606781,
+      "topMeanShift": -0.008333333333333333,
+      "bottomMeanShift": -0.008333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 1920,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 19.028084455532433,
+      "topMeanShift": 0.075,
+      "bottomMeanShift": 0.16666666666666666,
+      "maxAbsShift": 2,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "fade06",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 2.6853085784427706,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "fade03",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 4.017619073634698,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "bw640stable",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 1920,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0.7443012662893971,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "ideal",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 1.691674363693491,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 6.747395330792468,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 8.765747238700062,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 19.49445701133188,
+      "topMeanShift": 0,
+      "bottomMeanShift": -0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 20.53304416733617,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "hburst",
+      "pass": true,
+      "H": 296,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 296,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 34.68865426007472,
+      "topMeanShift": 0,
+      "bottomMeanShift": -0.25,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 384,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "midfield",
+      "pass": true,
+      "H": 303,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "motion",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 6.747395330792468,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 384,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 97.50894390067508,
+      "topMeanShift": -0.3333333333333333,
+      "bottomMeanShift": 0.75,
+      "maxAbsShift": 11,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "fade06",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 10.103157166065577,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "fade03",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 14.758828719570232,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col64",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 384,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 6.103828915570583,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "ideal",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 1.664811467470783,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 13.8265269399883,
+      "topMeanShift": 0,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 15.31345858677552,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 16.86511438838567,
+      "topMeanShift": -0.06666666666666667,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 18.82865723659904,
+      "topMeanShift": 0.06666666666666667,
+      "bottomMeanShift": 0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "hburst",
+      "pass": true,
+      "H": 392,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 392,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 22.589917551863707,
+      "topMeanShift": 0,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 480,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "midfield",
+      "pass": true,
+      "H": 380,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "motion",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 13.854374058598085,
+      "topMeanShift": 0,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 480,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 82.72561196509821,
+      "topMeanShift": -0.06666666666666667,
+      "bottomMeanShift": 0.13333333333333333,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "fade06",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 9.046980005627415,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "fade03",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 13.234642567477556,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col80",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 480,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 5.986738817308358,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "ideal",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 1.6754110883048419,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.659353504299856,
+      "topMeanShift": 0,
+      "bottomMeanShift": -0.05555555555555555,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 12.264785420860534,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0.05555555555555555,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 16.132440682088717,
+      "topMeanShift": 0,
+      "bottomMeanShift": -0.1111111111111111,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 16.758873985237983,
+      "topMeanShift": 0.05555555555555555,
+      "bottomMeanShift": 0.1111111111111111,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "hburst",
+      "pass": true,
+      "H": 488,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 488,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 21.85466095899719,
+      "topMeanShift": 0,
+      "bottomMeanShift": -0.05555555555555555,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 576,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "midfield",
+      "pass": true,
+      "H": 460,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "motion",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.794193451505237,
+      "topMeanShift": 0,
+      "bottomMeanShift": -0.05555555555555555,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 576,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 76.86426766898988,
+      "topMeanShift": -0.2222222222222222,
+      "bottomMeanShift": 0.16666666666666666,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "fade06",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 8.19653339663923,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "fade03",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 12.389959314743033,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col96",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 576,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 6.011996109631328,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "ideal",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 1.6825577060023165,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.732246978942195,
+      "topMeanShift": -0.08333333333333333,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 12.153273923404,
+      "topMeanShift": 0.08333333333333333,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 15.245683125057164,
+      "topMeanShift": -0.125,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 17.244802677938697,
+      "topMeanShift": 0.125,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "hburst",
+      "pass": true,
+      "H": 680,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 680,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 17.941708214749074,
+      "topMeanShift": -0.125,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 768,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "midfield",
+      "pass": true,
+      "H": 635,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "motion",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.677822637006157,
+      "topMeanShift": -0.08333333333333333,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 768,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 67.6347450666769,
+      "topMeanShift": -0.125,
+      "bottomMeanShift": 0.125,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "fade06",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 6.706048232700504,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "fade03",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 9.73532660989804,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col128",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 768,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 3.940423435236159,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "ideal",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 1.6816359016016384,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.824716925988309,
+      "topMeanShift": -0.03333333333333333,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 11.677559646842123,
+      "topMeanShift": 0.03333333333333333,
+      "bottomMeanShift": 0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 14.515136376478788,
+      "topMeanShift": -0.06666666666666667,
+      "bottomMeanShift": -0.1,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 15.870948739407135,
+      "topMeanShift": 0.06666666666666667,
+      "bottomMeanShift": 0.1,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "hburst",
+      "pass": true,
+      "H": 872,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 872,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 15.538579340360132,
+      "topMeanShift": -0.1,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 960,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "midfield",
+      "pass": true,
+      "H": 795,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "motion",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.570564804104736,
+      "topMeanShift": -0.03333333333333333,
+      "bottomMeanShift": -0.06666666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 960,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 59.56696948953058,
+      "topMeanShift": -0.03333333333333333,
+      "bottomMeanShift": 0.16666666666666666,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "fade06",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 5.921778894705355,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "fade03",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 8.691948301605214,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col160",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 960,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 2.741961103743896,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "ideal",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 1.6775541379646945,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.208153304968844,
+      "topMeanShift": -0.027777777777777776,
+      "bottomMeanShift": -0.05555555555555555,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.494794395046057,
+      "topMeanShift": 0.027777777777777776,
+      "bottomMeanShift": 0.05555555555555555,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 13.684812331254918,
+      "topMeanShift": -0.08333333333333333,
+      "bottomMeanShift": -0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 15.300901061782902,
+      "topMeanShift": 0.08333333333333333,
+      "bottomMeanShift": 0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "hburst",
+      "pass": true,
+      "H": 1064,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 1064,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 17.15115580781603,
+      "topMeanShift": -0.3333333333333333,
+      "bottomMeanShift": -0.05555555555555555,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 1152,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "midfield",
+      "pass": true,
+      "H": 915,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "motion",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.184696599255219,
+      "topMeanShift": -0.027777777777777776,
+      "bottomMeanShift": -0.05555555555555555,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 1152,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 54.93176127258699,
+      "topMeanShift": 0.05555555555555555,
+      "bottomMeanShift": 0.1388888888888889,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "fade06",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 5.460028318605055,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "fade03",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 8.154014700082817,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col192",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 1152,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 2.48227950001681,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "ideal",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 1.6836818623823437,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.983884244481446,
+      "topMeanShift": -0.0625,
+      "bottomMeanShift": -0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 10.745831452658328,
+      "topMeanShift": 0.0625,
+      "bottomMeanShift": 0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 14.027962023508124,
+      "topMeanShift": -0.16666666666666666,
+      "bottomMeanShift": -0.1875,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 15.256162305155579,
+      "topMeanShift": 0.16666666666666666,
+      "bottomMeanShift": 0.20833333333333334,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "hburst",
+      "pass": true,
+      "H": 1448,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 1448,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 11.552696493815278,
+      "topMeanShift": -0.16666666666666666,
+      "bottomMeanShift": -0.08333333333333333,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 1536,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "midfield",
+      "pass": true,
+      "H": 1221,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "motion",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.882146853955488,
+      "topMeanShift": -0.0625,
+      "bottomMeanShift": -0.10416666666666667,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 1536,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 47.45208064936204,
+      "topMeanShift": 0.0625,
+      "bottomMeanShift": 0.14583333333333334,
+      "maxAbsShift": 3,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "fade06",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 5.001371746509971,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "fade03",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 7.638819000232691,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col256",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 2.908408836397561,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "ideal",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "gain_dc",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 1.6836818623823437,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "phase invariant under gain/DC; quantization tolerance2.5"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "ppm500",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 6.710118405743465,
+      "topMeanShift": -0.020833333333333332,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "ppm-500",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 7.844733417628874,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0.020833333333333332,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "ppm1000",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 9.428323827797968,
+      "topMeanShift": -0.020833333333333332,
+      "bottomMeanShift": -0.020833333333333332,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "ppm-1000",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 11.032536024345093,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0.020833333333333332,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "hburst",
+      "pass": true,
+      "H": 1448,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "hburst_ppm500",
+      "pass": true,
+      "H": 1448,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 8.267757122351949,
+      "topMeanShift": -0.20833333333333334,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "H reacquired after20missing pulses with<=2extra losses per field; no accumulating bottom shift"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "v_lost",
+      "pass": true,
+      "H": 1536,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "midfield",
+      "pass": true,
+      "H": 1224,
+      "V": 3,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "motion",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "motion_ppm500",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 6.7566743983842565,
+      "topMeanShift": -0.020833333333333332,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 1,
+      "checks": [
+        "clock drift remains <=1 pixel locally, <=0.35px mean at bottom, all H recognized"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "motion_v_lost",
+      "pass": true,
+      "H": 1536,
+      "V": 2,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "h_weak",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 0,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "exact source pixels after acquisition"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "h_jitter",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 3,
+      "redPixels": 0,
+      "rmse": 31.412946485847886,
+      "topMeanShift": 0.041666666666666664,
+      "bottomMeanShift": 0.041666666666666664,
+      "maxAbsShift": 2,
+      "checks": [
+        "deliberately jittered sync may visibly move real picture; no missing pixels introduced"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "fade06",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 4.8777341647118515,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "fade03",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 7.4253751797690235,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    },
+    {
+      "mode": "col256stable",
+      "kind": "dc_jump",
+      "pass": true,
+      "H": 1536,
+      "V": 4,
+      "frames": 4,
+      "redPixels": 0,
+      "rmse": 2.748481716686834,
+      "topMeanShift": 0,
+      "bottomMeanShift": 0,
+      "maxAbsShift": 0,
+      "checks": [
+        "intrachamp gain/DC retains H/V and geometry; finite AGC settling allowed"
+      ]
+    }
+  ],
+  "beforeAfter": [
+    {
+      "mode": "bw64",
+      "before": {
+        "H": 48,
+        "bottomShift": -0.6666666666666666,
+        "maxAbsShift": 1
+      },
+      "after": {
+        "H": 104,
+        "bottomShift": 0,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "bw80",
+      "before": {
+        "H": 60,
+        "bottomShift": -0.9333333333333333,
+        "maxAbsShift": 1
+      },
+      "after": {
+        "H": 152,
+        "bottomShift": 0,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "bw96",
+      "before": {
+        "H": 72,
+        "bottomShift": -1.2222222222222223,
+        "maxAbsShift": 2
+      },
+      "after": {
+        "H": 200,
+        "bottomShift": 0,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "bw128",
+      "before": {
+        "H": 80,
+        "bottomShift": -1.375,
+        "maxAbsShift": 2
+      },
+      "after": {
+        "H": 296,
+        "bottomShift": -0.041666666666666664,
+        "maxAbsShift": 2
+      }
+    },
+    {
+      "mode": "bw160",
+      "before": {
+        "H": 80,
+        "bottomShift": -1.3,
+        "maxAbsShift": 2
+      },
+      "after": {
+        "H": 392,
+        "bottomShift": -0.06666666666666667,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "bw192",
+      "before": {
+        "H": 80,
+        "bottomShift": -0.6388888888888888,
+        "maxAbsShift": 1
+      },
+      "after": {
+        "H": 488,
+        "bottomShift": -0.08333333333333333,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "bw256",
+      "before": {
+        "H": 80,
+        "bottomShift": -3.6041666666666665,
+        "maxAbsShift": 4
+      },
+      "after": {
+        "H": 680,
+        "bottomShift": -0.10416666666666667,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "bw320",
+      "before": {
+        "H": 80,
+        "bottomShift": -5.7,
+        "maxAbsShift": 7
+      },
+      "after": {
+        "H": 872,
+        "bottomShift": -0.03333333333333333,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "bw320stable",
+      "before": {
+        "H": 80,
+        "bottomShift": -3.6,
+        "maxAbsShift": 5
+      },
+      "after": {
+        "H": 872,
+        "bottomShift": -0.016666666666666666,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "bw640",
+      "before": {
+        "H": 80,
+        "bottomShift": -12,
+        "maxAbsShift": 12
+      },
+      "after": {
+        "H": 1832,
+        "bottomShift": -0.11666666666666667,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "bw640stable",
+      "before": {
+        "H": 80,
+        "bottomShift": -11.991666666666667,
+        "maxAbsShift": 12
+      },
+      "after": {
+        "H": 1832,
+        "bottomShift": 0,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "col64",
+      "before": {
+        "H": 80,
+        "bottomShift": -0.5,
+        "maxAbsShift": 1
+      },
+      "after": {
+        "H": 296,
+        "bottomShift": -0.25,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "col80",
+      "before": {
+        "H": 80,
+        "bottomShift": 0.5333333333333333,
+        "maxAbsShift": 1
+      },
+      "after": {
+        "H": 392,
+        "bottomShift": -0.06666666666666667,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "col96",
+      "before": {
+        "H": 80,
+        "bottomShift": -0.2777777777777778,
+        "maxAbsShift": 1
+      },
+      "after": {
+        "H": 488,
+        "bottomShift": -0.05555555555555555,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "col128",
+      "before": {
+        "H": 80,
+        "bottomShift": -1.7916666666666667,
+        "maxAbsShift": 2
+      },
+      "after": {
+        "H": 680,
+        "bottomShift": 0,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "col160",
+      "before": {
+        "H": 80,
+        "bottomShift": -2.6,
+        "maxAbsShift": 3
+      },
+      "after": {
+        "H": 872,
+        "bottomShift": -0.06666666666666667,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "col192",
+      "before": {
+        "H": 80,
+        "bottomShift": -3.6666666666666665,
+        "maxAbsShift": 5
+      },
+      "after": {
+        "H": 1064,
+        "bottomShift": -0.05555555555555555,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "col256",
+      "before": {
+        "H": 80,
+        "bottomShift": -3.3958333333333335,
+        "maxAbsShift": 4
+      },
+      "after": {
+        "H": 1448,
+        "bottomShift": -0.08333333333333333,
+        "maxAbsShift": 1
+      }
+    },
+    {
+      "mode": "col256stable",
+      "before": {
+        "H": 80,
+        "bottomShift": -3.0416666666666665,
+        "maxAbsShift": 4
+      },
+      "after": {
+        "H": 1448,
+        "bottomShift": 0,
+        "maxAbsShift": 1
+      }
+    }
+  ],
+  "realAntennaNoise": {
+    "input": "VALIDATION/CAPTURES/no-local-tx.bin",
+    "rawSha256": "35735b58c54db642afbee5dda2cfac1690e76e99465d1f8431c0d6e802054556",
+    "sourceSha256": "68a183d2aa2cd07c59b36d9cb89177ba2c5f4f84e3a4fcd0b467eab6f5ad20fa",
+    "syntheticNoise": false,
+    "modeCount": 19,
+    "passed": 19,
+    "falseH": 0,
+    "falseV": 0,
+    "sdLumaRange": [
+      55.565974149396574,
+      98.53135334427145
+    ],
+    "minimumReceivedFraction": 0.9997916666666666,
+    "modes": [
+      {
+        "mode": "bw64",
+        "frames": 312,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 312,
+          "frames": 312,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 3072,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 3072,
+        "redPixels": 0,
+        "meanLuma": 100.95833333333333,
+        "sdLuma": 98.48870802096496,
+        "pass": true
+      },
+      {
+        "mode": "bw80",
+        "frames": 224,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 224,
+          "frames": 224,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 4800,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 4800,
+        "redPixels": 0,
+        "meanLuma": 100.44145833333333,
+        "sdLuma": 96.99020091160376,
+        "pass": true
+      },
+      {
+        "mode": "bw96",
+        "frames": 170,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 170,
+          "frames": 170,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 6912,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 6912,
+        "redPixels": 0,
+        "meanLuma": 101.5652488425926,
+        "sdLuma": 97.96334922408305,
+        "pass": true
+      },
+      {
+        "mode": "bw128",
+        "frames": 107,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 107,
+          "frames": 107,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 12288,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 12288,
+        "redPixels": 0,
+        "meanLuma": 102.662109375,
+        "sdLuma": 97.68742797224107,
+        "pass": true
+      },
+      {
+        "mode": "bw160",
+        "frames": 74,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 74,
+          "frames": 74,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 19200,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 19200,
+        "redPixels": 0,
+        "meanLuma": 101.76026041666667,
+        "sdLuma": 98.25334692101936,
+        "pass": true
+      },
+      {
+        "mode": "bw192",
+        "frames": 54,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 54,
+          "frames": 54,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 27648,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 27648,
+        "redPixels": 0,
+        "meanLuma": 102.38794849537037,
+        "sdLuma": 98.0043514128286,
+        "pass": true
+      },
+      {
+        "mode": "bw256",
+        "frames": 32,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 32,
+          "frames": 32,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 49152,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 49152,
+        "redPixels": 0,
+        "meanLuma": 103.03157552083333,
+        "sdLuma": 98.53135334427145,
+        "pass": true
+      },
+      {
+        "mode": "bw320",
+        "frames": 21,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 21,
+          "frames": 21,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 76800,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 76800,
+        "redPixels": 0,
+        "meanLuma": 102.88569010416667,
+        "sdLuma": 98.3135618898882,
+        "pass": true
+      },
+      {
+        "mode": "bw320stable",
+        "frames": 11,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 11,
+          "frames": 11,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 76800,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 76800,
+        "redPixels": 0,
+        "meanLuma": 102.68264322916667,
+        "sdLuma": 69.942239195943,
+        "pass": true
+      },
+      {
+        "mode": "bw640",
+        "frames": 6,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 6,
+          "frames": 6,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 307200,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 307200,
+        "redPixels": 0,
+        "meanLuma": 102.685166015625,
+        "sdLuma": 98.16421096870874,
+        "pass": true
+      },
+      {
+        "mode": "bw640stable",
+        "frames": 3,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 3,
+          "frames": 3,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 64,
+          "totalPixels": 307200,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 307136,
+        "redPixels": 64,
+        "meanLuma": 102.7580615753282,
+        "sdLuma": 70.0010522955731,
+        "pass": true
+      },
+      {
+        "mode": "col64",
+        "frames": 180,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 180,
+          "frames": 180,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 3072,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 3072,
+        "redPixels": 0,
+        "meanLuma": 112.37157291666661,
+        "sdLuma": 61.71702954293436,
+        "pass": true
+      },
+      {
+        "mode": "col80",
+        "frames": 131,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 131,
+          "frames": 131,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 4800,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 4800,
+        "redPixels": 0,
+        "meanLuma": 111.35548145833319,
+        "sdLuma": 62.79983139269793,
+        "pass": true
+      },
+      {
+        "mode": "col96",
+        "frames": 100,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 100,
+          "frames": 100,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 6912,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 6912,
+        "redPixels": 0,
+        "meanLuma": 112.92850535300953,
+        "sdLuma": 63.334999827296855,
+        "pass": true
+      },
+      {
+        "mode": "col128",
+        "frames": 64,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 64,
+          "frames": 64,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 12288,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 12288,
+        "redPixels": 0,
+        "meanLuma": 113.60560489908967,
+        "sdLuma": 63.7977628457963,
+        "pass": true
+      },
+      {
+        "mode": "col160",
+        "frames": 45,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 45,
+          "frames": 45,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 19200,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 19200,
+        "redPixels": 0,
+        "meanLuma": 113.72613390625243,
+        "sdLuma": 63.26841796495791,
+        "pass": true
+      },
+      {
+        "mode": "col192",
+        "frames": 33,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 33,
+          "frames": 33,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 27648,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 27648,
+        "redPixels": 0,
+        "meanLuma": 113.3696138599522,
+        "sdLuma": 63.579251549033984,
+        "pass": true
+      },
+      {
+        "mode": "col256",
+        "frames": 20,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 20,
+          "frames": 20,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 49152,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 49152,
+        "redPixels": 0,
+        "meanLuma": 113.24381054687818,
+        "sdLuma": 63.50448552291606,
+        "pass": true
+      },
+      {
+        "mode": "col256stable",
+        "frames": 11,
+        "samples": 2040320,
+        "H": 0,
+        "V": 0,
+        "hLocked": false,
+        "missingSamples": 1059,
+        "firmwareInvalid": 35,
+        "gapSamples": 1024,
+        "resets": 0,
+        "lastInfo": {
+          "fields": 11,
+          "frames": 11,
+          "verticalSyncs": 0,
+          "horizontalSyncs": 0,
+          "anchored": false,
+          "hLocked": false,
+          "missingSamples": 1059,
+          "invalidSamples": 35,
+          "gapSamples": 1024,
+          "redPixels": 0,
+          "totalPixels": 49152,
+          "hMisses": 0,
+          "falseH": 0,
+          "hReacquired": 0,
+          "hPhaseError": 0,
+          "lineClockErrorSamples": 0
+        },
+        "receivedPixels": 49152,
+        "redPixels": 0,
+        "meanLuma": 110.5263685099289,
+        "sdLuma": 55.565974149396574,
+        "pass": true
+      }
+    ]
+  }
+}

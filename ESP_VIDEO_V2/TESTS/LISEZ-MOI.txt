@@ -1,0 +1,18 @@
+Outils hors application, Node.js requis, aucun paquet npm nécessaire.
+Les sources de test et défauts contrôlés ne sont jamais injectés dans le produit.
+L'ancien HTML est inclus uniquement comme référence des régressions.
+
+Depuis ce dossier TESTS :
+  node regressions-sync.js
+  node auto320.js
+  node mesures-analogiques.js --modes all --frames 4 --tag reproduction --cases ideal,gain_dc,ppm500,ppm-500,ppm1000,ppm-1000,hburst,hburst_ppm500,v_lost,midfield,motion,motion_ppm500,motion_v_lost,h_weak,h_jitter,fade06,fade03,dc_jump
+
+Le dernier outil produit les mesures des 342 scénarios dans
+analog-tests-reproduction.json. Les critères utilisés lors de la validation
+sont indiqués, scénario par scénario, dans VALIDATION/tests-342-resume.json.
+Les captures physiques sont dans VALIDATION/CAPTURES ; il s'agit de trames
+MPX4 à CRC32, index LE32, force LE16 et 128 échantillons PCM8 signés.
+Le 0x80 indique un échantillon indisponible, jamais un niveau RF valide.
+Les captures contiennent aussi le bruit précédant/suivant la transmission.
+Les chemins absolus historiques des rapports désignent les fichiers du banc
+d'origine ; les données correspondantes sont regroupées dans ce paquet.

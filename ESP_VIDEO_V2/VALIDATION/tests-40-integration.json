@@ -1,0 +1,263 @@
+{
+  "passed": 40,
+  "cases": [
+    "CRC32 golden vector",
+    "Healthy MPX4, all fragmentation sizes",
+    "MPX4 delete at every packet byte; following packets intact",
+    "MPX4 insert at every packet byte; following packets intact",
+    "MPX4 xor at every packet byte; following packets intact",
+    "CRC covers index and strength, no giant index reaches decoder",
+    "MPX4 index wraps without loss",
+    "Payload magic and command strings stay PCM in validated MPX4",
+    "Control lines and READY with CRLF split across chunks",
+    "Legacy healthy packets and final tail, fragmented",
+    "Legacy deleted bytes never deliver shifted PCM or consume following good frames",
+    "Legacy inserted bytes never deliver shifted PCM",
+    "Legacy payload containing plausible MPX3 is not a boundary",
+    "Legacy short and long packets cannot cancel their boundary errors",
+    "Legacy truncated final packet does not block expected STOP acknowledgement",
+    "Legacy READY-like PCM at a USB chunk boundary stays PCM",
+    "Legacy truncated RX plus zero boundary releases expected TX READY",
+    "CRC-valid duplicate packets cannot create fake backward timeline resets",
+    "Real packet omissions preserve timeline and following payload",
+    "Long garbage remains bounded and recovers to CRC packets",
+    "Serial parser and fixed1.5M connection remain unchanged during analog fixes",
+    "Webcam/source and TX streaming functions remain byte-for-byte unchanged",
+    "All 19 formats retain exact decoded output through valid MPX4 transport",
+    "COM27 real legacy capture commits only physically complete packets",
+    "COM28 real legacy capture commits only physically complete packets",
+    "Fixed 1.5M: one open, no training/autodetection/2M path, then STOP/INFO/WIRE4/PACE150k",
+    "Fixed 1.5M: STATUS retries use the same open port without train bytes",
+    "Fixed 1.5M: CPU, command, read, EOF and write failures are reported and fully cleaned up",
+    "Fixed 1.5M: permission/unsupported-baud errors never trigger another open",
+    "Fixed 1.5M: a writer-lock acquisition failure closes the already opened port",
+    "Fixed 1.5M: exhausted STATUS retries leave no reader/writer/port/session behind",
+    "Fixed 1.5M: optional old-style MPX3 protocol works at the fixed baud",
+    "Fixed 1.5M: optional pacing rejection preserves MPX4 without any baud change",
+    "Fixed 1.5M: firmware INFO must confirm the fixed baud",
+    "Fixed 1.5M: reconnect/reset starts fresh without leaked locks or cadence detection",
+    "Connection UI: one picker and one 1.5M open, RX starts after configuration",
+    "Connection UI: double click while picker is open cannot create a second picker",
+    "Connection UI: active TX session is never reopened",
+    "Connection UI: configuration failure closes the selected port and restores buttons",
+    "Failed command writes cancel response timers and pending waiters"
+  ],
+  "formats": [
+    {
+      "id": "bw64",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "bw80",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "bw96",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "bw128",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "bw160",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "bw192",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "bw256",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "bw320",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "bw320stable",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "bw640",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "bw640stable",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "col64",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "col80",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "col96",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "col128",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "col160",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "col192",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "col256",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    },
+    {
+      "id": "col256stable",
+      "frames": 3,
+      "redPixels": [
+        0,
+        0,
+        0
+      ],
+      "unchanged": true
+    }
+  ],
+  "legacyCaptures": [
+    {
+      "port": "COM27",
+      "validated": 7252,
+      "stats": {
+        "packets": 7252,
+        "crcErrors": 0,
+        "shortPackets": 227,
+        "badHeaders": 10,
+        "resyncs": 237,
+        "discardedBytes": 33854
+      }
+    },
+    {
+      "port": "COM28",
+      "validated": 7256,
+      "stats": {
+        "packets": 7256,
+        "crcErrors": 0,
+        "shortPackets": 235,
+        "badHeaders": 4,
+        "resyncs": 239,
+        "discardedBytes": 33398
+      }
+    }
+  ]
+}

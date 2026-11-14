@@ -1,0 +1,51 @@
+{
+  "html": "HTML/CB_VIDEO_HTMLv4_STANDALONE.html",
+  "htmlSha256": "68a183d2aa2cd07c59b36d9cb89177ba2c5f4f84e3a4fcd0b467eab6f5ad20fa",
+  "passed": 7,
+  "tests": [
+    {
+      "name": "Source encoding and all format plans remain unchanged",
+      "pass": true,
+      "formats": 19
+    },
+    {
+      "name": "20 absent H pulses recover after two additional coherent tops instead of waiting for V",
+      "pass": true,
+      "oldH": 1260,
+      "newH": 1418,
+      "expectedMissing": 22,
+      "V": 3
+    },
+    {
+      "name": "Image plateaus cannot pull the held oscillator into active video after a sync outage",
+      "pass": true,
+      "H": 1418,
+      "V": 3,
+      "transportLoss": 0
+    },
+    {
+      "name": "Rejected off-phase image candidate changes neither raster, oscillator, calibration nor pixels",
+      "pass": true,
+      "rejectedCandidates": 3
+    },
+    {
+      "name": "Gain/DC alone does not move the raster by a pixel",
+      "pass": true,
+      "rmse": 0.7644761789127246,
+      "H": 1440,
+      "V": 3
+    },
+    {
+      "name": "Weakened short H sync does not veto the stronger real V signature",
+      "pass": true,
+      "H": 1920,
+      "V": 4
+    },
+    {
+      "name": "Manual sync threshold now controls the separator without inventing missing pixel data",
+      "pass": true,
+      "H": 0,
+      "realSamples": 647232
+    }
+  ]
+}

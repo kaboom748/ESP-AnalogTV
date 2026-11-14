@@ -1,0 +1,31 @@
+{
+  "generated_at_utc": "2026-11-14T18:33:34.563578+00:00",
+  "html_sha256": "68a183d2aa2cd07c59b36d9cb89177ba2c5f4f84e3a4fcd0b467eab6f5ad20fa",
+  "firmware_sha256": "719cecb930d75e5789f8fa5c3837b4639955d3e951d0dbc1b37d18376182de1e",
+  "firmware_unchanged": true,
+  "CH340_files_unchanged": true,
+  "serial_baud": 1500000,
+  "controlled_scenarios_passed": 342,
+  "controlled_modes": 19,
+  "integration_groups_passed": 40,
+  "focused_regressions_passed": 7,
+  "auto320_tests_passed": 2,
+  "physical_RF_modes": 19,
+  "physical_transmitted_images": 95,
+  "real_noise_modes_passed": 19,
+  "synthetic_noise_in_product": false,
+  "browser_UI_automated_validation": false,
+  "RF_summary": {
+    "modesTested": 19,
+    "oldH": 18222,
+    "newH": 19702,
+    "oldFalseH": 3094,
+    "newFalseH": 17,
+    "oldMissingH": 5093,
+    "newMissingH": 3609,
+    "oldRejectedMutations": 1,
+    "newRejectedMutations": 0
+  },
+  "noise_raw_sha256": "35735b58c54db642afbee5dda2cfac1690e76e99465d1f8431c0d6e802054556",
+  "caveat": "Aucune régression observée dans les essais ; les pertes de transport restent marquées et les limites RF réelles demeurent."
+}

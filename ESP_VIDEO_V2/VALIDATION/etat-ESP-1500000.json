@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-11-14T13:27:57.2566018-05:00",
+  "devices": [
+    {
+      "port": "COM27",
+      "baud": 1500000,
+      "opened": true,
+      "command": "STATUS\\n",
+      "response": "OK STATUS CB_FM_STEREO 4\r\nOK STATUS CB_FM_STEREO 4\r\n",
+      "bytes": 52,
+      "identified": true,
+      "error": null
+    },
+    {
+      "port": "COM28",
+      "baud": 1500000,
+      "opened": true,
+      "command": "STATUS\\n",
+      "response": "OK STATUS CB_FM_STEREO 4\r\nOK STATUS CB_FM_STEREO 4\r\n",
+      "bytes": 52,
+      "identified": true,
+      "error": null
+    }
+  ]
+}

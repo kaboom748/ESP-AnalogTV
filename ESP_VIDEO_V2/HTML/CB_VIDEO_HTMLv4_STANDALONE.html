@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CB-VIDEO HTMLv4.2 · ANALOG SYNC · REAL RF · 120K</title>
+<style>
+:root{color-scheme:dark;--bg:#080d15;--panel:#121d2d;--panel2:#18283a;--border:#2c3d51;--muted:#9eb2cc;--text:#e6eef9;--teal:#46d1b7;--blue:#9bc6ff;--orange:#ffd089}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font:14px/1.46 system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+main{max-width:1480px;margin:auto;padding:20px 20px 45px}h1,h2,h3,p{margin-top:0}h1{font-size:1.7rem;margin-bottom:3px;letter-spacing:-.02em}h2{font-size:1.05rem;margin-bottom:12px}h3{font-size:.9rem;margin:0}p{color:var(--muted)}
+header{margin-bottom:14px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:end}.eyebrow{font-weight:700;color:var(--teal);font-size:.76rem;letter-spacing:.12em;text-transform:uppercase}.subtitle{margin:0;color:var(--muted)}
+.badge{border:1px solid #315c60;background:#102a32;padding:6px 9px;border-radius:10px;color:#b0f0e4;font-weight:600;font-size:.78rem}
+.panel{border:1px solid var(--border);border-radius:13px;background:var(--panel);padding:16px;min-width:0}.panelInset{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px}
+.controlBar{margin-bottom:14px}.controlsRow{display:grid;grid-template-columns:1.5fr 2.4fr 1.3fr 1fr 1fr 1.5fr;gap:10px;align-items:end}.field{min-width:0}.field label{display:block;margin:0 0 5px;color:var(--muted);font-size:.76rem;font-weight:700}.field select,.field input[type=number]{background:#0a1422;border:1px solid #344960;border-radius:8px;color:var(--text);width:100%;padding:10px 10px;font:inherit;min-height:41px}.field select:focus,.field input:focus{outline:2px solid #257e86}
+button{background:#26394b;border:1px solid #47617a;color:var(--text);border-radius:9px;min-height:40px;padding:9px 12px;font:600 .89rem system-ui;cursor:pointer}button:hover:not(:disabled){filter:brightness(1.2)}button:disabled{opacity:.4;cursor:not-allowed}.primary{background:#0f695e;border-color:#1cb7aa}.danger{background:#613038;border-color:#9d4e5a}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>button{flex:1}
+.statusbar{margin-top:11px;background:#0b2530;padding:9px 11px;border-left:3px solid var(--teal);border-radius:6px;font-size:.9rem}.statusbar.error{background:#3a242e;border-color:#e78b96}.statusbar strong{color:#b9f6ea}
+.switchrow{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}.small{font-size:.79rem;color:var(--muted);margin:7px 0 0}
+.videoGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:14px;align-items:start}.videoPanel{overflow:hidden}.videoPanel h2{display:flex;justify-content:space-between;gap:6px;align-items:center;margin-bottom:10px}.videoPanel h2 span{font-size:.78rem;color:var(--muted);font-weight:500}
+.screen{border:1px solid #394f62;border-radius:9px;background:#000;overflow:hidden;min-height:120px;position:relative}.screen canvas{display:block;width:100%;height:auto;aspect-ratio:4/3;image-rendering:pixelated;background:black}.screenLabel{position:absolute;top:7px;left:8px;padding:3px 6px;border-radius:5px;background:rgba(0,0,0,.6);color:#dbeaf7;font-size:.7rem;pointer-events:none}
+.nearControls{margin-top:12px;border-top:1px solid var(--border);padding-top:13px}.controlHeading{font-weight:700;color:#d8e9f8;font-size:.87rem;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.sliderGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}.sliderField label{display:flex;justify-content:space-between;gap:9px;font-weight:650;color:#b6cde5;font-size:.78rem;margin:0 0 2px}.sliderField output{font-variant-numeric:tabular-nums;color:var(--teal);white-space:nowrap}.sliderField input[type=range]{width:100%;margin:7px 0 0;accent-color:var(--teal);cursor:pointer}
+.mini{font-size:.8rem;color:var(--muted)}.hidden{display:none!important}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.metric{background:#0c1624;border:1px solid #243547;border-radius:9px;padding:9px 11px}.metric b{display:block;font-size:1.15rem;line-height:1.35;font-variant-numeric:tabular-nums}.metric span{display:block;color:var(--muted);font-size:.68rem}.under{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:14px}#log{font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#070f1b;height:130px;overflow:auto;padding:9px;border-radius:8px;color:#a8c4d7;margin:0}.rateStrip{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:10px;color:var(--muted);font-size:.79rem}.rateStrip b{color:var(--text)}
+.rxLossLegend{margin-top:9px;display:flex;align-items:flex-start;gap:10px;background:#26171b;border:1px solid #ba3c47;border-radius:9px;padding:10px 12px;color:#ffe9ec;font-size:.8rem}
+.lossSwatch{display:block;flex:none;width:19px;height:19px;border-radius:2px;background:#ff0000;border:1px solid #ffcaca;margin-top:2px}
+.rxLossLegend strong{color:#ff737d}.lossExplain{color:#f3b6bd;line-height:1.4;margin-top:3px}.lossStatus{color:#fff2f3;margin-top:4px}
+details summary{cursor:pointer;color:var(--blue);font-weight:700}details p{margin:9px 0 0}footer{margin-top:15px;color:var(--muted);font-size:.79rem}
+@media(max-width:1100px){.controlsRow{grid-template-columns:repeat(3,minmax(0,1fr))}.metrics{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:780px){.videoGrid,.under{grid-template-columns:1fr}.controlsRow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:450px){.sliderGrid{grid-template-columns:1fr}.controlsRow{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}main{padding:10px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div><div class="eyebrow">ESP8266 · CB FM STEREO V12 radio · USB Serial</div><h1>CB-VIDEO <span style="color:var(--teal)">HTMLv4.2 · ANALOG SYNC / REAL RF</span></h1><p class="subtitle">Real received PCM8 only · Red pixels show missing data · No artificial radio noise · 640×480 B&W 1/2 spp</p></div>
+<div class="badge">120,000 PCM8 samples/s · 19 formats · DIRECT ANALOG · NO SYNTHETIC NOISE</div>
+</header>
+<section class="panel controlBar">
+<h2>1 · Radio setup and shared video format</h2>
+<div class="controlsRow">
+ <div class="field"><label for="role">Role</label><select id="role"><option value="rx">Receiver / Analog TV</option><option value="tx">Transmitter / Webcam TX</option></select></div>
+ <div class="field"><label for="mode">Video format (must match on TX and RX)</label><select id="mode"></select></div>
+ <div class="field"><label for="grayLevels">B&W grayscale levels (TX)</label><select id="grayLevels"><option value="256">256 gray levels</option><option value="16">16 gray levels</option><option value="2">Black and white (2 levels)</option></select></div>
+ <div class="field"><label for="frequency">RF frequency (MHz)</label><input type="number" id="frequency" min="2401" max="2482.5" step="0.0001" value="2442.3125"></div>
+ <div class="field"><label for="fine">RX frequency correction (Hz)</label><input type="number" id="fine" min="-50000" max="50000" step="100" value="0"></div>
+ <div class="field"><label for="apwr">TX power (APWR 0–191)</label><input type="number" id="apwr" min="0" max="191" step="1" value="63"></div>
+</div>
+<div class="switchrow"><div class="row"><button id="connect" class="primary">Connect USB serial</button><button id="disconnect" disabled>Disconnect</button></div>
+<div class="mini">TX/RX: one ESP8266 per computer · V12 radio processing · MPX4 CRC32 / legacy MPX3 · 160 MHz CPU · HQ 120 kHz</div></div>
+<div id="status" class="statusbar">Not connected. Select the same video format on both computers.</div>
+</section>
+<div class="videoGrid">
+<section class="panel videoPanel">
+ <h2>Video source (TX) <span>Webcam or test pattern</span></h2>
+ <div class="screen"><canvas id="preview" width="320" height="240"></canvas><div class="screenLabel" id="sourceLabel">LOCAL SOURCE</div></div>
+ <div class="rateStrip"><span>Resolution: <b id="srcRes">320 × 240</b></span><span>Frame rate: <b id="targetFps">1.29 FPS</b></span><span>Scan: <b id="fieldFps">Progressive</b></span></div>
+ <div class="nearControls">
+  <div class="row"><button id="camera">Enable webcam</button><button id="pattern">Analog test pattern</button></div>
+  <div class="sliderField" style="margin-top:12px"><label for="contrast">TX source contrast <output id="contrastOut">1.00×</output></label><input type="range" id="contrast" min="0.5" max="2.0" step="0.05" value="1"></div>
+  <div class="row" style="margin-top:12px"><button id="startTx" class="primary" disabled>▶ Start TX</button><button id="stopTx" class="danger" disabled>■ Stop TX</button></div>
+  <p class="mini">One webcam capture per transmitted frame. Select the same format on TX and RX. Auto switching applies ONLY to the two 320×240 B&W modes (not 640×480). No video CRC or pixel correction.</p>
+ </div>
+</section>
+<section class="panel videoPanel">
+ <h2>Analog television (RX) <span>RF defects displayed directly</span></h2>
+ <div class="screen"><canvas id="received" width="320" height="240"></canvas><div class="screenLabel" id="rxLabel">RX · B&W</div></div>
+ <div class="rxLossLegend" role="note" aria-label="Red missing-data pixel legend">
+  <span class="lossSwatch" aria-hidden="true"></span>
+  <div><strong>RED = MISSING VIDEO DATA</strong><div class="lossExplain">Unavailable firmware PCM8 (0x80), rejected or missing serial packets, or unfilled scan positions. Red is NOT RF noise. All available radio PCM8 values are displayed directly.</div><div id="rxLossStatus" class="lossStatus" aria-live="polite">Waiting for an analog raster. Missing positions are red.</div><div class="lossStatus">Red pixels: <b id="redPixels">0 / 0</b></div></div>
+ </div>
+ <div class="nearControls">
+  <label class="mini" style="display:flex;align-items:center;gap:9px;margin:0 0 9px;color:#b9e9e0">
+   <input type="checkbox" id="auto320" checked style="width:17px;height:17px;accent-color:var(--teal)">
+   Auto-detect 320×240: Fast (1.29 FPS) / Stable (0.71 FPS) on RX
+  </label>
+  <div class="rateStrip" style="margin:0 0 10px"><span>Synchronization: <b id="lockStatus">Searching for H / V</b></span><span>H pulse: 1/line · V pulse: 1/frame</span><span id="syncDetails" aria-live="polite">H: 0 · V: 0 · Rejected H: 0</span></div>
+  <div class="controlHeading">Image controls — directly below the screen <button id="resetHold" style="min-height:30px;padding:4px 9px;font-size:.76rem">Reset H/V position</button></div>
+  <div class="sliderGrid">
+   <div class="sliderField"><label for="hPosition" title="Circular horizontal offset: pixels leaving one edge reappear on the opposite edge.">H-POSITION <output id="hPositionOut">0 px</output></label><input id="hPosition" type="range" min="-320" max="320" step="1" value="0"></div>
+   <div class="sliderField"><label for="hHold">H-HOLD <output id="hHoldOut">0.00 samples/line</output></label><input id="hHold" type="range" min="-3" max="3" step="0.05" value="0"></div>
+   <div class="sliderField"><label for="vHold">V-HOLD <output id="vHoldOut">0 samples/frame</output></label><input id="vHold" type="range" min="-180" max="600" step="5" value="0"></div>
+   <div class="sliderField"><label for="hLock">H sync lock strength <output id="hLockOut">85 %</output></label><input id="hLock" type="range" min="0" max="100" step="1" value="85"></div>
+   <div class="sliderField"><label for="rxBrightness">Brightness <output id="rxBrightnessOut">0</output></label><input id="rxBrightness" type="range" min="-100" max="100" step="1" value="0"></div>
+   <div class="sliderField"><label for="rxContrast">RX contrast <output id="rxContrastOut">1.00×</output></label><input id="rxContrast" type="range" min="0.2" max="3" step="0.05" value="1"></div>
+   <div class="sliderField"><label for="autoLevel">RX video levels (analog)</label>
+    <label style="display:flex;gap:7px;align-items:center;font-weight:400"><input type="checkbox" id="autoLevel" checked> Automatic black/white level restoration from porches</label>
+    <div id="markerLevels" class="mini">Received reference levels: searching for H/V…</div>
+   </div>
+   <div class="sliderField" id="saturationRow"><label for="saturation">Color saturation <output id="saturationOut">1.00×</output></label><input id="saturation" type="range" min="0" max="2.5" step="0.05" value="1"></div>
+  </div>
+  <p class="mini">Direct analog TV: every available PCM8 sample is displayed (real RF distortion is kept); one H marker per line (24 low samples + black + white references) and one reserved V signature per frame. H can lock before V and stays locked between frames. No video error correction; RF defects remain visible.</p>
+ </div>
+</section>
+</div>
+<div class="under">
+<section class="panel"><h2>Live counters (read-only)</h2>
+ <div class="metrics">
+  <div class="metric"><b id="txRate">0</b><span>PCM TX kB/s</span></div>
+  <div class="metric"><b id="rxRate">0</b><span>PCM RX kB/s</span></div>
+  <div class="metric"><b id="rxFps">0,00</b><span>Displayed RX frames/s</span></div>
+  <div class="metric"><b id="missed">0</b><span>Total unavailable PCM samples</span></div>
+  <div class="metric"><b id="invalidSamples">0</b><span>Firmware invalid PCM (0x80)</span></div>
+  <div class="metric"><b id="gapSamples">0</b><span>Missing serial timeline samples</span></div>
+  <div class="metric"><b id="wirePackets">0</b><span>Validated serial packets</span></div>
+  <div class="metric"><b id="wireCrcErrors">0</b><span>MPX4 CRC failures</span></div>
+  <div class="metric"><b id="wireShortPackets">0</b><span>Truncated legacy packets</span></div>
+  <div class="metric"><b id="wireBadHeaders">0</b><span>Rejected serial headers</span></div>
+  <div class="metric"><b id="wireResyncs">0</b><span>Serial resynchronizations</span></div>
+  <div class="metric"><b id="wireDiscardedBytes">0</b><span>Discarded received bytes</span></div>
+  <div class="metric"><b id="rxSync">0</b><span>V-sync pulses detected</span></div>
+  <div class="metric"><b id="rxHSync">0</b><span>H-sync pulses detected</span></div>
+  <div class="metric"><b id="txJitter">0</b><span>Maximum TX scheduling delay (ms)</span></div>
+ </div>
+ <div class="rateStrip"><span>Average line rate: <b id="lineHz">309 Hz</b></span><span>Frame duration: <b id="fieldDuration">777,6 ms</b></span><span>Signal: <b id="modeKind">Progressive B&W</b></span></div>
+ <p class="mini">Counters do not alter RF pixels. Red indicates missing or unavailable PCM, not FM noise. The radio signal itself is never fabricated.</p>
+</section>
+<section class="panel"><h2>Local test, diagnostics, and event log</h2>
+ <div class="row"><button id="selfTest">Local missing-pixel test (NO RF)</button></div>
+ <p id="selfTestResult" class="small">Local waveform test injects 0x80 sample losses marked RED. It does not simulate real-world RF quality.</p>
+ <details style="margin:9px 0 10px"><summary>How color and H/V sync pulses work</summary>
+  <p class="mini"><b>YUV 4:2:0 color:</b> Full-resolution Y (luminance), followed by U and V at half horizontal and vertical resolution. These are analog PCM8 amplitudes, not JPEG data. The 256 × 192 Color Stable mode sends every Y, U and V sample twice for smoother analog reconstruction (about 0.69 FPS). More samples per frame means fewer FPS. Signal defects appear as color shifts or noise.</p>
+  <p class="mini"><b>H-SYNC:</b> A 24-sample pulse starts EVERY line, with progressive lock and a narrow search window to reject false pulses. <b>V-SYNC:</b> A 168-sample signature starts EVERY frame: 48 low / 12 high / 48 low / 12 high / 48 low. Total frame length is unchanged.</p>
+  <p class="mini">Every line starts with a 24-sample H pulse. Each frame starts with a distinctive 168-sample V marker using reserved extreme levels. 640×480 mono: 1 spp ≈ 0.353 FPS (2.834 s/frame); 2 spp ≈ 0.185 FPS (5.394 s/frame). Both retain V12 radio processing at 120,000 PCM8 samples/s, with validated MPX4 transport when supported and legacy MPX3 compatibility.</p>
+ </details>
+ <div id="log" aria-live="polite"></div>
+</section>
+</div>
+<video id="cameraVideo" playsinline autoplay muted hidden></video>
+<footer>Experimental 2.4 GHz FM analog video at low frame rate; this is not a VHF tuner or a PAL/NTSC decoder. Actual radio samples are displayed, including real RF noise. Missing data is RED; no simulated snow. V12 radio processing is retained; the corrected firmware adds MPX4 CRC32 transport and diagnostics. Legacy MPX3 framing remains available at the same 1,500,000 baud; use the matching corrected firmware. Start RF testing through a shielded or attenuated link and use only authorized frequencies and power levels. If camera or serial access is blocked on file://, use http://localhost.</footer>
+</main>
+<script>
+/*
+  CB-VIDEO HTMLv4 / 120 ksample/s -- real PCM8, explicit RED loss pixels, no simulated RF noise.
+  Retains CB FM STEREO V12 radio processing; negotiates MPX4 CRC32 with legacy MPX3 fallback.
+  Pixels never have CRC, packet validity, FEC, or retransmission.
+  H/V pulse detection controls the raster only. Actual RF distortion remains visible.
+*/
+(function(root){
+'use strict';
+const FS=120000, HSYNC=24, BLACK=12, WHITE=12, PRE=8, POST=12;
+const VSYNC=168, VPORCH=24, VBLANK=VSYNC+VPORCH;
+// Reserved-endpoint vertical marker: LOW 48, WHITE 12, LOW 48, WHITE 12, LOW 48.
+// Same 168 samples as V4: frame rate is unchanged.
+const VSEGMENTS=Object.freeze([[0,48,true],[48,60,false],[60,108,true],[108,120,false],[120,168,true]]);
+const HOVER=HSYNC+BLACK+WHITE+PRE+POST; // 68 samples per physical line
+const PIXEL_OFFSET=HSYNC+BLACK+WHITE+PRE;
+const SYNC=-110, BLACK_REF=-48, WHITE_REF=88, PIXEL_BLACK=-38, PIXEL_WHITE=78;
+const clamp=(v,lo,hi)=>v<lo?lo:v>hi?hi:v;
+const enc=v=>(v+256)&255;
+const formats=[];
+const resolutions=[[64,48],[80,60],[96,72],[128,96],[160,120],[192,144],[256,192],[320,240]];
+for(const [w,h] of resolutions)formats.push({id:`bw${w}`,label:`${w} × ${h} · progressive B&W`,kind:'mono',w,h,spp:1});
+formats.push({id:'bw320stable',label:'320 × 240 · B&W stable (2 samples/pixel)',kind:'mono',w:320,h:240,spp:2});
+// HTMLv3: full-resolution progressive monochrome, 1 or 2 PCM8 samples per pixel.
+// H/V timing and reference porches are identical to HTMLv2; only raster size differs.
+formats.push({id:'bw640',label:'640 × 480 · B&W (1 sample/pixel)',kind:'mono',w:640,h:480,spp:1});
+formats.push({id:'bw640stable',label:'640 × 480 · B&W stable (2 samples/pixel)',kind:'mono',w:640,h:480,spp:2});
+for(const [w,h] of resolutions.filter(([w])=>w<=256))formats.push({id:`col${w}`,label:`${w} × ${h} · YUV 4:2:0 color`,kind:'color',w,h,spp:1});
+// Slow color mode: repeat each transmitted Y, U and V sample twice for analog robustness.
+formats.push({id:'col256stable',label:'256 × 192 · YUV 4:2:0 color stable (2 samples/pixel)',kind:'color',w:256,h:192,spp:2});
+const byId=new Map(formats.map(f=>[f.id,Object.freeze(f)]));
+function getFormat(id){const m=byId.get(id);if(!m)throw Error('Unknown video format: '+id);return m;}
+function getPlan(id){
+ const m=typeof id==='string'?getFormat(id):id,rows=[];
+ if(m.kind==='mono')for(let y=0;y<m.h;y++)rows.push({plane:'y',y,width:m.w,spp:m.spp,len:HOVER+m.w*m.spp});
+ if(m.kind==='color'){
+  for(let y=0;y<m.h;y++)rows.push({plane:'y',y,width:m.w,spp:m.spp,len:HOVER+m.w*m.spp});
+  for(const plane of ['u','v'])for(let y=0;y<m.h/2;y++)rows.push({plane,y,width:m.w/2,spp:m.spp,len:HOVER+(m.w/2)*m.spp});
+ }
+ const fieldSamples=VBLANK+rows.reduce((s,row)=>s+row.len,0);
+ return {mode:m,rows,fieldSamples,fieldsPerFrame:1,fieldFps:FS/fieldSamples,frameFps:FS/fieldSamples};
+}
+const planCache=new Map(formats.map(m=>[m.id,getPlan(m)]));
+const plan=id=>planCache.get(typeof id==='string'?id:id.id);
+function patternRGBA(modeId){
+ const m=getFormat(modeId),rgba=new Uint8ClampedArray(m.w*m.h*4);
+ for(let y=0;y<m.h;y++)for(let x=0;x<m.w;x++){
+  const i=4*(y*m.w+x),check=(((x/(m.w/8))|0)+((y/(m.h/6))|0))&1;
+  let r=check?195:43,g=r,b=r;
+  if(x>m.w*.34&&x<m.w*.67&&y>m.h*.28&&y<m.h*.78){r=g=b=Math.round(255*(x/m.w-.34)/.33);}
+  if(m.kind==='color'&&y>m.h*.76){
+   const bar=Math.min(5,Math.floor(x/m.w*6));
+   [[224,52,53],[236,178,52],[54,195,113],[39,157,224],[156,90,226],[231,87,164]][bar].forEach((v,k)=>{if(k===0)r=v;else if(k===1)g=v;else b=v;});
+  }
+  rgba[i]=r;rgba[i+1]=g;rgba[i+2]=b;rgba[i+3]=255;
+ }
+ return rgba;
+}
+function sourceFromRGBA(modeId,rgba){
+ const m=getFormat(modeId),size=m.w*m.h;
+ if(!rgba||rgba.length!==size*4)throw Error('Invalid RGBA source image');
+ const y=new Uint8Array(size),u=m.kind==='color'?new Uint8Array(size/4):null,v=m.kind==='color'?new Uint8Array(size/4):null;
+ // BT.601 full-range YUV. Chrominance is averaged over 2x2 spatial blocks.
+ for(let py=0;py<m.h;py++)for(let px=0;px<m.w;px++){
+  const j=4*(py*m.w+px),r=rgba[j],g=rgba[j+1],b=rgba[j+2];
+  y[py*m.w+px]=clamp(Math.round(.299*r+.587*g+.114*b),0,255);
+ }
+ if(m.kind==='color')for(let py=0;py<m.h;py+=2)for(let px=0;px<m.w;px+=2){
+  let us=0,vs=0;
+  for(let dy=0;dy<2;dy++)for(let dx=0;dx<2;dx++){
+   const p=(py+dy)*m.w+px+dx,j=p*4,yy=y[p];
+   us+=(rgba[j+2]-yy)/1.772+128;
+   vs+=(rgba[j]-yy)/1.402+128;
+  }
+  const k=(py/2)*(m.w/2)+px/2;
+  u[k]=clamp(Math.round(us/4),0,255);
+  v[k]=clamp(Math.round(vs/4),0,255);
+ }
+ return {id:m.id,y,u,v};
+}
+function makeWave(source,modeId){
+ const p=plan(modeId),m=p.mode;
+ if(!source||source.id!==m.id)throw Error('Source/mode mismatch');
+ const wave=new Uint8Array(p.fieldSamples),put=(value,count)=>{wave.fill(enc(value),at,at+count);at+=count;};
+ let at=0;
+ for(const [lo,hi,isSync] of VSEGMENTS)put(isSync?SYNC:WHITE_REF,hi-lo);
+ put(BLACK_REF,VPORCH);
+ for(const row of p.rows){
+  put(SYNC,HSYNC);put(BLACK_REF,BLACK);put(WHITE_REF,WHITE);put(BLACK_REF,PRE);
+  const arr=row.plane==='u'?source.u:row.plane==='v'?source.v:source.y;
+  for(let x=0;x<row.width;x++){
+   let lum;
+   lum=arr[row.y*row.width+x];
+   const signed=PIXEL_BLACK+Math.round((PIXEL_WHITE-PIXEL_BLACK)*lum/255);
+   put(signed,row.spp);
+  }
+  put(BLACK_REF,POST);
+ }
+ if(at!==wave.length)throw Error('Scan timing: unexpected frame length');
+ return wave;
+}
+class Decoder{
+ constructor({mode='bw320',threshold=-78,brightness=0,contrast=1,saturation=1,hPosition=0,hHold=0,vHold=0,hLock=.85,onFrame=()=>{}}={}){
+  this.onFrame=onFrame;this.onHSignal=null;
+  this.totalSamples=0;this.totalMissing=0;this.invalidSamples=0;this.gapSamples=0;
+  this.redPixelsLast=0;this.verticalSyncs=0;this.horizontalSyncs=0;
+  this.fields=0;this.frames=0;this.falseH=0;this.hLost=0;this.hPhaseError=0;
+  this.hReacquired=0;this.vRejected=0;
+  this.threshold=threshold;this.autoThreshold=true;this.syncThresholdUsed=threshold;
+  this.brightness=brightness;this.contrast=contrast;this.saturation=saturation;
+  this.hPosition=hPosition;this.hHold=hHold;this.vHold=vHold;this.hLock=hLock;
+  this.setMode(mode);
+ }
+ setMode(id){
+  this.p=plan(id);this.m=this.p.mode;this.row=0;
+  this.lineLengths=[...new Set(this.p.rows.map(row=>row.len))];
+  this.lineStart=this.totalSamples+VBLANK;this.autoPeriod=0;
+  this.anchored=false;this.hLocked=false;this.hStreak=0;this.hMissStreak=0;this.hClockStarted=false;
+  this.lineSeq=0;this.hSeq=-1;this.hCandidate=null;this.hAlternative=null;
+  this.syncThresholdUsed=this.threshold;this.lowSum=0;
+  this.lastHAt=-1e12;this.lastHLineLength=0;this.lastVAt=-1e12;this.lastFrameAt=-1e12;
+  this.previousLow=false;this.lowRun=0;this.vCandidate=null;
+  // Running valid-sample sums allow a waveform-shape sync separator, not a fixed
+  // negative PCM threshold. Works through DC offset and analog gain variation.
+  this.windowEpoch=this.totalSamples;
+  this.cumSum=new Float64Array(1024);this.cumSquare=new Float64Array(1024);
+  this.cumValid=new Float64Array(1024);this.sumSoFar=0;this.squareSoFar=0;this.validSoFar=0;
+  this.hCandidates=0;this.hShapes=0;this.vCandidates=0;
+  this.lastShapeH=-1e12;this.lastVShape=-1e12;this.hShapeCandidate=null;
+  this.rxSyncMean=null;this.rxBlackMean=null;this.rxWhiteMean=null;
+  this.autoLevel=true;this.markerContrast=0;
+  this.recoverySamples=0;
+  this.fieldParity=0;
+  // A valid bit is set ONLY after an actual, non-0x80 PCM8 value has been
+  // received for that pixel. Missing positions render pure RED (255,0,0).
+  // This validity bitmap is NOT a second picture buffer or a frame gate.
+  this.y=new Uint8Array(this.m.w*this.m.h);this.y.fill(95);
+  this.yValid=new Uint8Array(this.y.length);
+  if(this.m.kind==='color'){
+   this.u=new Uint8Array(this.m.w*this.m.h/4);this.v=new Uint8Array(this.u.length);
+   this.u.fill(128);this.v.fill(128);
+   this.uValid=new Uint8Array(this.u.length);this.vValid=new Uint8Array(this.v.length);
+  }else {this.u=null;this.v=null;this.uValid=null;this.vValid=null;}
+  this.bitmap=new Uint8ClampedArray(this.m.w*this.m.h*4);
+  this.previousSample=0;this.previousSampleValid=false;
+ }
+ reset(clearCounters=false){
+  if(clearCounters){this.totalSamples=0;this.totalMissing=0;this.invalidSamples=0;this.gapSamples=0;this.redPixelsLast=0;this.verticalSyncs=0;this.horizontalSyncs=0;this.fields=0;this.frames=0;this.falseH=0;this.hLost=0;this.hReacquired=0;this.vRejected=0;}
+  this.setMode(this.m.id);
+ }
+ setLevels({brightness=this.brightness,contrast=this.contrast,saturation=this.saturation,threshold=this.threshold,
+   hPosition=this.hPosition,hHold=this.hHold,vHold=this.vHold,hLock=this.hLock,autoThreshold=this.autoThreshold,autoLevel=this.autoLevel}={}){
+  this.brightness=clamp(+brightness||0,-160,160);
+  this.contrast=clamp(Number.isFinite(+contrast)?+contrast:1,.1,6);
+  this.saturation=clamp(Number.isFinite(+saturation)?+saturation:1,0,3);
+  this.threshold=clamp(Number.isFinite(+threshold)?+threshold:-78,-126,-40);
+  this.autoThreshold=!!autoThreshold;this.autoLevel=!!autoLevel;
+  if(!this.autoThreshold)this.syncThresholdUsed=this.threshold;
+  this.hPosition=clamp(+hPosition||0,-this.m.w,this.m.w);
+  this.hHold=clamp(+hHold||0,-5,5);this.vHold=clamp(+vHold||0,-180,600);
+  this.hLock=clamp(Number.isFinite(+hLock)?+hLock:.85,0,1);
+ }
+ level(raw){
+  // Porches act as a sync-tip / black-level clamp. This is analog AGC/DC
+  // restoration, not a pixel-error check or digital error correction.
+  let black=PIXEL_BLACK,white=PIXEL_WHITE;
+  if(this.autoLevel && this.rxBlackMean!==null && this.rxWhiteMean!==null){
+   const gain=clamp((this.rxWhiteMean-this.rxBlackMean)/(WHITE_REF-BLACK_REF),.05,2.8);
+   black=this.rxBlackMean+(PIXEL_BLACK-BLACK_REF)*gain;
+   white=this.rxBlackMean+(PIXEL_WHITE-BLACK_REF)*gain;
+  }
+  return clamp(Math.round((255*(raw-black)/(white-black)-128)*this.contrast+128+this.brightness),0,255);
+ }
+ // H-POSITION represents a circular horizontal displacement, not clipping.
+ // YUV 4:2:0 chroma uses half as many horizontal samples as luma.
+ shiftedX(sourceX,row){
+  const offset=row.plane==='y'?this.hPosition:Math.round(this.hPosition/2);
+  return ((sourceX+offset)%row.width+row.width)%row.width;
+ }
+ paint(x,row,value){
+  const desc=this.p.rows[row],m=this.m;
+  if(desc.plane==='y'){
+   const k=desc.y*m.w+x;this.y[k]=value;this.yValid[k]=1;
+  }else if(desc.plane==='u'){
+   const k=desc.y*(m.w/2)+x;this.u[k]=value;this.uValid[k]=1;
+  }else {
+   const k=desc.y*(m.w/2)+x;this.v[k]=value;this.vValid[k]=1;
+  }
+ }
+ markMissing(x,row){
+  const desc=this.p.rows[row],m=this.m;
+  if(desc.plane==='y')this.yValid[desc.y*m.w+x]=0;
+  else if(desc.plane==='u')this.uValid[desc.y*(m.w/2)+x]=0;
+  else this.vValid[desc.y*(m.w/2)+x]=0;
+ }
+ compose(){
+  const m=this.m,rgba=this.bitmap,source=this.y,uvW=m.w/2;
+  let red=0;
+  for(let y=0;y<m.h;y++)for(let x=0;x<m.w;x++){
+   const i=y*m.w+x,j=i*4,yy=source[i];let r=yy,g=yy,b=yy;
+   let valid=this.yValid[i]===1;
+   if(m.kind==='color'){
+    const uv=(Math.floor(y/2)*uvW)+Math.floor(x/2);
+    valid=valid&&this.uValid[uv]===1&&this.vValid[uv]===1;
+    if(valid){
+     const du=(this.u[uv]-128)*this.saturation,dv=(this.v[uv]-128)*this.saturation;
+     r=clamp(Math.round(yy+1.402*dv),0,255);
+     g=clamp(Math.round(yy-.344136*du-.714136*dv),0,255);
+     b=clamp(Math.round(yy+1.772*du),0,255);
+    }
+   }
+   // RED means 'unknown video data' — never simulated radio noise.
+   if(!valid){r=255;g=0;b=0;red++;}
+   rgba[j]=r;rgba[j+1]=g;rgba[j+2]=b;rgba[j+3]=255;
+  }
+  this.redPixelsLast=red;
+  return rgba.slice();
+ }
+ emitFrame(at){
+  this.fields++;this.frames++;this.lastFrameAt=at;
+  const picture=this.compose();
+  this.onFrame(picture,{fields:this.fields,frames:this.frames,verticalSyncs:this.verticalSyncs,
+    horizontalSyncs:this.horizontalSyncs,anchored:this.anchored,hLocked:this.hLocked,
+    missingSamples:this.totalMissing,invalidSamples:this.invalidSamples,gapSamples:this.gapSamples,
+    redPixels:this.redPixelsLast,totalPixels:this.m.w*this.m.h,
+    hMisses:this.hLost,falseH:this.falseH,hReacquired:this.hReacquired,
+    hPhaseError:this.hPhaseError,lineClockErrorSamples:this.autoPeriod});
+ }
+ currentPeriod(){return this.p.rows[this.row].len+this.hHold+this.autoPeriod;}
+ advanceRaster(n,silent=false){
+  let guard=0;
+  while(n>=this.lineStart+this.currentPeriod()&&guard++<10000){
+   // The raster never rejects a line. Its H detector is only a clock/phase reference.
+   if(this.hClockStarted && this.hSeq!==this.lineSeq){
+    this.hMissStreak++;this.hLost++;
+    if(this.hMissStreak>=12){this.hLocked=false;this.hStreak=0;}
+   }
+   this.lineStart+=this.currentPeriod();
+   if(++this.row>=this.p.rows.length){
+    this.row=0;this.lineSeq=0;this.hSeq=-1;
+    // Vertical blanking breaks the ordinary H-H distance. The next H is
+    // allowed even if the V marker was lost; do not invalidate H lock.
+    this.lastHAt=-1e12;this.lastHLineLength=0;
+    if(!silent)this.emitFrame(n);
+    // Never recycle stale lines from the preceding field. Missing samples
+    // remain visible as noise in each newly scanned field.
+    this.y.fill(72);this.yValid.fill(0);
+     if(this.u){this.u.fill(128);this.v.fill(128);this.uValid.fill(0);this.vValid.fill(0);}
+    this.lineStart+=VBLANK+this.vHold;
+    // Free-run through V blanking; a recognizable next V pulse reanchors us.
+   }else{this.lineSeq++;}
+  }
+ }
+ // Prefix sums of ONLY transport-valid analog samples; no per-pixel CRC.
+ resetWaveWindow(){
+  this.windowEpoch=this.totalSamples;
+  this.cumSum.fill(0);this.cumSquare.fill(0);this.cumValid.fill(0);
+  this.sumSoFar=0;this.squareSoFar=0;this.validSoFar=0;
+  this.lastShapeH=-1e12;this.vCandidate=null;this.hShapeCandidate=null;
+ }
+ stat(lo,hi){
+  if(lo<this.windowEpoch||hi>this.totalSamples||hi-lo>900)return null;
+  const n=this.cumValid[hi&1023]-this.cumValid[lo&1023];
+  if(n<1)return null;
+  const sum=this.cumSum[hi&1023]-this.cumSum[lo&1023];
+  const sq=this.cumSquare[hi&1023]-this.cumSquare[lo&1023];
+  const mean=sum/n;
+  return {n,mean,sd:Math.sqrt(Math.max(0,sq/n-mean*mean))};
+ }
+ // H separator: 24 negative samples, followed by 12 black porch and 12
+ // bright reference samples. Compare means and flatness (relative contrast),
+ // never demand a predetermined absolute amplitude or a previous V lock.
+ finishHorizontalCandidate(n){
+  const candidate=this.hShapeCandidate;
+  if(!candidate||n<candidate.until)return;
+  this.hShapeCandidate=null;this.lastShapeH=candidate.start;
+  this.hCandidates++;this.hShapes++;
+  if(this.onHSignal)this.onHSignal(candidate.start);
+  this.onHorizontal(candidate.start,n,HSYNC,candidate.a.mean,candidate.b.mean,candidate.c.mean);
+ }
+ detectHorizontal(n){
+  const start=n+1-(HSYNC+BLACK+WHITE);
+  if(start<this.windowEpoch||start-this.lastShapeH<18)return;
+  // Once locked, look near the predicted line boundary. A false H in image
+  // content must not tug the horizontal oscillator across the screen.
+  if(this.hLocked && Math.abs(start-this.lineStart)>22 && this.hMissStreak<10)return;
+  const a=this.stat(start,start+HSYNC),b=this.stat(start+HSYNC,start+HSYNC+BLACK);
+  const c=this.stat(start+HSYNC+BLACK,start+HSYNC+BLACK+WHITE);
+  if(!a||!b||!c||a.n<17||b.n<8||c.n<8)return;
+  const d1=b.mean-a.mean,d2=c.mean-b.mean,span=c.mean-a.mean;
+  if(span<12||d1<Math.max(2,span*.08)||d2<Math.max(3,span*.20))return;
+  if(!this.autoThreshold&&a.mean>=this.threshold)return;
+  // Flatness is normalized to the RECEIVED amplitude. Absolute standard-
+  // deviation thresholds made low-gain signals latch one or two samples early.
+  if(a.sd>span*.24||b.sd>span*.24||c.sd>span*.24)return;
+  const score=(a.sd*a.sd*a.n+b.sd*b.sd*b.n+c.sd*c.sd*c.n)/((a.n+b.n+c.n)*span*span);
+  if(score>.04)return;
+  // Choose the best local alignment, not the first passing window. Six samples
+  // still leave at least two samples before the first active pixel at offset56.
+  const prior=this.hShapeCandidate;
+  if(!prior)this.hShapeCandidate={start,score,a,b,c,until:n+6};
+  else if(score<prior.score-1e-12)this.hShapeCandidate={start,score,a,b,c,until:prior.until};
+ }
+ // V separator: 48 low, 12 porch, 48 low, 12 porch, 48 low.
+ // This distinctive waveform is also normalized by the RECEIVED analog
+ // contrast rather than the encoder's nominal PCM offset.
+ verticalScore(start){
+  if(start<this.windowEpoch||start+VSYNC>this.totalSamples)return -1;
+  let lows=[],porches=[];
+  for(const [lo,hi,isSync] of VSEGMENTS){
+   // Ignore transition edges (FIR ringing + 4-sample search phase).
+   const width=hi-lo, trim=isSync?5:3;
+   const s=this.stat(start+lo+trim,start+hi-trim);
+   if(!s||s.n<(width-2*trim)*.70)return -1;
+   (isSync?lows:porches).push(s);
+  }
+  const low=lows.reduce((sum,s)=>sum+s.mean,0)/3;
+  const porch=(porches[0].mean+porches[1].mean)*.5;
+  const contrast=porch-low;
+  if(contrast<12)return -1;
+  // A vertical sync marker is a FLAT pulse train, unlike random FM noise.
+  // This is a check on the reserved sync waveform only, not on image pixels.
+  if(lows.some(s=>s.sd>Math.max(2,contrast*.30)) ||
+     porches.some(s=>s.sd>Math.max(2,contrast*.35)))return -1;
+  // H and V have different pulse widths and need not retain identical sync-tip
+  // amplitudes after the real RF channel. Compare DC-invariant contrasts;
+  // do not veto a genuine V merely because a short H was attenuated more.
+  if(this.hLocked&&this.rxWhiteMean!==null&&this.rxBlackMean!==null&&
+     contrast<(this.rxWhiteMean-this.rxBlackMean)*1.05)return -1;
+  if(!this.autoThreshold&&low>=this.threshold)return -1;
+  if(lows.some(s=>Math.abs(s.mean-low)>Math.max(2,contrast*.40))||
+     porches.some(s=>Math.abs(s.mean-porch)>Math.max(2,contrast*.45)))return -1;
+  // Noise may make an individual 48-sample low segment uneven. Its mean
+  // can still be usable; do not treat the video luminance as valid/invalid.
+  return contrast-Math.abs(porches[0].mean-porches[1].mean)*.2;
+ }
+ detectVertical(n){
+  if((n&3)!==0)return;
+  if(this.vCandidate && n>=this.vCandidate.until){
+   const candidate=this.vCandidate;this.vCandidate=null;
+   if(candidate.start-this.lastVAt>this.p.fieldSamples*.65)this.onVertical(candidate.start,n);
+  }
+  if(n+1<VSYNC||n-this.lastVAt<this.p.fieldSamples*.65)return;
+  const start=n+1-VSYNC,score=this.verticalScore(start);
+  if(score>=12){
+   this.vCandidates++;
+   if(!this.vCandidate||score>this.vCandidate.score)this.vCandidate={start,score,until:n+20};
+  }
+ }
+ onVertical(start,n){
+  const wasHLocked=this.hLocked;
+  this.lastVAt=start;this.verticalSyncs++;this.anchored=true;this.hClockStarted=true;
+  if(this.row>this.p.rows.length*.70 && n-this.lastFrameAt>this.p.fieldSamples*.55)this.emitFrame(n);
+  this.row=0;this.lineStart=start+VBLANK;
+  this.y.fill(72);this.yValid.fill(0);
+  if(this.u){this.u.fill(128);this.v.fill(128);this.uValid.fill(0);this.vValid.fill(0);}
+  this.hMissStreak=0;this.lineSeq=0;this.hSeq=-1;
+  this.hAlternative=null;this.hShapeCandidate=null;this.hPhaseError=0;
+  this.lastHAt=-1e12;this.lastHLineLength=0;
+  // The V back porch is also an actual received black reference. It can
+  // re-establish the clamp after a large gain change while H was unavailable.
+  const lowStats=VSEGMENTS.filter(s=>s[2]).map(([lo,hi])=>this.stat(start+lo+5,start+hi-5));
+  const whiteStats=VSEGMENTS.filter(s=>!s[2]).map(([lo,hi])=>this.stat(start+lo+3,start+hi-3));
+  const black=this.stat(start+VSYNC+3,Math.min(this.totalSamples,start+VBLANK-3));
+  if(lowStats.every(Boolean)&&whiteStats.every(Boolean)&&black&&black.n>=6){
+   const low=lowStats.reduce((s,v)=>s+v.mean,0)/lowStats.length;
+   const white=whiteStats.reduce((s,v)=>s+v.mean,0)/whiteStats.length;
+   if(black.mean>low+(white-low)*.10&&black.mean<white-(white-low)*.20){
+    this.rxSyncMean=low;this.rxBlackMean=black.mean;this.rxWhiteMean=white;
+    this.markerContrast=black.mean-low;this.syncThresholdUsed=(low+black.mean)*.5;
+   }
+  }
+  if(wasHLocked)this.hStreak=Math.max(3,this.hStreak);
+ }
+ onHorizontal(start,n,run,syncMean,blackMean,whiteMean){
+  if(start>=this.lastVAt && start<this.lastVAt+VBLANK-10)return;
+  const prev=this.lastHAt,prevLen=this.lastHLineLength;
+  const length=this.p.rows[this.row].len;
+  // Outside the expected flyback window, require reserved-reference contrast
+  // continuity. Image plateaus can imitate H shape, but must not drag a held
+  // oscillator into active video. Near the predicted top, allow real gain/DC
+  // changes immediately instead of waiting a whole slow frame for V.
+  const predictedError=this.hClockStarted?start-this.lineStart:0;
+  if(this.rxSyncMean!==null&&this.rxBlackMean!==null&&this.rxWhiteMean!==null&&Math.abs(predictedError)>22){
+   const depth=blackMean-syncMean,whiteSpan=whiteMean-blackMean;
+   if(depth<Math.max(2,(this.rxBlackMean-this.rxSyncMean)*.35)||
+      whiteSpan<Math.max(3,(this.rxWhiteMean-this.rxBlackMean)*.65)){
+    this.falseH++;return;
+   }
+  }
+  if(prev>-1e11&&start-prev<.58*Math.min(length,prevLen)){this.falseH++;return;}
+  const delta=prev>-1e11?start-prev:0;
+  const plausible=prev<=-1e11||this.lineLengths.some(l=>Math.abs(delta-l)<Math.max(13,l*.012));
+  const skipped=prev>-1e11&&this.lineLengths.some(l=>Math.abs(delta-2*l)<23);
+  const first=!this.hClockStarted;
+  let err=first?0:start-this.lineStart,reacquired=false,periodObservation=null;
+  if(!first&&(!plausible&&!skipped||Math.abs(err)>(this.hLocked?22:55))){
+   const alt=this.hAlternative;
+   const candidateDelta=alt?start-alt.start:0;
+   const matching=this.lineLengths.find(l=>candidateDelta>0&&Math.abs(candidateDelta-l)<Math.max(13,l*.012));
+   const coherent=alt&&matching!==undefined;
+   const streak=coherent?alt.streak+1:1;
+   const observed=coherent?candidateDelta-matching-this.hHold:0;
+   this.hAlternative={start,streak,periodError:coherent?(alt.periodError*(streak-2)+observed)/(streak-1):0};
+   if(streak<3){this.falseH++;return;}
+   reacquired=true;periodObservation=this.hAlternative.periodError;
+  }
+  // No rejected candidate above can change the oscillator, row, calibration,
+  // or pixels. A coherent reacquisition deliberately releases the stale lastH.
+  this.hAlternative=null;
+  if(first){
+   this.hClockStarted=true;this.lineStart=start;this.row=0;this.lineSeq=0;
+   this.hSeq=-1;this.hStreak=0;this.autoPeriod=0;
+  }else if(reacquired){
+   this.hReacquired++;this.lineStart=start;err=0;this.hStreak=2;this.hLocked=false;
+   this.autoPeriod=clamp(periodObservation,-3,3);
+  }
+  this.horizontalSyncs++;this.lastHAt=start;this.lastHLineLength=length;
+  this.hStreak=plausible||reacquired?Math.min(255,this.hStreak+1):Math.max(1,this.hStreak);
+  this.hSeq=this.lineSeq;this.hMissStreak=0;
+  if(this.hStreak>=3)this.hLocked=true;
+  this.hPhaseError=err;
+  const gain=this.hLocked?this.hLock:.65;
+  this.lineStart+=clamp(err*gain,-38,38);
+  if(!reacquired&&prev>-1e11 && plausible && delta>0){
+   this.autoPeriod=clamp(.97*this.autoPeriod+.03*(delta-prevLen-this.hHold),-3,3);
+  }
+  // A line clamp follows the received back porch, not an old multi-line DC
+  // average. Smooth only gain/contrast; available image samples remain intact.
+  if(this.rxBlackMean===null){
+   this.rxSyncMean=syncMean;this.rxBlackMean=blackMean;this.rxWhiteMean=whiteMean;
+  }else{
+   const oldSpan=this.rxWhiteMean-this.rxBlackMean,newSpan=whiteMean-blackMean;
+   const oldDepth=this.rxBlackMean-this.rxSyncMean,newDepth=blackMean-syncMean;
+   const gainAlpha=newSpan<oldSpan*.70||newSpan>oldSpan*1.45?.75:.10;
+   const span=oldSpan*(1-gainAlpha)+newSpan*gainAlpha;
+   const depth=oldDepth*.85+newDepth*.15;
+   this.rxBlackMean=blackMean;this.rxWhiteMean=blackMean+span;this.rxSyncMean=blackMean-depth;
+  }
+  this.markerContrast=this.rxBlackMean-this.rxSyncMean;
+  this.syncThresholdUsed=(this.rxSyncMean+this.rxBlackMean)*.5;
+ }
+ feed(value,missingSource='firmware'){
+  const n=this.totalSamples++,missing=value===-128;
+  if(missing){
+   this.totalMissing++;
+   if(missingSource==='gap')this.gapSamples++;
+   else this.invalidSamples++;
+  }
+  if(!missing){this.sumSoFar+=value;this.squareSoFar+=value*value;this.validSoFar++;}
+  const at=(n+1)&1023;
+  this.cumSum[at]=this.sumSoFar;this.cumSquare[at]=this.squareSoFar;this.cumValid[at]=this.validSoFar;
+  this.advanceRaster(n);
+  this.finishHorizontalCandidate(n);
+  if(!missing){this.detectHorizontal(n);this.detectVertical(n);}
+  this.advanceRaster(n);
+  const row=this.p.rows[this.row],rel=n-this.lineStart-PIXEL_OFFSET;
+  const position=Math.round(rel);
+  if(position>=0&&position<row.width*row.spp){
+   const x=this.shiftedX(Math.floor(position/row.spp),row);
+   if(row.spp===1){
+    if(missing)this.markMissing(x,this.row);
+    else this.paint(x,this.row,this.level(value));
+   }else if((position%row.spp)===0){
+    this.previousSampleValid=!missing;
+    if(!missing)this.previousSample=this.level(value);
+    else this.markMissing(x,this.row);
+   }else if(missing||!this.previousSampleValid){
+    this.markMissing(x,this.row);
+   }else this.paint(x,this.row,Math.round((this.previousSample+this.level(value))*.5));
+  }
+  this.advanceRaster(n+1);
+ }
+ feedBytes(bytes){for(let i=0;i<bytes.length;i++)this.feed(bytes[i]===128?-128:(bytes[i]<<24)>>24,'firmware');}
+ feedMissing(n){for(let k=0;k<n;k++)this.feed(-128,'gap');}
+ skipMissing(n){
+  if(n<=0)return;
+  // Advance the analog timebase through absent MPX3 samples.
+  // Unknown video positions are marked RED, never replaced by random data.
+  if(n>this.p.fieldSamples*2){
+   this.totalSamples+=n;this.totalMissing+=n;this.gapSamples+=n;
+   this.anchored=false;this.hLocked=false;this.hStreak=0;this.hClockStarted=false;
+   this.lineStart=this.totalSamples+VBLANK;this.row=0;this.lineSeq=0;this.hSeq=-1;
+   this.lowRun=0;this.lowSum=0;this.vCandidate=null;this.hCandidate=null;
+   this.resetWaveWindow();
+   this.showSignalLoss('Large serial timeline gap');return;
+  }
+  const end=this.totalSamples+n;
+  let loops=0;
+  while(this.totalSamples<end && loops++<this.p.rows.length*3+10){
+   this.advanceRaster(this.totalSamples);
+   const lineEnd=this.lineStart+this.currentPeriod();
+   const segmentEnd=Math.min(end,Math.max(this.totalSamples+1,lineEnd));
+   const row=this.p.rows[this.row],a=this.totalSamples,b=segmentEnd;
+   const low=Math.max(0,Math.ceil((a-this.lineStart-PIXEL_OFFSET)/row.spp));
+   const high=Math.min(row.width,Math.ceil((b-this.lineStart-PIXEL_OFFSET)/row.spp));
+   for(let x=low;x<high;x++)this.markMissing(this.shiftedX(x,row),this.row);
+   this.totalMissing+=b-a;this.gapSamples+=b-a;this.totalSamples=b;
+   this.advanceRaster(this.totalSamples);
+  }
+  if(this.totalSamples<end){
+   this.totalMissing+=end-this.totalSamples;this.gapSamples+=end-this.totalSamples;
+   this.totalSamples=end;this.showSignalLoss('Serial sample timeline interrupted');
+  }
+  // A gap can wipe out the current sync pattern. Keep the raster moving, then
+  // let the next legitimate H/V markers establish the new phase.
+  this.lowRun=0;this.lowSum=0;this.hCandidate=null;this.vCandidate=null;
+  this.resetWaveWindow();
+  // The clock survives short serial gaps. A full missed line or two will
+  // be corrected by the next H; V can always realign the vertical origin.
+  this.hAlternative=null;
+ }
+ showSignalLoss(reason='No PCM samples arriving'){
+  // UI state only. No fictitious PCM sample is fed to the video decoder.
+  const picture=new Uint8ClampedArray(this.m.w*this.m.h*4);
+  for(let j=0;j<picture.length;j+=4){picture[j]=255;picture[j+1]=0;picture[j+2]=0;picture[j+3]=255;}
+  this.redPixelsLast=this.m.w*this.m.h;
+  this.onFrame(picture,{redPixels:this.redPixelsLast,totalPixels:this.redPixelsLast,
+    invalidSamples:this.invalidSamples,gapSamples:this.gapSamples,
+    missingSamples:this.totalMissing,signalLoss:reason});
+ }
+}
+root.CBAnalogV8=Object.freeze({FS,HSYNC,VSYNC,VPORCH,VBLANK,HOVER,VSEGMENTS,formats,getFormat,getPlan,plan,patternRGBA,sourceFromRGBA,makeWave,Decoder});
+root.CBAnalogV7=root.CBAnalogV8; // test harness compatibility
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+</script>
+<script>
+/* CB-VIDEO HTMLv4 — Web Serial RX displays real PCM8; missing samples render red. */
+(()=>{
+'use strict';
+const C=globalThis.CBAnalogV8,$=id=>document.getElementById(id);
+const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms)),ascii=new TextEncoder();
+const RATE=C.FS,PREBUFFER=12000,WRITE_BLOCK=2400,PREFIX=[77,80,88,51];
+const SERIAL_BAUD=1500000,SERIAL_PACE=150000;
+let modeId='bw160',cameraStream=null,cameraActive=false,imageSource='pattern';
+let preparedSource=null,sourceRGBA=null,scanFrame=null,scanOffset=0,txFieldCount=0;
+let txBytes=0,txBytesAtLast=0,txRateAtLast=performance.now(),txMaxLate=0;
+let rxBytes=0,rxBytesAtLast=0,rxRateAtLast=performance.now();
+let rxLastIndex=null,lastRxPacketAt=0,rxLossShown=false,rxFramesWindow=[],session=null,pending=[],connecting=false;
+let rxDecode=null, autoLineProbe=null;
+const previewCtx=$('preview').getContext('2d',{alpha:false}),receivedCtx=$('received').getContext('2d',{alpha:false});
+const scratch=document.createElement('canvas'),scratchCtx=scratch.getContext('2d',{willReadFrequently:true});
+const imgCam=$('cameraVideo');
+const fmt=()=>C.getFormat(modeId),plan=()=>C.plan(modeId);
+function log(message){
+ const t=new Date().toLocaleTimeString('en-US',{hour12:false});
+ $('log').textContent=($('log').textContent+`[${t}] ${message}\n`).split('\n').slice(-60).join('\n');
+ $('log').scrollTop=$('log').scrollHeight;
+}
+function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('error',error);}
+function formatNumber(n,places=2){return n.toFixed(places);}
+function resizeCanvases(){
+ const m=fmt();
+ for(const id of ['preview','received']){$(id).width=m.w;$(id).height=m.h;}
+ scratch.width=m.w;scratch.height=m.h;
+}
+function makeDecoder(){
+ rxDecode=new C.Decoder({mode:modeId,onFrame:(rgba,info)=>{
+  // Never invent RF noise: valid PCM pixels are shown as received.
+  // Pure red pixels indicate unavailable 0x80 or missing MPX3 samples.
+  if(rgba.length===fmt().w*fmt().h*4){
+   receivedCtx.putImageData(new ImageData(rgba,fmt().w,fmt().h),0,0);
+   const count=info.redPixels||0,amount=info.totalPixels||fmt().w*fmt().h;
+   $('redPixels').textContent=count.toLocaleString('en-US')+' / '+amount.toLocaleString('en-US');
+   $('rxLossStatus').textContent=info.signalLoss
+     ? 'NO PCM DATA — '+info.signalLoss+' · screen marked red (not RF noise)'
+     : 'Latest raster: '+(100*count/amount).toFixed(1)+'% unavailable pixels marked red; real received PCM is never synthesized.';
+   if(!info.signalLoss)rxFramesWindow.push(performance.now());
+  }
+ }});
+ rxDecode.onHSignal=start=>{if(autoLineProbe && $('auto320').checked && ['bw320','bw320stable'].includes(modeId))autoLineProbe.acceptH(start);};
+ updateRxControls();
+}
+function drawPreview(rgba){
+ const m=fmt();
+ previewCtx.putImageData(new ImageData(rgba,m.w,m.h),0,0);
+}
+function createSource(forceCamera=false){
+ const m=fmt();
+ if(forceCamera&&cameraActive&&imgCam.readyState>=2&&imgCam.videoWidth){
+  try{scratchCtx.drawImage(imgCam,0,0,m.w,m.h);sourceRGBA=scratchCtx.getImageData(0,0,m.w,m.h).data;}
+  catch(e){log('Webcam capture: '+e.message);}
+ }
+ if(!sourceRGBA||sourceRGBA.length!==m.w*m.h*4)sourceRGBA=C.patternRGBA(modeId);
+ const pixels=new Uint8ClampedArray(sourceRGBA);
+ const levels=Number($('grayLevels').value),contrast=Number($('contrast').value);
+ for(let i=0;i<pixels.length;i+=4){
+  if(m.kind!=='color'){
+   let y=Math.round(.299*pixels[i]+.587*pixels[i+1]+.114*pixels[i+2]);
+   y=Math.max(0,Math.min(255,(y-128)*contrast+128));
+   y=Math.round(Math.round(y*(levels-1)/255)*255/(levels-1));
+   pixels[i]=pixels[i+1]=pixels[i+2]=y;
+  }else{
+   for(let k=0;k<3;k++)pixels[i+k]=Math.max(0,Math.min(255,Math.round((pixels[i+k]-128)*contrast+128)));
+  }
+ }
+ drawPreview(pixels);preparedSource=C.sourceFromRGBA(modeId,pixels);
+ return preparedSource;
+}
+function selectedMode(){
+ const m=fmt(),p=plan();
+ $('grayLevels').disabled=m.kind==='color';
+ $('saturationRow').classList.toggle('hidden',m.kind!=='color');
+ $('srcRes').textContent=`${m.w} × ${m.h}`;
+ $('targetFps').textContent=formatNumber(p.frameFps)+' FPS';
+ $('fieldFps').textContent='Progressive';
+ $('lineHz').textContent=formatNumber(C.FS/(p.fieldSamples-C.VBLANK)*(p.rows.length),1)+' Hz (moy.)';
+ $('fieldDuration').textContent=formatNumber(p.fieldSamples*1000/RATE,1)+' ms';
+ $('modeKind').textContent=m.kind==='color'?'Analog YUV 4:2:0':'Progressive B&W';
+ $('rxLabel').textContent=m.kind==='color'?'RX · COLOR':'RX · B&W';
+ const hMax=m.w; // HTMLv3: H-POSITION also spans the new 640-pixel raster.
+ $('hPosition').min=String(-hMax);$('hPosition').max=String(hMax);
+ if(Math.abs(+$('hPosition').value)>hMax)$('hPosition').value='0';
+ resizeCanvases();makeDecoder();
+ rxLastIndex=null;scanFrame=null;scanOffset=0;
+ preparedSource=null;sourceRGBA=null;
+ createSource(false);
+ status(session?.state==='rx'?'RX: automatically searching for H pulses, then V pulses. TX and RX must use the same video format.':`Format ${m.label} · ${formatNumber(p.frameFps)} theoretical FPS.`);
+ log(`Mode ${m.id}: ${p.fieldSamples} samples/frame, ${formatNumber(p.frameFps,3)} frames/s (progressive).`);
+}
+function initModes(){
+ const groups=[['Progressive black and white',C.formats.filter(f=>f.kind==='mono')],['Progressive YUV 4:2:0 color',C.formats.filter(f=>f.kind==='color')]];
+ for(const [label,formats] of groups){
+  const g=document.createElement('optgroup');g.label=label;
+  for(const mode of formats){
+   const p=C.plan(mode.id),op=document.createElement('option');op.value=mode.id;
+   op.textContent=`${mode.label} · ${formatNumber(p.frameFps)} FPS`;
+   g.append(op);
+  }
+  $('mode').append(g);
+ }
+ $('mode').value=modeId;
+}
+async function startCamera(){
+ try{
+  if(!navigator.mediaDevices?.getUserMedia)throw Error('Camera access blocked. Try http://localhost in Chrome/Edge.');
+  if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());
+  cameraStream=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:640},height:{ideal:480},frameRate:{ideal:24}},audio:false});
+  imgCam.srcObject=cameraStream;await imgCam.play();
+  imageSource='camera';cameraActive=true;
+  createSource(true);
+  log('Webcam connected. One capture is taken at the beginning of each progressive frame.');
+ }catch(e){status('Webcam : '+e.message,true);log('Webcam : '+e.message);}
+}
+function usePattern(){
+ if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());
+ cameraStream=null;cameraActive=false;imageSource='pattern';sourceRGBA=null;
+ createSource(false);log('Analog test pattern selected.');
+}
+function getPcm(count){
+ const p=plan(),m=fmt(),dst=new Uint8Array(count);let at=0;
+ while(at<count){
+  if(!scanFrame||scanOffset>=scanFrame.length){
+   createSource(imageSource==='camera');
+   scanFrame=C.makeWave(preparedSource,modeId);
+   scanOffset=0;txFieldCount++;
+  }
+  const take=Math.min(count-at,scanFrame.length-scanOffset);
+  dst.set(scanFrame.subarray(scanOffset,scanOffset+take),at);
+  at+=take;scanOffset+=take;
+ }
+ return dst;
+}
+// Independent analog H-line timing probe. It only reads the original TX sync
+// waveform (H pulse + black + white porch), never examines/checks video pixels.
+// Allows 320x240 RX to distinguish 388-sample fast lines from 708-sample
+// stable lines without requiring any radio firmware change or framing bytes.
+// The shape separator itself supplies H edges. Do NOT run a second old-style
+// detector with a fixed <-78 PCM threshold; that was the V7 acquisition bug.
+class Auto320LineProbe{
+ constructor(onDetected){this.onDetected=onDetected;this.reset();}
+ reset(){this.prevH=null;this.kind=null;this.streak=0;this.lastSwitch=-1e12;}
+ skip(n){if(n>1400)this.reset();}
+ acceptH(start){
+  if(this.prevH!==null){
+   const distance=start-this.prevH;
+   const which=Math.abs(distance-388)<=15?'bw320':Math.abs(distance-708)<=15?'bw320stable':null;
+   if(which){this.streak=this.kind===which?this.streak+1:1;this.kind=which;}
+   else{this.kind=null;this.streak=0;}
+   if(this.streak>=5 && start-this.lastSwitch>RATE*2){
+    this.lastSwitch=start;this.onDetected(which);this.streak=0;
+   }
+  }
+  this.prevH=start;
+ }
+}
+function autoDetect320(which){
+ if(!$('auto320').checked||$('role').value!=='rx'||!session||session.state!=='rx')return;
+ if(!['bw320','bw320stable'].includes(modeId)||which===modeId)return;
+ modeId=which;$('mode').value=which;selectedMode();
+ log('AUTO 320: '+(which==='bw320stable'?'STABLE · 708':'FAST · 388')+' samples/line detected. Waiting for the next V pulse.');
+ status('RX: '+(which==='bw320stable'?'320×240 Stable (0.71 FPS)':'320×240 Fast (1.29 FPS)')+' detected from H pulses.');
+}
+class ByteParser{
+ constructor(onFrame,onLine,onReady,controlExpected=()=>false){
+  this.rest=new Uint8Array(0);this.onFrame=onFrame;this.onLine=onLine;this.onReady=onReady;
+  this.controlExpected=controlExpected;
+  this.wireVersion=null;this.expectedIndex=null;this.seeking=false;
+  this.stats={packets:0,crcErrors:0,shortPackets:0,badHeaders:0,resyncs:0,discardedBytes:0};
+ }
+ setWireVersion(version){this.wireVersion=version;this.expectedIndex=null;}
+ static crc32(bytes,start,length){
+  if(!this.crcTable){this.crcTable=new Uint32Array(256);for(let i=0;i<256;i++){let c=i;for(let bit=0;bit<8;bit++)c=(c>>>1)^((c&1)?0xEDB88320:0);this.crcTable[i]=c>>>0;}}
+  let crc=0xFFFFFFFF;for(let i=start;i<start+length;i++)crc=(crc>>>8)^this.crcTable[(crc^bytes[i])&255];
+  return (crc^0xFFFFFFFF)>>>0;
+ }
+ header(data,at,version=3){
+  if(at+10>data.length||data[at]!==77||data[at+1]!==80||data[at+2]!==88||data[at+3]!==48+version)return null;
+  const view=new DataView(data.buffer,data.byteOffset+at,10),index=view.getUint32(4,true),strength=view.getUint16(8,true);
+  return strength<=30000?{index,strength}:null;
+ }
+ forward(before,after,minimum=128){const difference=(after-before)>>>0;return difference>=minimum&&difference<RATE*20;}
+ plausible(index){if(this.expectedIndex===null)return true;const difference=(index-this.expectedIndex)>>>0;return difference===0||difference<RATE*20;}
+ control(data,at){
+  if(data[at]===239&&data[at+1]===239&&data[at+2]===239&&data[at+3]===239)return {length:4,ready:true};
+  let prefix;if(data[at]===79)prefix=[79,75,32];else if(data[at]===69)prefix=[69,82,82,32];else return null;
+  if(at+prefix.length>data.length)return null;
+  for(let i=0;i<prefix.length;i++)if(data[at+i]!==prefix[i])return null;
+  for(let end=at+prefix.length;end<Math.min(data.length,at+150);end++){
+   if(data[end]===10||data[end]===13)return {length:end-at+(data[end]===13&&data[end+1]===10?2:1),line:new TextDecoder().decode(data.subarray(at,end))};
+   if(data[end]<32||data[end]>126)return null;
+  }
+  return null;
+ }
+ terminalControl(data,at,maximum){
+  for(let candidate=at+10;candidate<=Math.min(data.length-4,at+maximum);candidate++){
+   const control=this.control(data,candidate);
+   if(control&&candidate+control.length===data.length&&this.controlExpected(control.ready?'ready':'line',control.line)){
+    // Firmware precedes READY with a complete zero boundary. A run of 0xEF
+    // in ordinary PCM cannot be used as an early legacy packet boundary.
+    if(control.ready&&(candidate<138||!data.subarray(candidate-138,candidate).every(byte=>byte===0)))continue;
+    return candidate;
+   }
+  }
+  return -1;
+ }
+ emit(data,at,header){
+  if(this.seeking){this.stats.resyncs++;this.seeking=false;}
+  this.stats.packets++;this.expectedIndex=(header.index+128)>>>0;
+  this.onFrame(header.index,header.strength,data.subarray(at+10,at+138));
+ }
+ discard(count){this.stats.discardedBytes+=count;this.seeking=true;}
+ feed(chunk){
+  let data;if(this.rest.length){data=new Uint8Array(this.rest.length+chunk.length);data.set(this.rest);data.set(chunk,this.rest.length);}else data=chunk;
+  let at=0;
+  while(at<data.length){
+   const c=data[at];
+   if(c===77){
+    const available=data.length-at;
+    if(available<4&&[77,80,88].slice(0,available).every((b,i)=>data[at+i]===b))break;
+    const version=data[at+1]===80&&data[at+2]===88?data[at+3]-48:0;
+    if((version===3||version===4)&&(this.wireVersion===null||version===this.wireVersion)){
+     if(available<10)break;
+     const header=this.header(data,at,version);
+     if(version===4){
+      if(available<142)break;
+      const expected=new DataView(data.buffer,data.byteOffset+at+138,4).getUint32(0,true);
+      if(ByteParser.crc32(data,at,138)!==expected){this.stats.crcErrors++;this.discard(1);at++;continue;}
+      if(!header){this.stats.badHeaders++;this.discard(142);at+=142;continue;}
+      if(this.expectedIndex!==null&&((header.index-this.expectedIndex)>>>0)>=0x80000000){this.stats.badHeaders++;this.discard(142);at+=142;continue;}
+      // The CRC covers the index too. No unverified index reaches the raster.
+      this.emit(data,at,header);at+=142;continue;
+     }
+     if(!header||!this.plausible(header.index)){this.stats.badHeaders++;this.discard(1);at++;continue;}
+     const next=this.header(data,at+138);
+     if(next&&this.forward(header.index,next.index)){
+      this.emit(data,at,header);at+=138;continue;
+     }
+     const boundary=this.control(data,at+138);
+     if(boundary){this.emit(data,at,header);at+=138;continue;}
+     if(available!==138){
+      const terminal=this.terminalControl(data,at,552);
+      if(terminal>=0){if(terminal-at<138)this.stats.shortPackets++;else this.stats.badHeaders++;this.discard(terminal-at);at=terminal;continue;}
+     }
+     if(available<138)break;
+     // Confirm a replacement boundary with its following packet. Merely
+     // finding "MPX3" inside PCM is not enough to discard a healthy packet.
+     let replacement=-1;
+     const limit=Math.min(data.length-148,at+552);
+     for(let candidate=at+1;candidate<=limit;candidate++){
+      const h=this.header(data,candidate),following=this.header(data,candidate+138);
+      if(h&&following&&this.plausible(h.index)&&this.forward(h.index,following.index)){replacement=candidate;break;}
+     }
+     if(replacement>=0){
+      const distance=replacement-at;
+      // A healthy packet can precede an unreadable header. Preserve it only
+      // when there is no earlier confirmed shortened-packet boundary.
+      const later=this.header(data,at+276);
+      let earlyBoundary=false;
+      for(let candidate=at+10;candidate<at+138&&candidate+10<=data.length;candidate++){
+       const early=this.header(data,candidate);
+       if(early&&this.forward(header.index,early.index)){earlyBoundary=true;break;}
+      }
+      if(!earlyBoundary&&distance>=276&&later&&this.forward(header.index,later.index,256)){
+       this.emit(data,at,header);at+=138;continue;
+      }
+      if(distance<138)this.stats.shortPackets++;else this.stats.badHeaders++;
+      this.discard(distance);at=replacement;continue;
+     }
+     if(available<562)break;
+     this.stats.badHeaders++;this.discard(1);at++;continue;
+    }
+   }
+   // CR and LF may arrive in separate USB chunks. Both are legitimate line
+   // delimiters, not evidence of a serial loss or a resynchronization.
+   if(c===10||c===13){at++;continue;}
+   const control=this.control(data,at);
+   if(control){
+    if(control.ready)this.onReady();else{if(/^OK RX /.test(control.line))this.expectedIndex=null;this.onLine(control.line);}
+    at+=control.length;continue;
+   }
+   if((c===239&&data.length-at<4)||((c===79||c===69)&&data.length-at<150&&data.subarray(at).every(b=>b>=32&&b<=126)))break;
+   this.discard(1);at++;
+  }
+  this.rest=data.slice(at);
+ }
+ finish(){
+  // Only an exactly aligned complete legacy tail may be committed at EOF.
+  // MPX4 packets are already committed immediately after CRC validation.
+  if(this.rest.length===138&&(this.wireVersion===null||this.wireVersion===3)){
+   const header=this.header(this.rest,0);
+   if(header&&this.plausible(header.index))this.emit(this.rest,0,header);
+   else this.discard(this.rest.length);
+  }else if(this.rest.length)this.discard(this.rest.length);
+  this.rest=new Uint8Array(0);
+ }
+}
+function rxFrame(index,_strength,bytes){
+ if(!session||session.state!=='rx')return;
+ lastRxPacketAt=performance.now();rxLossShown=false;rxBytes+=bytes.length;
+ if(rxLastIndex!==null){
+  const diff=(index-rxLastIndex)>>>0;
+  if(diff>0&&diff<RATE*20){
+   // Missing MPX3 payload is NEVER recreated as fake RF noise.
+   // Keep timeline moving; paint red ONLY where PCM values are unavailable.
+   if(diff<=384)rxDecode.feedMissing(diff);
+   else rxDecode.skipMissing(diff);
+   if(autoLineProbe)autoLineProbe.skip(diff);
+  }else if(diff>=RATE*20){
+   rxDecode.showSignalLoss('Serial index discontinuity');if(autoLineProbe)autoLineProbe.skip(0);
+   log('Serial sample-timeline discontinuity: video data unavailable, marked RED.');
+  }
+ }
+ rxDecode.feedBytes(bytes);rxLastIndex=(index+bytes.length)>>>0;
+}
+function response(line){
+ log(line);
+ for(const item of [...pending])if(item.test(line)){
+  pending=pending.filter(p=>p!==item);clearTimeout(item.timer);item.resolve(line);
+ }
+ if(/^ERR /.test(line)){
+  for(const item of pending){clearTimeout(item.timer);item.reject(new Error(line));}pending=[];
+  if(session?.state==='tx'){session.txRunning=false;session.state='rx';setButtons();status('Radio fault: '+line,true);}
+ }
+}
+function ready(){if(session?.state==='keying'){session.ready?.();session.ready=null;}}
+function waitLine(test,ms=4500){
+ let item;const reply=new Promise((resolve,reject)=>{
+  item={test,resolve,reject,timer:0};item.timer=setTimeout(()=>{pending=pending.filter(x=>x!==item);reject(Error('Serial response timed out'));},ms);pending.push(item);
+ });
+ reply.cancel=()=>{clearTimeout(item.timer);pending=pending.filter(x=>x!==item);};return reply;
+}
+function readConfig(){
+ const hz=Math.round(Number($('frequency').value)*1e6),fine=Number($('fine').value),apwr=Number($('apwr').value);
+ if(!Number.isSafeInteger(hz)||hz<2401000000||hz>2482500000)throw Error('RF frequency must be 2401–2482.5 MHz');
+ if(!Number.isInteger(fine)||Math.abs(fine)>50000)throw Error('RX fine tuning must be within ±50 kHz');
+ if(!Number.isInteger(apwr)||apwr<0||apwr>191)throw Error('APWR must be between 0 and 191');
+ return {hz,fine,apwr};
+}
+async function write(bytes,own=session){if(!own||own.closing)throw Error('Serial port unavailable');await own.writer.write(typeof bytes==='string'?ascii.encode(bytes):bytes);}
+async function commandAwait(command,test,ms=4500,own=session){
+ const reply=waitLine(test,ms);
+ try{const [,line]=await Promise.all([write(command,own),reply]);return line;}
+ finally{reply.cancel();}
+}
+async function readSerial(own){
+ const parser=new ByteParser(rxFrame,response,ready,(kind,line)=>kind==='ready'?own.state==='keying':pending.some(item=>item.test(line)||/^ERR /.test(line)));
+ own.parser=parser;
+ try{
+  while(session===own&&!own.closing){
+   const reader=own.port.readable.getReader();own.reader=reader;
+   try{while(session===own&&!own.closing){const {value,done}=await reader.read();if(done){own.readEnded=true;return;}if(value?.length)parser.feed(value);}}
+   finally{reader.releaseLock();own.reader=null;}
+  }
+ }catch(e){if(!own.closing){own.readError=e;log('Serial RX: '+e.message);status('USB reading interrupted: '+e.message,true);}}
+ finally{parser.finish();}
+}
+// BEGIN SERIAL CONNECTION
+async function openSerialSession(port){
+ await port.open({baudRate:SERIAL_BAUD,dataBits:8,stopBits:1,parity:'none',flowControl:'none',bufferSize:65536});
+ let writer;
+ try{writer=port.writable.getWriter();}catch(e){await port.close();throw e;}
+ const own={port,baudRate:SERIAL_BAUD,writer,reader:null,state:'connecting',closing:false,txRunning:false,txTask:null,readTask:null,ready:null,readError:null,readEnded:false};
+ session=own;own.readTask=readSerial(own);setButtons();return own;
+}
+async function closeSerialSession(own){
+ if(!own)return;own.closing=true;own.txRunning=false;
+ for(const p of pending){clearTimeout(p.timer);p.reject(Error('Serial session ended'));}pending=[];
+ if(session===own)session=null;
+ let failure=null;
+ try{await own.reader?.cancel();}catch(e){failure=e;}
+ try{await own.readTask;}catch(e){failure=failure||e;}
+ try{own.writer.releaseLock();}catch(e){failure=failure||e;}
+ try{await own.port.close();}catch(e){failure=failure||e;}
+ if(failure)throw failure;
+}
+async function identifySerialSession(own){
+ await sleep(280); // Also allows a previous abandoned TX stream to time out.
+ for(let attempt=0;attempt<3;attempt++){
+  if(own.closing||session!==own)throw Error('Serial connection cancelled');
+  if(own.readError)throw own.readError;
+  if(own.readEnded)throw Error('USB serial stream ended during identification');
+  try{
+   await commandAwait('STATUS\n',line=>/^OK STATUS CB_FM_STEREO 4$/.test(line),2200,own);
+   return;
+  }catch(e){
+   if(own.readError)throw own.readError;
+   if(own.readEnded)throw Error('USB serial stream ended during identification');
+   if(e.message!=='Serial response timed out')throw e;
+   if(attempt===2)throw Error('No compatible firmware response at '+SERIAL_BAUD+' baud');
+   await sleep(430);
+  }
+ }
+}
+async function establishSerialPort(port){
+ let own=null;
+ try{
+  own=await openSerialSession(port);await identifySerialSession(own);
+  log('Serial rate confirmed by firmware response: '+SERIAL_BAUD.toLocaleString('en-US')+' baud.');return own;
+ }catch(e){if(own)await closeSerialSession(own);throw e;}
+}
+async function configureSerialTransport(own){
+ await commandAwait('STOP\n',line=>line==='OK STOP',3500,own);
+ try{
+  const info=await commandAwait('INFO\n',line=>/^OK INFO /.test(line),2200,own);
+  const reported=/\bBAUD (\d+)\b/.exec(info);
+  if(reported&&Number(reported[1])!==own.baudRate)throw Error('Firmware serial rate does not match the opened port');
+  log('Firmware link capabilities: '+info);
+ }catch(e){if(e.message!=='ERR COMMAND')throw e;}
+ try{
+  await commandAwait('WIRE 4\n',line=>line==='OK WIRE 4',2200,own);
+  own.parser.setWireVersion(4);own.wireVersion=4;
+  try{
+   await commandAwait('PACE '+SERIAL_PACE+'\n',line=>line==='OK PACE '+SERIAL_PACE,2200,own);
+   own.pace=SERIAL_PACE;
+  }catch(e){if(e.message!=='ERR COMMAND')throw e;own.pace=0;}
+  log('Serial transport confirmed: MPX4 CRC32; pacing '+own.pace.toLocaleString('en-US')+' bytes/s.');
+ }catch(e){
+  if(e.message!=='ERR COMMAND')throw e;
+  own.parser.setWireVersion(3);own.wireVersion=3;own.pace=0;
+  log('Serial transport confirmed: legacy MPX3 with validated boundaries.');
+ }
+}
+// END SERIAL CONNECTION
+function setButtons(){
+ const state=session?.state||(connecting?'connecting':'off'),on=state!=='off'&&state!=='connecting';
+ $('connect').disabled=state!=='off';$('disconnect').disabled=!on;
+ $('startTx').disabled=state!=='rx'||$('role').value!=='tx';
+ $('stopTx').disabled=!['tx','keying','stopping'].includes(state);
+ $('role').disabled=state!=='off';$('frequency').disabled=state!=='off';$('fine').disabled=state!=='off';$('apwr').disabled=state!=='off';
+ $('mode').disabled=['tx','keying','stopping'].includes(state);
+}
+async function connect(){
+ if(session||connecting)return;let own=null;connecting=true;setButtons();
+ try{
+  const cfg=readConfig();
+  if(!navigator.serial)throw Error('Web Serial is unavailable. Use desktop Chrome/Edge, preferably via localhost.');
+  const port=await navigator.serial.requestPort();
+  status('Checking radio serial link...');own=await establishSerialPort(port);
+  await configureSerialTransport(own);
+  const reply=await commandAwait(`RX ${cfg.hz} HQ ${cfg.fine}\n`,s=>/^OK RX \d+ 120000 HQ$/.test(s),5500,own);
+  log('V12 radio RX 120000 HQ: '+reply);
+  rxLastIndex=null;lastRxPacketAt=performance.now();rxLossShown=false;rxDecode.reset(true);updateRxControls();
+  autoLineProbe=new Auto320LineProbe(autoDetect320);
+  own.state='rx';setButtons();status($('role').value==='rx'?'RX analog TV active · H/V scanning · RF defects visible':'Radio ready · enable webcam or test pattern, then select Start TX');
+ }catch(e){const message='Connection: '+e.message;log(message);if(own&&session===own)await disconnect();status(message,true);}
+ finally{connecting=false;setButtons();}
+}
+async function disconnect(){
+ const own=session;if(!own||own.closing)return;
+ own.closing=true;own.txRunning=false;
+ for(const p of pending){clearTimeout(p.timer);p.reject(Error('Disconnected'));}pending=[];
+ if(['tx','keying'].includes(own.state))await sleep(200);
+ session=null;autoLineProbe=null;
+ try{await own.reader?.cancel();}catch(_){}
+ try{await own.readTask;}catch(_){}
+ try{own.writer.releaseLock();}catch(_){}
+ try{await own.port.close();}catch(_){}
+ setButtons();status('USB serial disconnected.');log('USB serial disconnected.');
+}
+async function txLoop(own){
+ try{
+  txBytes=0;txBytesAtLast=0;txRateAtLast=performance.now();txMaxLate=0;
+  scanOffset=0;scanFrame=null;txFieldCount=0;
+  await write(getPcm(PREBUFFER),own);txBytes+=PREBUFFER;
+  let clock=performance.now(),sent=0;
+  while(session===own&&own.txRunning&&!own.closing){
+   const goal=clock+sent*1000/RATE,wait=goal-performance.now();
+   if(wait>1)await sleep(Math.min(wait,50));
+   if(session!==own||!own.txRunning)break;
+   const late=performance.now()-goal;if(late>txMaxLate)txMaxLate=Math.ceil(late);
+   if(late>120){clock=performance.now()-sent*1000/RATE;log('Browser scheduling delayed: resumed stream without a catch-up USB burst.');}
+   await write(getPcm(WRITE_BLOCK),own);sent+=WRITE_BLOCK;txBytes+=WRITE_BLOCK;
+  }
+ }catch(e){if(session===own&&!own.closing){status('TX error: '+e.message,true);log('TX error: '+e.message);}}
+ finally{
+  if(session===own){own.txRunning=false;
+   if(own.state==='tx'){own.state='stopping';setButtons();await sleep(310);if(session===own&&own.state==='stopping'){own.state='rx';status('TX stopped; returning to HQ reception.');setButtons();}}
+  }
+ }
+}
+async function startTx(){
+ const own=session;if(!own||own.state!=='rx'||$('role').value!=='tx')return;
+ try{
+  const {apwr}=readConfig();own.state='keying';setButtons();status('Issuing RF TX command, waiting for READY...');
+  const readyP=new Promise((resolve,reject)=>{const t=setTimeout(()=>{own.ready=null;reject(Error('RF READY signal not received'));},3500);own.ready=()=>{clearTimeout(t);resolve();};});
+  await write(`TX ${apwr}\n`,own);await readyP;
+  if(session!==own||own.closing||own.state!=='keying')return;
+  own.state='tx';own.txRunning=true;setButtons();
+  log(`TX PCM8 120 kHz - ${modeId} - ${formatNumber(plan().frameFps)} FPS - APWR ${apwr}`);
+  status('Continuous video transmission active — keep this tab in the foreground.');own.txTask=txLoop(own);
+ }catch(e){if(session===own){own.ready=null;own.txRunning=false;own.state='rx';setButtons();status('Unable to start TX: '+e.message,true);log('TX error: '+e.message);}}
+}
+async function stopTx(){const own=session;if(!own||!['tx','keying','stopping'].includes(own.state))return;own.txRunning=false;if(own.txTask)await own.txTask;if(session===own&&own.state==='keying'){own.state='stopping';setButtons();await sleep(330);if(session===own){own.state='rx';setButtons();}}}
+function updateRxControls(){
+ if(!rxDecode)return;
+ rxDecode.setLevels({brightness:Number($('rxBrightness').value),contrast:Number($('rxContrast').value),saturation:Number($('saturation').value),
+  autoLevel:$('autoLevel').checked,hPosition:Number($('hPosition').value),hHold:Number($('hHold').value),vHold:Number($('vHold').value),hLock:Number($('hLock').value)/100});
+ for(const [id,out,suffix] of [['hPosition','hPositionOut',' px'],['vHold','vHoldOut',' samples/frame'],['hLock','hLockOut',' %'],['rxBrightness','rxBrightnessOut','']])$(out).textContent=$ (id).value+suffix;
+ for(const [id,out,suffix] of [['hHold','hHoldOut',' samples/line'],['rxContrast','rxContrastOut','×'],['saturation','saturationOut','×']])$(out).textContent=formatNumber(Number($(id).value))+suffix;
+}
+function selfTest(){
+ const m=fmt(),p=plan(),rgba=C.patternRGBA(modeId),source=C.sourceFromRGBA(modeId,rgba);
+ let last=null,meta=null;const test=new C.Decoder({mode:modeId,onFrame:(pic,s)=>{last=pic;meta=s;}});
+ // Explicit LOCAL TEST (not live radio): inject a 42-sample unavailable PCM span.
+ for(let field=0;field<p.fieldsPerFrame;field++){
+  const wave=C.makeWave(source,modeId,field);
+  const testWave=wave.slice();
+  testWave.fill(128,Math.round(wave.length*.55),Math.round(wave.length*.55)+42);
+  for(let i=0;i<testWave.length;i+=128)test.feedBytes(testWave.subarray(i,i+128));
+ }
+ if(last){receivedCtx.putImageData(new ImageData(last,m.w,m.h),0,0);$('redPixels').textContent=meta.redPixels.toLocaleString('en-US')+' / '+meta.totalPixels.toLocaleString('en-US');$('rxLossStatus').textContent='LOCAL TEST: injected 0x80 missing values shown red. NOT live radio.';$('selfTestResult').textContent=`Simulation OK: ${meta.frames} frame(s), ${meta.verticalSyncs} V pulses, ${meta.horizontalSyncs} H pulses, ${meta.redPixels} red pixels. No artificial radio noise.`;}
+ else $('selfTestResult').textContent='Simulation incomplete: no frame displayed.';
+ log($('selfTestResult').textContent);
+}
+function updateStats(){
+ const now=performance.now(),elapsed=Math.max(.001,(now-txRateAtLast)/1000);
+ $('txRate').textContent=((txBytes-txBytesAtLast)/elapsed/1000).toFixed(1);txBytesAtLast=txBytes;txRateAtLast=now;
+ const elapsedRx=Math.max(.001,(now-rxRateAtLast)/1000);
+ $('rxRate').textContent=((rxBytes-rxBytesAtLast)/elapsedRx/1000).toFixed(1);
+ rxBytesAtLast=rxBytes;rxRateAtLast=now;
+ rxFramesWindow=rxFramesWindow.filter(t=>now-t<5000);
+ $('rxFps').textContent=formatNumber(rxFramesWindow.length/5);
+ $('missed').textContent=rxDecode.totalMissing.toLocaleString('en-US');
+ $('invalidSamples').textContent=rxDecode.invalidSamples.toLocaleString('en-US');
+ $('gapSamples').textContent=rxDecode.gapSamples.toLocaleString('en-US');
+ const wire=session?.parser?.stats;
+ for(const [id,key] of [['wirePackets','packets'],['wireCrcErrors','crcErrors'],['wireShortPackets','shortPackets'],['wireBadHeaders','badHeaders'],['wireResyncs','resyncs'],['wireDiscardedBytes','discardedBytes']])$(id).textContent=(wire?.[key]||0).toLocaleString('en-US');
+ $('rxSync').textContent=rxDecode.verticalSyncs.toLocaleString('en-US');
+ $('rxHSync').textContent=rxDecode.horizontalSyncs.toLocaleString('en-US');
+ const vRecent=rxDecode.verticalSyncs>0 && rxDecode.totalSamples-rxDecode.lastVAt<rxDecode.p.fieldSamples*1.6;
+ $('lockStatus').textContent=rxDecode.hLocked?(vRecent?'H + V locked':'H locked · searching for V'):(vRecent?'Acquiring H · V detected':'Searching for H / V');
+ $('syncDetails').textContent=`H: ${rxDecode.horizontalSyncs} · V: ${rxDecode.verticalSyncs} · candidates: ${rxDecode.hCandidates} · false H: ${rxDecode.falseH} · missing H: ${rxDecode.hLost} · sync margin: ${rxDecode.markerContrast.toFixed(0)} PCM`;
+ $('lockStatus').style.color=rxDecode.hLocked?'#7de2ae':'#f4c17a';
+ $('txJitter').textContent=String(txMaxLate);
+ $('markerLevels').textContent=rxDecode.rxSyncMean===null?'Received reference levels: searching for H/V…':`SYNC ${rxDecode.rxSyncMean.toFixed(0)} · Black ${rxDecode.rxBlackMean.toFixed(0)} · White ${rxDecode.rxWhiteMean.toFixed(0)} PCM`;
+ if(session?.state==='rx'&&$('role').value==='rx'&&lastRxPacketAt&&now-lastRxPacketAt>1600&&!rxLossShown){
+  rxLossShown=true;
+  rxDecode.showSignalLoss('no serial packets for more than 1.6 seconds');
+  log('RX: serial packets stopped. Marked missing image RED; no RF noise invented.');
+ }
+}
+initModes();selectedMode();setButtons();
+$('role').addEventListener('change',()=>{setButtons();$('sourceLabel').textContent=$('role').value==='rx'?'LOCAL PREVIEW (NOT RECEIVED)':'TX SOURCE';});
+$('sourceLabel').textContent='LOCAL PREVIEW (NOT RECEIVED)';
+$('mode').addEventListener('change',()=>{modeId=$('mode').value;selectedMode();if(autoLineProbe)autoLineProbe.reset();});
+$('auto320').addEventListener('change',()=>{if(autoLineProbe)autoLineProbe.reset();log('320 fast/stable detection: '+($('auto320').checked?'enabled':'disabled'));});
+$('grayLevels').addEventListener('change',()=>{if(imageSource==='pattern')sourceRGBA=null;createSource(imageSource==='camera');});
+$('contrast').addEventListener('input',()=>{$('contrastOut').textContent=formatNumber(Number($('contrast').value))+'×';if(imageSource==='pattern')sourceRGBA=null;createSource(imageSource==='camera');});
+$('camera').addEventListener('click',startCamera);$('pattern').addEventListener('click',usePattern);
+$('connect').addEventListener('click',connect);$('disconnect').addEventListener('click',disconnect);
+$('startTx').addEventListener('click',startTx);$('stopTx').addEventListener('click',stopTx);
+$('selfTest').addEventListener('click',selfTest);
+for(const id of ['rxBrightness','rxContrast','hPosition','hHold','vHold','hLock','saturation','autoLevel'])$(id).addEventListener('input',updateRxControls);
+$('resetHold').addEventListener('click',()=>{
+ for(const [id,val] of [['hPosition','0'],['hHold','0'],['vHold','0'],['hLock','85']])$(id).value=val;
+ updateRxControls();log('H/V raster centered.');
+});
+// Preview remains responsive even with no radio. While TX runs, the source is sampled at each actual video field boundary.
+setInterval(()=>{if(cameraActive&&(!session||session.state!=='tx'))createSource(true);},130);
+setInterval(updateStats,1000);
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&session?.state==='tx'){log('Tab hidden: stopping TX to avoid browser timer throttling.');void stopTx();}});
+log('CB-VIDEO HTMLv4.1: real radio PCM8, missing samples marked RED, 19 modes; V12 radio processing retained, MPX4 CRC32 negotiated when supported.');
+})();
+
+</script>
+</body>
+</html>

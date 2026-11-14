@@ -1,0 +1,12 @@
+{
+  "final_html_sha256": "68a183d2aa2cd07c59b36d9cb89177ba2c5f4f84e3a4fcd0b467eab6f5ad20fa",
+  "rf_modes": 19,
+  "noise_modes": 19,
+  "same_indexed_gaps_and_invalid_PCM": true,
+  "source_manifest_frames_verified": 95,
+  "noise_pngs": [
+    "BANC-ORIGINE/analog-rf-compare-evidence/bw64-noise19-new-last.png",
+    "BANC-ORIGINE/analog-rf-compare-evidence/bw640stable-noise19-new-last.png",
+    "BANC-ORIGINE/analog-rf-compare-evidence/col256stable-noise19-new-last.png"
+  ]
+}

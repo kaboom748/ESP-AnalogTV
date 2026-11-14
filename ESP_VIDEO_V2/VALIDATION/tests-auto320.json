@@ -1,0 +1,24 @@
+{
+  "passed": 2,
+  "results": [
+    {
+      "tx": "bw320",
+      "initialRx": "bw320stable",
+      "detected": [
+        "bw320",
+        "bw320"
+      ],
+      "pass": true
+    },
+    {
+      "tx": "bw320stable",
+      "initialRx": "bw320",
+      "detected": [
+        "bw320stable",
+        "bw320stable",
+        "bw320stable"
+      ],
+      "pass": true
+    }
+  ]
+}

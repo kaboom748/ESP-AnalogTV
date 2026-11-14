@@ -1,0 +1,18 @@
+{
+  "checked_at_utc": "2026-11-14T18:33:34.329391+00:00",
+  "action": "Lecture des empreintes uniquement ; aucune modification du pilote.",
+  "files": [
+    {
+      "path": "%SystemRoot%/System32/drivers/CH341S64.SYS",
+      "before": "de6ca1ae927081ac622f99ab9c77b2127cbb2df597b4123a4aa2f3da52cd64d5",
+      "after": "de6ca1ae927081ac622f99ab9c77b2127cbb2df597b4123a4aa2f3da52cd64d5",
+      "unchanged": true
+    },
+    {
+      "path": "%SystemRoot%/INF/oem48.inf",
+      "before": "0cbd34f89b0d11b386e07a825fab531706f86e9da44dcc536ac7c98a6d22c383",
+      "after": "0cbd34f89b0d11b386e07a825fab531706f86e9da44dcc536ac7c98a6d22c383",
+      "unchanged": true
+    }
+  ]
+}

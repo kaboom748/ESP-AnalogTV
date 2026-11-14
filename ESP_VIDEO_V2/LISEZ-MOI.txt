@@ -1,0 +1,38 @@
+ESP8266-TVv4.2 - correction du balayage analogique
+
+Remplacer uniquement le HTML par HTML/CB_VIDEO_HTMLv4_STANDALONE.html.
+Les deux ESP utilisent deja le firmware fourni : aucun nouveau flash requis.
+La liaison serie reste fixee a 1 500 000 bauds, 8N1, avec MPX4/CRC32.
+Le firmware et le pilote CH340 sont inchanges par cette correction analogique.
+
+Le decodeur corrige trois erreurs de synchronisation :
+- un candidat H refuse ne peut plus deplacer les lignes ou la calibration ;
+- apres plusieurs tops manquants, H se reacquiert sur trois tops coherents
+  sans rester bloque jusqu'au prochain V ;
+- le meilleur alignement local remplace le premier seuil acceptable, afin
+  qu'une variation de gain ou de niveau continu ne deplace pas l'image.
+Les references noir/blanc proviennent des porches vraiment recus. Le gain
+peut suivre les faibles amplitudes, sans ajouter du bruit ou lisser l'image.
+
+La neige vient exclusivement des echantillons radio disponibles. Le raster
+continue meme sans verrouillage H/V. Les manques serie ou echantillons
+indisponibles restent identifies en rouge ; ils ne sont jamais remplaces
+par une neige generee, une ancienne image ou des donnees inventees.
+
+Ce systeme reste une video analogique FM proprietaire a 2,4 GHz et
+120 000 echantillons/s. Il ne devient pas un recepteur VHF PAL/NTSC.
+En 640x480 stable, un balayage dure 5,3936 secondes (0,185 image/s).
+La neige se renouvelle au rythme du format choisi, pas a 50/60 images/s.
+
+Tous les 19 formats, webcam, mire, TX/RX et reglages existants sont conserves.
+
+Validation et preuves dans VALIDATION :
+- RAPPORT-ANALOGIQUE.txt : explication du decalage et bilan des essais ;
+- AVANT-APRES-RF.png : memes echantillons RF, deux decodeurs ;
+- NEIGE-RF-REELLE.png : emetteur local arrete, vrai bruit recu ;
+- tests-342-resume.json : criteres et resultats des 342 scenarios ;
+- modes-RF-19.csv : bilan des captures par antennes, mode par mode.
+
+TESTS contient les outils de mesure hors application. Les erreurs de tops,
+gain ou horloge y sont volontairement injectees pour les tests uniquement.
+L'application n'injecte jamais ces erreurs ni du bruit de simulation.

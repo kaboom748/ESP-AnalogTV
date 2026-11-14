@@ -1,0 +1,29 @@
+COPIE PRÉPARÉE POUR PUBLICATION
+
+Cette copie conserve le code, le firmware, les images et les captures RF à
+l'identique. Les modifications portent uniquement sur les chemins de fichiers
+dans les rapports JSON et le présent document. Le manifeste a été recalculé.
+
+Les chemins personnels du poste de développement sont remplacés par des chemins
+relatifs. %SystemRoot% désigne le dossier Windows générique. BANC-ORIGINE désigne
+un artefact historique du banc de test, pas nécessairement inclus dans le paquet.
+Les empreintes d'artefacts historiques présentes dans les rapports restent celles
+des originaux ; SHA256SUMS.txt donne les empreintes des fichiers de cette copie.
+Les scripts de mesure peuvent recréer des chemins absolus lors de nouveaux essais.
+Les résultats temporaires de TESTS ne sont pas inclus. Le .gitignore écarte
+ces fichiers lors de nouveaux essais ; les rapports
+anonymisés de référence restent disponibles dans VALIDATION.
+
+Vérifications réalisées : sources, HTML, scripts, rapports, chaînes du binaire
+firmware, métadonnées PNG et contenu du ZIP. Aucun mot de passe, clé privée,
+jeton d'accès ou identifiant matériel personnel reconnu n'a été détecté.
+Une recherche par motifs ne constitue pas une garantie universelle d'absence.
+
+Les rapports gardent les dates des essais, les noms locaux de ports COM et les
+caractéristiques techniques. Ces informations servent à la reproductibilité.
+Les captures RF contiennent les mires d'essai et le bruit reçu du banc ; aucune
+capture de conversation, image utilisateur ou vidéo webcam n'est incluse.
+Les noms d'auteurs et mentions de licence du code d'origine sont conservés.
+
+Pour GitHub, publier le contenu de ce dossier. Aucun dépôt distant n'a été créé
+et aucun fichier n'a été envoyé à GitHub pendant cette préparation.

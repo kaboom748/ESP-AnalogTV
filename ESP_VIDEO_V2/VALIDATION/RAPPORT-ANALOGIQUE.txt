@@ -1,0 +1,115 @@
+ESP8266-TVv4.2 — DIAGNOSTIC ET CORRECTION DU BALAYAGE ANALOGIQUE
+
+UTILISATION
+Remplacer uniquement HTML/CB_VIDEO_HTMLv4_STANDALONE.html. Aucun nouveau flash
+nécessaire : les deux ESP répondent à 1 500 000 bauds. Le firmware inclus est
+strictement identique à la version série corrigée déjà flashée. Aucune modification
+du pilote CH340 ; les empreintes des fichiers SYS/INF le confirment.
+
+POURQUOI UNE IMAGE ANALOGIQUE PEUT SE DÉCALER EN BAS
+La position horizontale dépend du temps écoulé depuis le top de synchronisation H.
+Analogique ne supprime pas cette base de temps. Un top absent, déformé ou confondu
+avec du contenu vidéo peut décaler une ligne ; une erreur d'horloge non corrigée
+peut s'accumuler au fil des lignes. Les vraies TV connaissent aussi gigue, torsion
+et déchirures en présence d'une mauvaise synchronisation.
+À titre d'ordre de grandeur, 50 ppm sans correction H sur 480 lignes de 1348
+échantillons avec 2 échantillons/pixel donnent environ 16 pixels de dérive.
+La capture d'écran seule ne permet pas de prouver la cause de chaque défaut visible.
+Des erreurs reproductibles du décodeur ont cependant été établies et corrigées.
+
+CAUSES LOGICIELLES ÉTABLIES ET CORRECTIONS
+1. Après une rafale de tops H perdus, l'ancien dernier timestamp empêchait
+   l'acceptation des tops revenus. Le verrou pouvait rester perdu jusqu'au V suivant.
+   La réacquisition exige maintenant trois tops cohérents et libère cette ancienne
+   référence. Après vingt tops supprimés, deux tops supplémentaires suffisent à
+   établir cette cohérence, puis le balayage reprend sans attendre le prochain V.
+2. Un candidat H pouvait modifier le départ de ligne avant d'être finalement rejeté.
+   La validation précède désormais toute modification du raster, de l'oscillateur,
+   de la calibration et des pixels. Un faux candidat dans l'image ne les déplace plus.
+3. Le premier passage sous un seuil pouvait avancer la détection lorsque le gain
+   ou le niveau continu changeait. Le meilleur alignement local des plateaux reçus
+   est maintenant choisi, avec une mesure de forme normalisée.
+4. Un H affaibli pouvait empêcher un V pourtant valide d'être reconnu. V dispose
+   maintenant d'un critère de contraste/platitude indépendant de l'amplitude H.
+5. Le noir reçu est recalé par ligne et le gain peut suivre de faibles amplitudes.
+   Cela amplifie aussi le bruit reçu ; aucun débruitage ni grain artificiel n'est ajouté.
+   Le seuil manuel agit réellement lorsque le réglage automatique est désactivé.
+
+NEIGE RÉELLE, SANS SIMULATION
+Une capture de 17 secondes a été faite sur COM28 avec l'émetteur local COM27 arrêté.
+Elle contient 2 040 320 positions d'échantillons après remise sur la chronologie,
+incluant les positions indisponibles. Les valeurs RF disponibles ont un écart-type
+d'environ 70 unités PCM et une entropie de 7,668 bits/échantillon. Le contenu comprend
+le bruit du récepteur et les éventuelles interférences radio ambiantes.
+Cette même capture a été décodée dans les 19 modes : aucun verrou H/V inventé,
+balayage libre actif, images variables produites à partir des seuls PCM reçus.
+NEIGE-RF-REELLE.png est la dernière image réelle en 640x480 1 échantillon/pixel,
+avec 307 200 pixels issus de données reçues, zéro pixel rouge sur cette image.
+Aucun Math.random, texture de neige ou substitution par une ancienne image.
+Les 0x80 et pertes indexées de transport restent identifiés en rouge ; ils ne sont
+jamais présentés comme de la neige radio. Le test réel comporte encore de rares
+pertes USB ponctuelles, identiques avant/après et non masquées par la correction.
+
+ESSAIS CONTRÔLÉS — 342/342 SCÉNARIOS, 19 MODES
+18 conditions par mode : idéal ; gain + niveau continu ; horloge +500, -500,
++1000, -1000 ppm ; vingt H perdus ; H perdus avec +500 ppm ; V perdus ; arrivée en
+milieu d'image ; mouvement ; mouvement +500 ppm ; mouvement avec V perdus ; H faible ;
+gigue H ; chute d'amplitude à 60 % et 30 % ; saut de niveau continu.
+L'oracle reconstruit indépendamment les pixels transmis après quantification Y/U/V.
+Il ne consiste pas à demander au nouveau décodeur d'imiter l'ancien.
+En signal idéal, mouvement, V perdus, départ en milieu d'image et H faible : pixels
+exacts après acquisition dans les 19 modes. Les autres cas ont des tolérances
+documentées dans tests-342-resume.json. Sous dérive d'horloge ±1000 ppm : au plus
+1 pixel local et 0,342 pixel de moyenne dans le bas de l'image ; aucune dérive
+accumulée incontrôlée dans ce corpus. Après perte de vingt H à +500 ppm, moyenne
+en bas au plus 0,25 pixel et jusqu'à 2 pixels locaux autour de la perte.
+Ces perturbations sont injectées uniquement dans les outils de test hors application.
+
+ESSAIS PHYSIQUES PAR ANTENNES — LES 19 MODES
+COM27 émetteur, COM28 récepteur, fréquence 2442,3125 MHz, puissance APWR191,
+PCM 120 000 échantillons/s, liaison série 1 500 000 bauds MPX4/CRC32.
+Cinq images connues par mode : deux mires fixes, une image avec repères et piège
+de faux H, une image mobile, puis une mire. 95 sources vérifiées par empreintes.
+Les deux décodeurs reçoivent exactement les mêmes PCM et les mêmes trous indexés.
+Les captures binaires originales sont incluses dans CAPTURES.
+Sur l'ensemble des captures, les H acceptés passent de 18 222 à 19 702 ; aucune
+baisse du nombre de H acceptés dans un mode. En 640x480 1 échantillon/pixel :
+2/5 images verrouillées H avant contre 5/5 après. En couleur 128x96 : 3/5 contre 5/5.
+Les compteurs de candidats H rejetés ne sont pas une vérité terrain sur le signal RF.
+Les captures incluent le bruit avant/après émission : le nombre total d'images
+produites peut dépasser les cinq images transmises, ce qui est attendu sans signal.
+Les pertes de transport sont conservées identiquement (notamment 896 positions en
+bw640 et 1664 en col160). Les échantillons indisponibles firmware sont aussi conservés.
+AVANT-APRES-RF.png compare la même portion capturée, sans trou dans cette image :
+l'ancienne acquisition produit une déformation ; la nouvelle retrouve la mire.
+RF-meme-V-AVANT/APRES.png fournit aussi une paire partageant le même top V.
+Ce sont les pixels produits par le moteur JS hors navigateur, pas une capture de l'UI.
+
+NON-RÉGRESSION
+40 groupes d'intégration passent : CRC, suppressions/insertions/corruptions de trames,
+resynchronisation série, indices, mémoire, commandes, émission des 19 formats et
+parcours webcam/connexion avec doublures de test. 7 régressions de synchronisation
+et 2 sens de détection automatique 320 passent également. Les plans des 19 formats,
+l'encodage vidéo émis et le parseur série sont préservés. Aucun changement du DSP RF.
+Aucune régression observée dans ces essais ; ce corpus ne garantit pas tous les
+environnements RF possibles. Pas de validation visuelle automatisée dans le navigateur.
+
+LIMITE MATÉRIELLE ET CADENCE
+Le projet est une vidéo analogique FM propriétaire à 2,4 GHz, numérisée à 120 kHz.
+Il ne démodule pas une émission TV VHF PAL/NTSC. Une vraie compatibilité VHF
+nécessiterait une autre chaîne RF et une bande passante/échantillonnage adaptée.
+En 640x480 stable (2 échantillons/pixel), une image contient 647 232 échantillons :
+5,3936 secondes par image, soit environ 0,1854 image/s. La neige se renouvelle à
+cette cadence, pas à 50/60 Hz. Aucune génération de pixels ne prétend contourner cela.
+
+RÉFÉRENCES TECHNIQUES PRIMAIRES
+Analog Devices AN-850 : erreurs de séparation synchro, gigue et PLL vidéo.
+https://www.analog.com/media/en/technical-documentation/application-notes/237557357an_850.pdf
+Texas Instruments LM1881 : séparation de synchronisation et référence au niveau noir.
+https://www.ti.com/lit/ds/symlink/lm1881.pdf
+
+TRAÇABILITÉ
+HTML 4.2 SHA256 : 68a183d2aa2cd07c59b36d9cb89177ba2c5f4f84e3a4fcd0b467eab6f5ad20fa
+Firmware inchangé SHA256 : 719cecb930d75e5789f8fa5c3837b4639955d3e951d0dbc1b37d18376182de1e
+Capture sans TX SHA256 : 35735b58c54db642afbee5dda2cfac1690e76e99465d1f8431c0d6e802054556
+SHA256SUMS.txt recense tous les fichiers de ce paquet, sauf lui-même.
