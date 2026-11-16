@@ -1,0 +1,592 @@
+/* ESP AnalogAV — console skin. No radio, DSP or transport logic lives here. */
+:root {
+  color-scheme: dark;
+  --console-bg: #101317;
+  --console-panel: #1b1d1f;
+  --console-text: #f2f0ea;
+  --console-muted: #b0b0a9;
+  --console-amber: #ffba32;
+  --console-border: #555753;
+  --console-green: #72ed60;
+  --console-red: #ed7368;
+  --teal: var(--console-amber);
+  --blue: #ffcc70;
+  --text: var(--console-text);
+  --muted: var(--console-muted);
+  --border: #4a4a45;
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; min-height: 100%; background: var(--console-bg); }
+body {
+  margin: 0;
+  color: var(--console-text);
+  background: radial-gradient(ellipse at 50% 5%, #292e33 0, #171b20 42%, #0d1014 100%);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+button, input, select { font: inherit; }
+button, select, input { -webkit-tap-highlight-color: transparent; }
+button { touch-action: manipulation; }
+button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+  outline: 3px solid var(--console-amber);
+  outline-offset: 4px;
+}
+button:disabled, input:disabled, select:disabled { cursor: not-allowed; opacity: .42; }
+[hidden], .hidden { display: none !important; }
+.console-app { max-width: 1600px; margin: auto; padding: 22px 30px 28px; }
+.console-header {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  margin: 0 10px 18px; color: #b4b6b8; font-size: .73rem; letter-spacing: .08em;
+}
+.console-header .brand { color: #f3c66e; font-weight: 750; letter-spacing: .16em; }
+.console-header p { margin: 0; color: inherit; }
+.console-header .notes { text-align: right; }
+.radio-chassis {
+  position: relative;
+  padding: 7px 9px 5px;
+  border: 2px solid #d5d7d5;
+  border-radius: 31px;
+  color: #f5f4ef;
+  background:
+    repeating-linear-gradient(2deg, #ffffff09 0px, #ffffff09 1px, #1417160b 1px, #1417160b 3px),
+    linear-gradient(110deg, #e5e7e6, #a9acac 24%, #d4d6d3 50%, #8d9291 78%, #e0e2de);
+  box-shadow: inset 0 0 0 3px #646968, inset 0 0 0 5px #ffffffb0, 0 25px 45px #0009, 0 3px 3px #000;
+}
+.radio-chassis::before, .radio-chassis::after {
+  content: ""; position: absolute; z-index: -1; bottom: -12px; width: 88px; height: 20px;
+  border: 1px solid #555; border-radius: 0 0 7px 7px;
+  background: linear-gradient(#454747, #111 65%, #353737);
+}
+.radio-chassis::before { left: 7%; }
+.radio-chassis::after { right: 7%; }
+.radio-title {
+  min-height: 56px; display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; padding: 2px 30px 8px; color: #171918;
+}
+.radio-title h1 {
+  flex: 1; margin: 0; text-align: center; font-size: clamp(1.4rem, 2.65vw, 2.8rem);
+  font-weight: 950; letter-spacing: .1em; line-height: 1.15; text-shadow: 0 1px #fff8;
+}
+.radio-title .esp8266 { font-size: 1.05rem; font-weight: 900; font-style: italic; }
+.radio-title .model, .radio-title small { min-width: 80px; color: #353937; font-size: .68rem; font-weight: 700; letter-spacing: .13em; }
+.radio-face {
+  display: grid;
+  grid-template-columns: minmax(130px, .75fr) minmax(0, 2.6fr) minmax(230px, 1.2fr);
+  gap: 20px;
+  align-items: center;
+  min-height: 350px;
+  padding: 24px 25px 18px;
+  border: 2px solid #191b1b;
+  border-bottom: 0;
+  border-radius: 20px 20px 0 0;
+  background:
+    repeating-linear-gradient(118deg, #ffffff02 0, #ffffff02 1px, transparent 1px, transparent 3px),
+    radial-gradient(ellipse at 45% 10%, #383a39 0, #222423 45%, #121413 100%);
+  box-shadow: inset 0 3px 7px #000a, inset 0 0 0 1px #64675f;
+}
+.control-stack { display: flex; flex-direction: column; gap: 22px; align-items: center; }
+.left-controls .dial-block:not([hidden]) ~ .dial-block:not([hidden]) { border-top: 1px solid #73766a66; padding-top: 19px; }
+.dial-block { display: flex; flex-direction: column; align-items: center; gap: 7px; min-width: 0; }
+.dial-block label, .dial-label { color: #f0f0e9; text-transform: uppercase; font-size: .88rem; font-weight: 850; letter-spacing: .035em; line-height: 1.2; text-align: center; }
+.dial-block output {
+  display: inline-block; min-width: 76px; padding: 2px 9px; border: 1px solid #716b52;
+  border-radius: 5px; color: #ffbf38; background: #15150e;
+  box-shadow: inset 0 2px 5px #000; font-size: .92rem; font-weight: 800;
+  font-variant-numeric: tabular-nums; line-height: 1.4; text-align: center;
+}
+.dial, .console-knob {
+  position: relative; width: 112px; height: 112px; max-width: 100%; aspect-ratio: 1;
+  border-radius: 50%; isolation: isolate;
+}
+.dial-face {
+  position: absolute; inset: 0; border-radius: 50%; pointer-events: auto; cursor: ns-resize; touch-action: none;
+  background:
+    radial-gradient(circle, transparent 63%, #111 64%, transparent 66%),
+    repeating-conic-gradient(from 0deg, #dbdfd9 0deg 2deg, #3b3e3b 3deg 4deg, #93978f 5deg 6deg);
+  border: 1px solid #acb0a8;
+  box-shadow: 0 6px 10px #000b, inset 0 0 0 2px #191c19, inset 0 0 0 4px #92968c;
+  transform: rotate(var(--angle, 0deg));
+  transition: transform 90ms ease-out;
+}
+.dial-face::before {
+  content: ""; position: absolute; inset: 9px; border: 2px solid #a2a69e; border-radius: 50%;
+  background:
+    conic-gradient(from 8deg, #393d39, #181b19 20%, #424641 37%, #191c19 57%, #3a3e38 75%, #1d211d 90%, #393d39),
+    #232623;
+  box-shadow: inset 0 0 0 2px #111, inset 0 3px 7px #ffffff20, 0 0 0 2px #000;
+}
+.dial-face::after {
+  content: ""; position: absolute; width: 6px; height: 23%; top: 10%; left: calc(50% - 3px);
+  border-radius: 1px; background: #eeeee8; box-shadow: 1px 0 2px #000;
+}
+.dial input[type=range], .console-knob input[type=range] {
+  position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; margin: 0;
+  opacity: 0; border-radius: 50%; cursor: ew-resize; touch-action: pan-y;
+}
+.dial:focus-within, .console-knob:focus-within { outline: 3px solid #ffba32; outline-offset: 7px; }
+.dial:has(input:disabled), .console-knob:has(input:disabled) { opacity: .48; }
+.dial-hint { margin: 3px 0 0; color: #92998c; font-size: .65rem; text-align: center; }
+.monitor-stack { position: relative; align-self: stretch; display: flex; align-items: center; min-width: 0; }
+.monitor-frame {
+  position: relative; width: 100%; overflow: hidden; padding: 11px; border: 2px solid #bfc5bf;
+  border-radius: 25px; background: linear-gradient(135deg, #111, #454946 42%, #080a09);
+  box-shadow: inset 0 0 0 3px #111, inset 0 0 0 4px #777d74, 0 4px 12px #000b;
+}
+.monitor-frame > .screen {
+  position: relative; overflow: hidden; width: 100%; min-height: 240px; aspect-ratio: 4 / 3;
+  border: 1px solid #030403; border-radius: 14px; background: #070b08;
+  box-shadow: inset 0 0 30px #000;
+}
+.monitor-frame .screen canvas { display: block; width: 100%; height: 100%; object-fit: contain; aspect-ratio: 4 / 3; background: #020402; }
+.monitor-frame .screenLabel { top: 9px; left: 10px; color: #dddcd0; background: #0009; border-radius: 3px; }
+.monitor-label {
+  position: absolute; left: 17px; bottom: 9px; z-index: 5; padding: 2px 6px;
+  border-radius: 3px; background: #000a; color: #e4e5d8;
+  font-size: .65rem; font-weight: 650; letter-spacing: .08em;
+}
+.empty-monitor {
+  position: absolute; z-index: 2; inset: 0; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 8px; padding: 22px; color: #a5b2a3; text-align: center;
+  background:
+    repeating-linear-gradient(0deg, #a7c3a807 0, #a7c3a807 1px, transparent 1px, transparent 4px),
+    radial-gradient(ellipse, #1a251b, #0b130d 65%, #040805);
+}
+.empty-monitor svg { width: 45px; height: 45px; color: #91a18d; opacity: .6; margin-bottom: 4px; }
+.empty-monitor strong { color: #c5d0bd; font-size: .9rem; font-weight: 650; letter-spacing: .08em; }
+.empty-monitor span, .empty-monitor p { max-width: 300px; margin: 0; font-size: .74rem; color: #8e9d8a; }
+.rf-stack { display: flex; flex-direction: column; align-items: stretch; gap: 17px; min-width: 0; }
+.amber-display {
+  display: grid; grid-template-columns: auto 1fr; gap: 0 12px; padding: 13px 15px 12px;
+  border: 5px solid #24251f; border-radius: 14px;
+  color: #251801; background: radial-gradient(ellipse at 45% 50%, #ffd25b, #ffc02b 66%, #e48a08 100%);
+  box-shadow: 0 0 0 1px #a7a692, inset 0 3px 7px #ad5e17, inset 0 0 15px #f09810, 0 3px 9px #000b;
+  text-shadow: 0 0 2px #ffd04e; font-variant-numeric: tabular-nums;
+}
+.lcd-role { grid-row: span 1; font-size: clamp(1.5rem, 2.5vw, 2.7rem); font-style: italic; font-weight: 950; line-height: 1.1; }
+.lcd-frequency { grid-column: 1/-1; white-space: nowrap; font-size: clamp(1.3rem, 2vw, 2.1rem); font-weight: 850; letter-spacing: -.045em; line-height: 1.25; text-align: center; }
+.lcd-frequency small, .lcd-frequency .unit { font-size: .55em; letter-spacing: -.02em; }
+.lcd-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 5px 10px; font-size: .68rem; font-weight: 800; line-height: 1.4; text-align: right; }
+.lcd-meta span { white-space: nowrap; }
+.rf-dials { display: flex; justify-content: center; align-items: center; gap: 22px; }
+.rf-dials .dial { width: 115px; height: 115px; }
+.rf-dials .dial-block:last-child .dial { width: 82px; height: 82px; }
+.rf-dials .dial-block:last-child label { font-size: .72rem; }
+.rf-dials .dial-block:last-child output { font-size: .78rem; min-width: 65px; }
+.signal-lamps, .signal-row { display: flex; gap: 18px; align-items: center; justify-content: center; font-size: .75rem; font-weight: 800; }
+.signal-lamps span, .signal-row span { display: inline-flex; align-items: center; gap: 7px; }
+.lamp { display: inline-block; width: 13px; height: 13px; border: 1px solid #8d9990; border-radius: 50%; background: #17311a; box-shadow: inset 0 2px 4px #000; }
+.lamp.tx { background: #4c1914; }
+.lamp.is-on, .is-connected .lamp.rx { background: #76fa50; border-color: #b2ff9f; box-shadow: 0 0 11px #69f34b, inset 0 1px 3px #edffe6; }
+.lamp.tx.is-on, .is-running .lamp.tx { background: #ff6e4c; border-color: #ffb49b; box-shadow: 0 0 11px #f65332; }
+.transport-bar {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 11px 25px 12px; border-right: 2px solid #191b1b; border-left: 2px solid #191b1b;
+  background: linear-gradient(#242623, #1a1d1a); box-shadow: inset 1px 0 #676a61, inset -1px 0 #676a61;
+}
+.segmented {
+  display: inline-flex; align-items: stretch; gap: 2px; padding: 3px; min-width: 0;
+  border: 1px solid #777d71; border-radius: 9px; background: #090b09;
+  box-shadow: 0 1px 0 #ffffff25, inset 0 2px 4px #000;
+}
+.segmented button, .transport-actions button {
+  min-height: 38px; padding: 7px 15px; border: 1px solid #666b62; border-radius: 6px;
+  color: #eceee7; background: linear-gradient(#454842, #232721);
+  box-shadow: inset 0 1px 2px #ffffff35, 0 2px 2px #000; font-size: .77rem; font-weight: 800;
+  line-height: 1.15; white-space: nowrap;
+}
+.segmented button[aria-pressed=true], .segmented button.selected, .transport-actions .primary {
+  color: #241800; border-color: #ffdf82; background: linear-gradient(#ffd46a 0%, #ffbd2c 40%, #e99608 100%);
+  box-shadow: inset 0 1px 2px #fff7cb, 0 0 0 1px #b5770d, 0 2px 3px #000;
+}
+.transport-actions { display: flex; gap: 10px; }
+.transport-actions button { min-width: 118px; }
+.transport-actions .danger { color: #fff1e8; border-color: #b76b5d; background: linear-gradient(#8c2d21, #5a1d17); box-shadow: inset 0 1px 2px #f79e7b66, 0 2px 3px #000; }
+.menu-bar {
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 11px;
+  padding: 6px 21px 18px; border: 2px solid #191b1b; border-top: 0; border-radius: 0 0 19px 19px;
+  background: linear-gradient(#1a1d1a, #111410); box-shadow: inset 1px -1px #676a61, inset -1px 0 #676a61;
+}
+.menu-button {
+  display: flex; justify-content: center; align-items: center; gap: 10px;
+  min-width: 0; min-height: 54px; padding: 10px 9px; border: 3px solid #080b08; border-radius: 10px;
+  color: #eceee8; background: linear-gradient(#454842, #242822 72%, #1c201a);
+  box-shadow: 0 0 0 1px #757b6f, inset 0 1px 1px #edf2e47a, 0 3px 4px #000;
+  font-size: .87rem; font-weight: 800; letter-spacing: .015em;
+}
+.menu-button svg { width: 23px; height: 23px; flex: 0 0 auto; stroke-width: 1.7; }
+.menu-button[aria-expanded=true], .menu-button.selected { color: #ffbf3e; background: linear-gradient(#34382e, #1c211a); box-shadow: 0 0 0 1px #cba450, inset 0 1px 1px #f9d0728a; }
+.menu-button:hover:not(:disabled) { color: #ffd783; filter: brightness(1.12); }
+.menu-button:active:not(:disabled), .transport-actions button:active:not(:disabled) { transform: translateY(1px); }
+.radio-status { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 14px; padding: 5px 27px 3px; color: #20251f; font-size: .7rem; font-weight: 750; }
+.radio-status span { min-width: 0; overflow-wrap: anywhere; }
+.radio-status .is-error { color: #74180c; }
+.quick-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 32px 7px 0; }
+.quick-summary > * { min-width: 0; padding: 15px 18px; border: 1px solid #424943; border-radius: 12px; background: linear-gradient(125deg, #292e29a6, #191e1ab3); box-shadow: inset 0 1px #c4d4bc0d; }
+.quick-summary label, .quick-summary .summary-label, .quick-summary small { display: block; color: #b0b8ad; font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.quick-summary strong, .quick-summary .summary-value { display: block; margin-top: 4px; color: #e4e9df; font-size: 1.04rem; font-weight: 650; font-variant-numeric: tabular-nums; }
+.quick-summary p, .quick-summary .summary-detail { margin: 4px 0 0; color: #9ea99a; font-size: .72rem; }
+.support-note { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 15px; margin: 16px 12px 0; color: #8e988a; font-size: .72rem; text-align: center; }
+.support-note p { margin: 0; color: inherit; }
+.support-note a { color: #d4b268; }
+
+/* The rotary face is decorative; the visible native slider remains usable
+   with a pointer, a touch screen, arrow keys, Home and End. */
+label.dial, label.console-knob { display: block; margin-bottom: 44px; }
+label.dial input[type=range], label.console-knob input[type=range] {
+  inset: auto 0 -19px; width: 100%; height: 13px; opacity: 1;
+  margin: 0; padding: 0; accent-color: #efb33f; cursor: pointer;
+  border: 0; border-radius: 4px; background: transparent; touch-action: auto;
+}
+label.dial output, label.console-knob output {
+  position: absolute; top: calc(100% + 23px); left: 50%;
+  transform: translateX(-50%); margin: 0; white-space: nowrap;
+}
+.dial-caption { color: #f0f0e9; font-size: .85rem; font-weight: 850; letter-spacing: .04em; text-align: center; }
+.monitor-placeholder {
+  position: absolute; z-index: 2; inset: 0; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 8px; padding: 22px; color: #a5b2a3; text-align: center;
+  background: repeating-linear-gradient(0deg, #a7c3a807 0, #a7c3a807 1px, transparent 1px, transparent 4px), radial-gradient(ellipse, #1a251b, #0b130d 65%, #040805);
+}
+.monitor-placeholder strong { color: #c5d0bd; font-size: .9rem; font-weight: 650; letter-spacing: .08em; }
+.monitor-placeholder p, .monitor-placeholder span { max-width: 300px; margin: 0; color: #8e9d8a; font-size: .74rem; }
+.monitor-placeholder svg { width: 45px; height: 45px; color: #91a18d; opacity: .6; }
+.indicator { display: inline-block; width: 13px; height: 13px; border: 1px solid #7e8e78; border-radius: 50%; background: #17311b; box-shadow: inset 0 2px 4px #000; }
+.indicator.tx { background: #4c1914; }
+.indicator.is-on { background: #76fa50; border-color: #b2ff9f; box-shadow: 0 0 11px #69f34b, inset 0 1px 3px #edffe6; }
+.indicator.tx.is-on { background: #ff6e4c; border-color: #ffb49b; box-shadow: 0 0 11px #f65332; }
+.menu-description { margin: 0 0 18px; color: #aeb8a3; font-size: .8rem; }
+.dialog-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 18px; }
+.port-state { padding: 12px 14px; margin-bottom: 16px; border: 1px solid #5d6d4b; border-radius: 8px; color: #d0dcbf; background: #26331d; font-size: .83rem; }
+.port-state.is-error { color: #ffb4a1; border-color: #88543d; background: #39271f; }
+
+/* Final shell structure: transport and navigation are full-width face rows. */
+.radio-face { border-bottom: 2px solid #191b1b; border-radius: 20px; row-gap: 15px; }
+.radio-face > .transport-bar { grid-column: 1/-1; padding: 11px 10px; border: 1px solid #62685b88; border-radius: 8px; box-shadow: inset 0 1px #ffffff08; background: #141a12aa; }
+.radio-face > .menu-bar { grid-column: 1/-1; padding: 2px 0 3px; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.radio-title > span:first-child { font-size: 1.05rem; font-weight: 900; font-style: italic; }
+.edition-label { color: #c8cbbf; font-size: .62rem; font-weight: 700; letter-spacing: .12em; }
+.radio-title > .edition-label { min-width: 95px; color: #383e33; font-size: .55rem; text-align: right; }
+.console-header .edition-label { color: #d1b976; }
+.console-note { color: #99a292; font-size: .68rem; }
+label.dial, label.console-knob { margin-top: 36px; }
+.dial > .dial-caption { position: absolute; bottom: calc(100% + 10px); left: 50%; display: block; width: 165px; transform: translateX(-50%); line-height: 1.1; font-size: .78rem; }
+.dial-caption small { display: block; margin-top: 5px; color: #9ba690; font-size: .48rem; font-weight: 650; letter-spacing: .06em; }
+.left-controls .dial-block:not([hidden]) ~ .dial-block:not([hidden]) { padding-top: 5px; }
+.rf-dials { gap: 16px; }
+.rf-dials .dial-block:last-child .dial { width: 78px; height: 78px; }
+.rf-dials .dial > .dial-caption { width: 110px; }
+.rf-dials .dial-block:last-child .dial-caption { font-size: .66rem; }
+.dial-edit { padding: 2px 3px; margin: -14px -12px 0; min-height: 26px; border: 0; background: transparent; box-shadow: none; color: #b2baa6; font-size: .57rem; }
+.dial-edit:hover { color: #f1c066; }
+.lcd-top { grid-column: 1/-1; display: flex; justify-content: space-between; align-items: center; gap: 7px; font-size: .59rem; font-weight: 800; white-space: nowrap; }
+.lcd-top .lcd-role { margin-right: auto; }
+.lcd-meta { grid-column: 1/-1; justify-content: space-between; margin-top: 5px; font-size: .51rem; }
+.indicator-column { display: flex; flex-direction: column; gap: 18px; padding-top: 3px; }
+.indicator-column .indicator { display: flex; align-items: center; gap: 6px; width: auto; height: auto; border: 0; border-radius: 0; background: none; box-shadow: none; color: #dce3d1; font-size: .65rem; font-weight: 800; }
+.indicator-column .indicator i { display: block; width: 12px; height: 12px; border: 1px solid #8c9980; border-radius: 50%; background: #163015; box-shadow: inset 0 2px 4px #000; }
+.indicator-column .indicator.tx i { background: #461d15; }
+.indicator-column .indicator.is-on { background: none; box-shadow: none; }
+.indicator-column .indicator.is-on i { background: #7afc51; border-color: #c7ffae; box-shadow: 0 0 10px #6df244; }
+.indicator-column .indicator.tx.is-on i { background: #ff6943; border-color: #ffbe9e; box-shadow: 0 0 10px #ff5933; }
+.mic-level { display: flex; align-items: center; gap: 8px; padding: 5px 9px; border: 1px solid #737b64; border-radius: 7px; background: #141a10; }
+.mic-level > span { color: #c2ccba; font-size: .6rem; font-weight: 750; }
+.mic-level meter { display: block; width: 100%; height: 12px; accent-color: #ffc150; }
+.radio-status > .port-state { padding: 0; margin: 0; border: 0; border-radius: 0; background: none; color: inherit; font-size: inherit; }
+.station-message { margin: 21px 9px 0; min-height: 22px; color: #bdc8b1; font-size: .76rem; text-align: center; }
+.station-message.is-error { padding: 10px 13px; border: 1px solid #8e4a38; border-radius: 8px; color: #ffc2ad; background: #3c2218; }
+.quick-summary { margin-top: 13px; }
+.quick-summary > div > span { color: #9daa90; font-size: .6rem; font-weight: 750; letter-spacing: .08em; }
+.quick-summary > div > small { margin-top: 5px; color: #95a289; font-size: .69rem; font-weight: 400; letter-spacing: 0; text-transform: none; }
+.monitor-frame > .monitor-placeholder { inset: 12px; border-radius: 14px; }
+.monitor-frame > .monitor-label { bottom: 16px; }
+.monitor-mark { display: flex; align-items: center; justify-content: center; width: 59px; height: 43px; border: 1px solid #73886a; border-radius: 7px; color: #9bac8f; font-size: 1.2rem; font-weight: 350; letter-spacing: .08em; }
+.menu-dialog .edition-label { display: block; margin-bottom: 3px; color: #91a083; font-size: .52rem; }
+.power-explainer { margin: 12px 0 17px; padding: 12px 14px; border: 1px solid #766c36; border-radius: 8px; color: #c5c0a5; background: #35331e; font-size: .76rem; line-height: 1.65; }
+.power-explainer strong { color: #e8dba8; font-weight: 650; }
+.submenu-links { display: flex; flex-direction: column; gap: 8px; margin: 19px 0; }
+.submenu-links button { display: flex; justify-content: space-between; width: 100%; padding: 11px 13px; text-align: left; }
+.dialog-tabs button[aria-pressed=true] { color: #ffca69; border-color: #b99b52; background: #3d4328; }
+
+/* All settings retain their original input/select/button nodes and listeners. */
+.menu-dialog {
+  width: min(720px, calc(100% - 36px)); max-height: min(88vh, 940px); margin: auto; padding: 0;
+  overflow: auto; border: 1px solid #c3c6b8; border-radius: 16px; color: #f0f0e8;
+  background:
+    repeating-linear-gradient(115deg, #ffffff02 0, #ffffff02 1px, transparent 1px, transparent 3px),
+    linear-gradient(145deg, #272b25, #171b16);
+  box-shadow: 0 25px 90px #000d, inset 0 0 0 2px #131810, inset 0 0 0 3px #606a58;
+}
+.menu-dialog::backdrop { background: #070b09bb; backdrop-filter: blur(7px); }
+.menu-dialog[open] { animation: menu-appear 150ms ease-out; }
+@keyframes menu-appear { from { opacity: 0; transform: translateY(9px) scale(.99); } to { opacity: 1; transform: none; } }
+.dialog-header {
+  position: sticky; z-index: 10; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 17px 22px; border-bottom: 1px solid #9d7c3d; background: linear-gradient(#30362b, #20261d);
+  box-shadow: 0 2px 12px #0004;
+}
+.dialog-header h2 { display: flex; align-items: center; gap: 11px; margin: 0; color: #ffbf3d; font-size: 1.08rem; font-weight: 850; letter-spacing: .065em; }
+.dialog-header svg { width: 23px; height: 23px; }
+.dialog-header button { display: inline-flex; align-items: center; justify-content: center; width: 35px; min-height: 35px; padding: 4px; border: 1px solid #71776b; border-radius: 7px; background: #1a2016; color: #eee; font-size: 1.4rem; }
+.dialog-body { padding: 21px 24px 26px; }
+.dialog-body > *:last-child { margin-bottom: 0; }
+.dialog-body .field { margin: 0 0 16px; }
+.dialog-body .field label { display: block; margin-bottom: 7px; color: #cccfc2; font-size: .78rem; font-weight: 650; }
+.dialog-body .field select, .dialog-body .field input[type=number], .dialog-body input[type=text] {
+  display: block; width: 100%; min-height: 43px; padding: 9px 12px; border: 1px solid #737969;
+  border-radius: 7px; color: #ecefe6; background: #12180f;
+  box-shadow: inset 0 2px 4px #0005; font-size: .88rem;
+}
+.dialog-body select option { background: #182012; color: #eee; }
+.dialog-body input[type=number] { font-variant-numeric: tabular-nums; }
+.dialog-body button {
+  min-height: 40px; padding: 9px 13px; border: 1px solid #6b7662; border-radius: 7px;
+  color: #e9eee3; background: linear-gradient(#3e4935, #283120); box-shadow: inset 0 1px #ffffff1f;
+  font-size: .8rem; font-weight: 650;
+}
+.dialog-body button.primary { color: #251900; border-color: #ffce66; background: linear-gradient(#ffcb60, #efa51b); }
+.dialog-body button.danger { color: #ffe7df; border-color: #9e5b4d; background: #5b2d24; }
+.dialog-body button:hover:not(:disabled) { filter: brightness(1.16); }
+.dialog-body .row { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; margin: 10px 0 15px; }
+.dialog-body .row > button { flex: 1; }
+.dialog-body .sliderField { margin: 17px 0; }
+.dialog-body .sliderField label { display: flex; justify-content: space-between; gap: 15px; color: #d3d7c9; font-size: .8rem; font-weight: 650; }
+.dialog-body .sliderField output { color: #ffc653; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dialog-body input[type=range] { display: block; width: 100%; margin: 13px 0 0; accent-color: #ffbe39; cursor: pointer; }
+.dialog-body input[type=checkbox] { accent-color: #ffbe39; width: 16px; height: 16px; vertical-align: -3px; }
+.dialog-body meter, .dialog-body .avMeter { width: 100%; height: 14px; margin: 10px 0 0; accent-color: #f6bd4d; }
+.dialog-body .mini, .dialog-body .small { color: #a4b099; font-size: .75rem; line-height: 1.55; }
+.dialog-body p { color: #b3beaa; font-size: .8rem; }
+.dialog-body .panel, .dialog-body .panelInset { padding: 15px; margin-bottom: 15px; border: 1px solid #46533c; border-radius: 9px; background: #1e29188c; }
+.dialog-body .panel h2, .dialog-body h3 { color: #e8eddf; font-size: .85rem; }
+.dialog-body h3 { margin: 3px 0 14px; font-weight: 750; }
+.dialog-body .dialog-section + .dialog-section { margin-top: 23px; padding-top: 20px; border-top: 1px solid #4f5e43; }
+.dialog-body .statusbar { margin: 13px 0; padding: 11px 13px; border-left: 3px solid #ffbf3b; background: #34321d; color: #dedac5; font-size: .79rem; }
+.dialog-body .statusbar.error, .dialog-body .error, .dialog-body .is-error { color: #ffb4a1; }
+.dialog-body .statusbar.error { border-left-color: #e88770; background: #422b23; }
+.dialog-body .sliderGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px 20px; }
+.dialog-body .metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+.dialog-body .metric { min-width: 0; padding: 10px; border: 1px solid #48563d; border-radius: 7px; background: #131c0e; }
+.dialog-body .metric b { display: block; color: #e7ecdc; font-size: 1.1rem; }
+.dialog-body .metric span { color: #a0ae92; font-size: .65rem; overflow-wrap: anywhere; }
+.dialog-body .rateStrip { display: flex; flex-wrap: wrap; gap: 5px 17px; margin: 10px 0; color: #a6b49a; font-size: .73rem; }
+.dialog-body .rateStrip b { color: #e2e9d8; }
+.dialog-body .avPlan, .dialog-body .easyForecast { padding: 13px; border: 1px solid #6e703b; border-radius: 8px; background: #30351b; }
+.dialog-body .avPlan strong, .dialog-body .easyForecast strong { color: #ffd47c; font-size: 1.15rem; }
+.dialog-body .avGrid, .dialog-body .controlsRow, .dialog-body .avSourceRow { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 15px; }
+.dialog-body .avAudioControls { margin-top: 15px; padding-top: 15px; border-top: 1px solid #47573b; }
+.dialog-tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 19px; }
+.dialog-tabs button { flex: 1; min-width: 100px; font-size: .73rem; }
+.dialog-tabs button[aria-selected=true], .dialog-tabs button.selected { color: #ffca69; border-color: #b99b52; background: #3d4328; }
+.dialog-body details { margin-top: 15px; padding: 12px 14px; border: 1px solid #48553e; border-radius: 8px; background: #151e10; }
+.dialog-body details summary { cursor: pointer; color: #d9c48b; font-size: .78rem; }
+.dialog-body #log { margin-top: 12px; border: 1px solid #3f4c35; color: #bacba8; background: #0b1207; }
+.dialog-body .rxLossLegend { background: #351f1d; border-color: #94483c; font-size: .74rem; }
+.dialog-body .lossStatus, .dialog-body .lossExplain { color: #d4b1a6; }
+.dialog-body .lossSwatch { background: #f00; }
+.dialog-body footer { color: #a7b19e; font-size: .72rem; }
+.menu-dialog.wide-dialog { width: min(1040px, calc(100% - 36px)); }
+
+@media (min-width: 1400px) {
+  .radio-face { gap: 27px; padding: 25px 32px 22px; }
+  .left-controls .dial { width: 128px; height: 128px; }
+  .monitor-frame > .screen { min-height: 310px; }
+  .rf-dials .dial { width: 128px; height: 128px; }
+  .rf-dials .dial-block:last-child .dial { width: 92px; height: 92px; }
+}
+@media (max-width: 1150px) {
+  .console-app { padding: 18px 17px 25px; }
+  .radio-face { grid-template-columns: 112px minmax(0, 1fr) 230px; gap: 15px; padding: 20px 18px 17px; }
+  .dial, .console-knob { width: 91px; height: 91px; }
+  .control-stack { gap: 16px; }
+  .dial-block label { font-size: .77rem; }
+  .dial-block output { font-size: .8rem; }
+  .rf-dials { gap: 14px; }
+  .rf-dials .dial { width: 92px; height: 92px; }
+  .rf-dials .dial-block:last-child .dial { width: 71px; height: 71px; }
+  .amber-display { padding: 12px 9px; }
+  .lcd-frequency { font-size: 1.48rem; }
+  .lcd-role { font-size: 2rem; }
+  .lcd-meta { font-size: .59rem; }
+  .transport-bar { padding-inline: 18px; gap: 10px; }
+  .segmented button, .transport-actions button { padding: 7px 10px; font-size: .69rem; }
+  .transport-actions button { min-width: 95px; }
+  .menu-bar { gap: 9px; padding-inline: 17px; }
+  .menu-button { gap: 7px; min-height: 49px; font-size: .75rem; }
+  .menu-button svg { width: 19px; height: 19px; }
+  .rf-dials { gap: 11px; }
+  .indicator-column .indicator { gap: 4px; font-size: .58rem; }
+  .indicator-column .indicator i { width: 10px; height: 10px; }
+  .rf-dials .dial-block:last-child .dial { width: 62px; height: 62px; }
+  .dial > .dial-caption { width: 125px; }
+}
+@media (max-width: 900px) {
+  .radio-title { min-height: 51px; padding: 3px 17px 8px; gap: 15px; }
+  .radio-title h1 { font-size: 1.85rem; }
+  .radio-title .esp8266 { font-size: .84rem; }
+  .radio-title .model, .radio-title small { font-size: .57rem; min-width: 60px; }
+  .radio-face { grid-template-columns: 90px minmax(0, 1fr) 190px; gap: 12px; padding: 17px 14px; }
+  .monitor-frame { padding: 8px; border-radius: 20px; }
+  .monitor-frame > .screen { min-height: 205px; border-radius: 11px; }
+  .dial, .console-knob { width: 77px; height: 77px; }
+  .dial-block label { font-size: .66rem; }
+  .dial-block output { font-size: .71rem; min-width: 62px; }
+  .left-controls .dial-block:not([hidden]) ~ .dial-block:not([hidden]) { padding-top: 13px; }
+  .rf-stack { gap: 14px; }
+  .rf-dials { gap: 8px; }
+  .rf-dials .dial { width: 78px; height: 78px; }
+  .rf-dials .dial-block:last-child .dial { width: 59px; height: 59px; }
+  .rf-dials .dial-block:last-child label { font-size: .6rem; }
+  .rf-dials .dial-block:last-child output { min-width: 56px; font-size: .65rem; }
+  .lcd-frequency { font-size: 1.23rem; }
+  .lcd-role { font-size: 1.6rem; }
+  .lcd-meta { font-size: .51rem; }
+  .signal-lamps, .signal-row { gap: 11px; font-size: .65rem; }
+  .lamp { width: 11px; height: 11px; }
+  .transport-bar { gap: 10px; padding: 10px 14px 11px; }
+  .segmented button, .transport-actions button { min-height: 34px; padding: 6px 9px; font-size: .66rem; }
+  .transport-actions { gap: 7px; }
+  .transport-actions button { min-width: 83px; }
+  .menu-bar { gap: 8px; padding: 4px 14px 15px; }
+  .menu-button { gap: 5px; min-height: 45px; padding: 7px 5px; font-size: .66rem; }
+  .menu-button svg { width: 16px; height: 16px; }
+  .radio-status { padding-inline: 19px; font-size: .61rem; }
+  .console-header { font-size: .65rem; }
+  .rf-dials { gap: 9px; }
+  .rf-dials .dial-block:last-child .dial { width: 52px; height: 52px; }
+  .rf-dials .dial > .dial-caption { width: 90px; font-size: .57rem; }
+  .lcd-top { font-size: .46rem; }
+  .lcd-meta { font-size: .42rem; }
+  .indicator-column { gap: 13px; }
+  .indicator-column .indicator { font-size: .5rem; gap: 4px; }
+  .indicator-column .indicator i { width: 8px; height: 8px; }
+}
+@media (max-width: 720px) {
+  .console-app { padding: 13px 11px 22px; }
+  .console-header { margin: 0 3px 12px; font-size: .58rem; }
+  .console-header .notes { max-width: 200px; letter-spacing: 0; }
+  .radio-chassis { border-radius: 23px; padding: 6px; }
+  .radio-title { min-height: 46px; padding-inline: 12px; gap: 10px; }
+  .radio-title h1 { font-size: clamp(1.08rem, 4vw, 1.8rem); letter-spacing: .07em; }
+  .radio-title .esp8266 { font-size: .65rem; }
+  .radio-title .model, .radio-title small { font-size: .45rem; min-width: 45px; }
+  .radio-face { grid-template-columns: 86px minmax(0, 1fr); gap: 14px; padding: 16px 12px; border-radius: 15px 15px 0 0; }
+  .monitor-stack { grid-column: 2; grid-row: 1; }
+  .left-controls { grid-column: 1; grid-row: 1; }
+  .monitor-frame > .screen { min-height: 215px; }
+  .rf-stack { grid-column: 1/-1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 13px; align-items: center; }
+  .amber-display { gap: 0 10px; min-height: 105px; padding: 10px 12px; }
+  .lcd-role { font-size: 2rem; }
+  .lcd-frequency { font-size: clamp(1.3rem, 4vw, 1.9rem); }
+  .lcd-meta { font-size: .58rem; }
+  .rf-dials { gap: 12px; }
+  .rf-dials .dial { width: 81px; height: 81px; }
+  .rf-dials .dial-block:last-child .dial { width: 62px; height: 62px; }
+  .signal-lamps, .signal-row { grid-column: 1/-1; margin: -3px 0 -4px; }
+  .transport-bar { justify-content: center; padding-inline: 12px; gap: 9px; }
+  .transport-actions { flex: 1; justify-content: flex-end; }
+  .segmented button, .transport-actions button { font-size: .67rem; min-height: 36px; padding: 7px 10px; }
+  .menu-bar { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 7px 13px 17px; border-radius: 0 0 15px 15px; }
+  .menu-button { min-height: 46px; gap: 9px; font-size: .77rem; }
+  .menu-button svg { width: 20px; height: 20px; }
+  .radio-status { padding-inline: 12px; font-size: .57rem; }
+  .quick-summary { gap: 9px; margin: 25px 2px 0; }
+  .quick-summary > * { padding: 11px 12px; border-radius: 9px; }
+  .quick-summary label, .quick-summary .summary-label, .quick-summary small { font-size: .55rem; letter-spacing: .05em; }
+  .quick-summary strong, .quick-summary .summary-value { font-size: .86rem; }
+  .quick-summary p, .quick-summary .summary-detail { font-size: .64rem; }
+  .support-note { font-size: .64rem; }
+  .radio-face { border-radius: 15px; }
+  .radio-title > span:first-child { font-size: .7rem; }
+  .radio-title > .edition-label { min-width: 70px; font-size: .4rem; }
+  .dial > .dial-caption { font-size: .65rem; width: 105px; }
+  .dial-caption small { font-size: .4rem; }
+  .rf-stack { grid-template-columns: minmax(0, 1fr) minmax(150px, 1fr); }
+  .rf-dials { gap: 13px; justify-content: flex-end; }
+  .rf-dials .dial-block:last-child .dial { width: 58px; height: 58px; }
+  .lcd-top { font-size: .54rem; }
+  .lcd-meta { font-size: .45rem; }
+  .mic-level { grid-column: 1/-1; }
+  .station-message { font-size: .7rem; }
+}
+@media (max-width: 480px) {
+  .console-app { padding: 10px 7px 19px; }
+  .console-header { align-items: start; gap: 6px; font-size: .55rem; }
+  .console-header .notes { max-width: 150px; }
+  .radio-title { padding-inline: 5px; gap: 6px; min-height: 42px; }
+  .radio-title h1 { font-size: 1.05rem; letter-spacing: .035em; }
+  .radio-title .esp8266 { font-size: .56rem; }
+  .radio-title .model, .radio-title small { font-size: .37rem; min-width: 35px; }
+  .radio-face { gap: 11px; grid-template-columns: 67px minmax(0, 1fr); padding: 12px 9px; }
+  .control-stack { gap: 11px; }
+  .left-controls .dial { width: 59px; height: 59px; }
+  .left-controls .dial-block:not([hidden]) ~ .dial-block:not([hidden]) { padding-top: 11px; }
+  .dial-block label { font-size: .57rem; }
+  .dial-block output { min-width: 53px; padding: 1px 5px; font-size: .65rem; }
+  .dial-face::before { inset: 6px; }
+  .dial-face::after { width: 4px; left: calc(50% - 2px); top: 12%; }
+  .monitor-frame { padding: 5px; border-radius: 15px; border-width: 1px; }
+  .monitor-frame > .screen { min-height: 180px; border-radius: 10px; }
+  .monitor-label { bottom: 7px; left: 10px; font-size: .49rem; }
+  .empty-monitor { gap: 5px; padding: 11px; }
+  .empty-monitor svg { width: 27px; height: 27px; }
+  .empty-monitor strong { font-size: .68rem; }
+  .empty-monitor span, .empty-monitor p { font-size: .58rem; }
+  .rf-stack { gap: 10px; grid-template-columns: minmax(0, 1fr) auto; }
+  .amber-display { min-height: 86px; padding: 9px 8px; border-width: 3px; border-radius: 10px; }
+  .lcd-role { font-size: 1.6rem; }
+  .lcd-frequency { font-size: 1.24rem; }
+  .lcd-meta { font-size: .45rem; gap: 2px 6px; }
+  .rf-dials { gap: 9px; }
+  .rf-dials .dial { width: 59px; height: 59px; }
+  .rf-dials .dial-block:last-child .dial { width: 46px; height: 46px; }
+  .rf-dials .dial-block:last-child label { font-size: .52rem; }
+  .rf-dials .dial-block:last-child output { min-width: 46px; font-size: .58rem; }
+  .rf-dials .dial-block { gap: 5px; }
+  .transport-bar { padding: 8px 9px; gap: 8px; }
+  .segmented { padding: 2px; }
+  .segmented button, .transport-actions button { padding: 7px 8px; font-size: .62rem; min-height: 34px; }
+  .transport-actions { width: 100%; justify-content: stretch; }
+  .transport-actions button { flex: 1; min-width: 0; }
+  .menu-bar { padding: 8px 9px 14px; gap: 8px; }
+  .menu-button { min-height: 42px; gap: 6px; padding: 7px 4px; font-size: .68rem; border-width: 2px; }
+  .menu-button svg { width: 17px; height: 17px; }
+  .radio-status { gap: 2px 8px; padding-inline: 7px; font-size: .5rem; }
+  .quick-summary { grid-template-columns: 1fr; gap: 8px; margin-top: 24px; }
+  .quick-summary > * { display: grid; grid-template-columns: 1fr 1.3fr; gap: 0 10px; align-items: baseline; padding: 10px 13px; }
+  .quick-summary p, .quick-summary .summary-detail { grid-column: 1/-1; }
+  .quick-summary strong, .quick-summary .summary-value { text-align: right; font-size: .85rem; margin-top: 0; }
+  .quick-summary label, .quick-summary .summary-label, .quick-summary small { font-size: .58rem; }
+  .menu-dialog, .menu-dialog.wide-dialog { width: calc(100% - 18px); max-height: 93vh; border-radius: 13px; }
+  .dialog-header { padding: 14px 16px; }
+  .dialog-header h2 { font-size: .95rem; }
+  .dialog-body { padding: 17px 16px 22px; }
+  .dialog-body .sliderGrid, .dialog-body .avGrid, .dialog-body .controlsRow, .dialog-body .avSourceRow { grid-template-columns: 1fr; }
+  .dialog-body .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dialog-grid { grid-template-columns: 1fr; }
+  .dial-caption { font-size: .57rem; }
+  .monitor-placeholder { gap: 5px; padding: 11px; }
+  .monitor-placeholder svg { width: 27px; height: 27px; }
+  .monitor-placeholder strong { font-size: .68rem; }
+  .monitor-placeholder span, .monitor-placeholder p { font-size: .58rem; }
+  .radio-title > span:first-child { font-size: .58rem; }
+  .radio-title > .edition-label { min-width: 50px; font-size: .32rem; }
+  .dial > .dial-caption { width: 86px; font-size: .55rem; }
+  .dial-caption small { font-size: .32rem; margin-top: 4px; }
+  label.dial { margin-top: 30px; margin-bottom: 43px; }
+  .rf-dials { gap: 9px; }
+  .rf-dials .dial-block:last-child .dial { width: 43px; height: 43px; }
+  .rf-dials .dial > .dial-caption { width: 70px; font-size: .5rem; }
+  .rf-stack { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+  .rf-dials .indicator-column { display: none; }
+  .lcd-top { font-size: .39rem; gap: 4px; }
+  .lcd-meta { font-size: .35rem; }
+  .dial-edit { margin-top: -18px; padding: 2px 0; font-size: .45rem; }
+  .station-message { font-size: .65rem; margin-top: 18px; }
+  .monitor-frame > .monitor-placeholder { inset: 7px; border-radius: 9px; }
+  .monitor-frame > .monitor-label { bottom: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

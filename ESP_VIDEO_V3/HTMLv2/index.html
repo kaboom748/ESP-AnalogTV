@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Local ESP Analog AV console: ESP8266 audio, video and radio over Web Serial.">
+<title>ESP Analog AV · Console</title>
+<link rel="stylesheet" href="css/legacy.css">
+<link rel="stylesheet" href="css/console.css">
+<link rel="stylesheet" href="css/receiving-view.css">
+<link rel="stylesheet" href="css/power-quality.css">
+</head>
+<body>
+<div class="console-app" id="consoleApp">
+  <header class="console-header"><span class="edition-label">ANALOG AUDIO / VIDEO STATION</span><span class="console-note">ESP8266 · 120 ksample/s</span></header>
+  <section class="radio-chassis" aria-label="ESP Analog AV console">
+    <div class="radio-title"><span>ESP8266</span><h1>ESP ANALOG AV</h1><span class="edition-label">CONTROL CONSOLE</span></div>
+    <div class="radio-face">
+      <div class="control-stack left-controls">
+        <div class="dial-block" data-station-role="rx"><label class="dial" for="knobVolume"><span class="dial-caption">VOLUME <small>SPEAKER</small></span><span class="dial-face" aria-hidden="true"></span><output id="knobVolumeOut" for="knobVolume">70 %</output><input id="knobVolume" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Speaker volume"></label></div>
+        <div class="dial-block power-control" data-station-role="tx" hidden><label class="dial" for="knobPower"><span class="dial-caption">TX POWER</span><span class="dial-face" aria-hidden="true"></span><output id="knobPowerOut" for="knobPower">APWR 191</output><input id="knobPower" type="range" min="0" max="191" step="1" value="0" aria-label="TX power"></label><div class="power-endpoints"><span>MIN · 191</span><span>MAX · 0</span></div><p id="powerLockNote" class="power-lock-note" hidden>Disconnect to adjust power.</p></div>
+        <div class="dial-block mic-control" data-station-role="tx" hidden><label class="dial" for="knobMic"><span class="dial-caption">MIC GAIN <small>AUDIO SOURCE</small></span><span class="dial-face" aria-hidden="true"></span><output id="knobMicOut" for="knobMic">1.00×</output><input id="knobMic" type="range" min="0" max="4" step="0.05" value="1" aria-label="Microphone gain"></label><div class="mic-level mic-level-left"><span>MIC</span><meter id="consoleMicLevel" min="0" max="1" value="0" aria-label="Microphone source level"></meter></div></div>
+      </div>
+      <div class="monitor-stack" id="monitorStack">
+        <div class="monitor-viewport" id="monitorViewport">
+          <div class="monitor-frame" id="mainMonitor"><div class="monitor-placeholder" id="monitorPlaceholder"><span class="monitor-mark">AV</span><strong id="monitorTitle">WAITING FOR SIGNAL</strong><span id="monitorHint">Choose your ESP in the PORT menu</span></div><div class="monitor-label" id="monitorLabel">RX VIDEO</div></div>
+          <div id="rxEdgeTrack" class="rx-edge-track" aria-hidden="true" hidden><span class="rx-edge-fill"></span><span id="rxEdgeCursor" class="rx-edge-cursor" hidden></span></div>
+        </div>
+        <div id="rxProgress" class="rx-progress" hidden>
+          <div class="rx-progress-caption"><span id="rxProgressLabel">INCOMING FRAME</span><span id="rxReceivingRow">Not connected</span></div>
+          <div id="rxProgressBar" class="rx-progress-track" role="progressbar" aria-label="Incoming frame scan position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="rxProgressFill"></span></div>
+        </div>
+      </div>
+      <div class="rf-stack">
+        <div class="amber-display" aria-label="Radio frequency and selected quality"><div class="lcd-top"><strong class="lcd-role" id="lcdRole">RX</strong><span id="lcdUsage">AUDIO + VIDEO</span><span id="lcdPower" data-station-role="tx" hidden>APWR 191</span></div><div class="lcd-frequency"><span id="lcdFrequency">2442.3125</span><small>MHz</small></div><div class="lcd-quality"><span class="lcd-quality-title">SELECTED QUALITY</span><div class="lcd-quality-row"><span>VIDEO</span><strong id="lcdVideoQuality">320 × 240 COLOR</strong></div><div class="lcd-quality-row"><span>AUDIO</span><strong id="lcdAudioQuality">44.1 kHz MONO</strong></div></div><div id="lcdPowerLevel" class="lcd-power-level" data-station-role="tx" hidden>MIN POWER</div><div class="lcd-meta"><span id="lcdConnection">USB DISCONNECTED</span><span id="lcdSync">H / V —</span></div></div>
+        <div class="rf-dials">
+          <div class="indicator-column"><span class="indicator" id="rxIndicator"><i></i>RX</span><span class="indicator tx" id="txIndicator"><i></i>TX</span></div>
+          <div class="dial-block"><label class="dial" for="knobFrequency"><span class="dial-caption">CHANNEL</span><span class="dial-face" aria-hidden="true"></span><input id="knobFrequency" type="range" min="2401" max="2482.5" step="0.0001" value="2442.3125" aria-label="Radio frequency in MHz"></label><button class="dial-edit" data-menu="radio" title="Enter an exact frequency">Exact frequency ↗</button></div>
+          <div class="dial-block small-dial"><label class="dial" for="knobFine"><span class="dial-caption">RX FINE</span><span class="dial-face" aria-hidden="true"></span><output id="knobFineOut" for="knobFine">0 Hz</output><input id="knobFine" type="range" min="-50000" max="50000" step="100" value="0" aria-label="RX frequency correction in Hz"></label></div>
+        </div>
+      </div>
+      <div class="transport-bar">
+        <div class="segmented" role="group" aria-label="Station role"><button id="consoleRX" data-legacy="easyRoleRX" aria-pressed="true">RX</button><button id="consoleTX" data-legacy="easyRoleTX" aria-pressed="false">TX</button></div>
+        <div class="segmented usage-segments" role="group" aria-label="Signal content"><button id="consoleAV" data-legacy="easyUsageAV" aria-pressed="true">AUDIO + VIDEO</button><button id="consoleVideo" data-legacy="easyUsageVideo" aria-pressed="false">VIDEO</button><button id="consoleAudio" data-legacy="easyUsageAudio" aria-pressed="false">AUDIO</button></div>
+        <div class="transport-actions"><button id="consoleStart" class="primary" data-legacy="easyStart">▶ START RX</button><button id="consoleStop" class="danger" data-legacy="easyStop" disabled>■ STOP</button></div>
+      </div>
+      <nav class="menu-bar" aria-label="Station settings">
+        <button class="menu-button" data-menu="audio"><span data-icon="mic"></span>AUDIO</button><button class="menu-button" data-menu="video"><span data-icon="video"></span>VIDEO</button><button class="menu-button" data-menu="quality"><span data-icon="sliders"></span>QUALITY</button><button class="menu-button" data-menu="radio"><span data-icon="radio"></span>RADIO</button><button class="menu-button" data-menu="port"><span data-icon="usb"></span>PORT</button><button class="menu-button" data-menu="advanced"><span data-icon="settings"></span>ADVANCED</button>
+      </nav>
+    </div>
+    <div class="radio-status"><span class="port-state" id="consolePortState">○ ESP disconnected</span><span id="consoleSignalState">Waiting for signal</span></div>
+  </section>
+  <aside class="power-advice" data-station-role="tx" hidden><span class="power-advice-icon" aria-hidden="true">ⓘ</span><div><strong>Start at minimum power. Increase only as needed.</strong><p>Use a heatsink if the module gets hot.</p></div></aside>
+  <div id="stationMessage" class="station-message" role="status">Choose your ESP in PORT to get started.</div>
+  <section class="quick-summary" aria-label="Signal summary"><div><span id="summaryVideoLabel">VIDEO FORMAT</span><strong id="summaryVideo">—</strong><small id="summaryFps">Calculated frame rate · —</small></div><div><span>AUDIO</span><strong id="summaryAudio">Off</strong><small id="summarySource">Receiver ready</small></div><div><span>SYNCHRONIZATION</span><strong id="summarySync">No signal</strong><small id="summaryDelay">Predicted delay · —</small></div></section>
+  <p class="support-note" id="browserNotice">Open this interface in Chrome or Edge. Choose the USB port before starting.</p>
+  <div id="bootError" class="statusbar error" role="alert" hidden></div>
+  <noscript>Enable JavaScript to use this console.</noscript>
+</div>
+<div id="inactiveScreens" hidden aria-hidden="true"></div>
+<dialog id="menuDialog" class="menu-dialog" aria-labelledby="menuTitle"><div class="dialog-header"><div><span class="edition-label">ESP ANALOG AV</span><h2 id="menuTitle">Settings</h2></div><button id="closeMenu" type="button" aria-label="Close menu">✕</button></div><div class="dialog-body">
+  <section data-menu-panel="audio" hidden><p class="menu-description">Microphone gain is shown in TX; speaker volume is shown in RX.</p><div id="audioSourceSlot" class="dialog-section"><h3>AUDIO SOURCE · TX</h3></div><div id="audioLevelSlot" class="dialog-section" data-station-role="tx" hidden><h3>MICROPHONE LEVEL</h3></div><div id="audioPlaybackSlot" class="dialog-section" data-station-role="rx"><h3>SPEAKER · RX</h3></div><div id="audioStatusSlot"></div></section>
+  <section data-menu-panel="video" hidden><p class="menu-description">Choose a webcam or test pattern for transmission. The screen shows received video in RX and the video being transmitted in TX.</p><div id="videoSourceSlot" class="dialog-section"><h3>VIDEO SOURCE · TX</h3></div><div id="videoContrastSlot" class="dialog-section"><h3>TRANSMITTED IMAGE</h3></div><div class="submenu-links"><button data-menu="advanced" data-section="image">RX image settings →</button><button data-menu="advanced" data-section="sync">H/V synchronization →</button></div><div id="videoInfoSlot"></div></section>
+  <section data-menu-panel="quality" hidden><p class="menu-description">All existing engine profiles. For video-only reception, select the same format as the transmitter.</p><div id="qualityVideoSlot" class="dialog-section"><h3>VIDEO</h3></div><div id="qualityAudioSlot" class="dialog-section"><h3>AUDIO</h3></div><div id="qualityFpsSlot" class="dialog-section"><h3>FRAME RATE</h3></div><div id="qualityPlanSlot" class="dialog-section"><h3>CALCULATED BUDGET AND DELAY</h3></div></section>
+  <section data-menu-panel="radio" hidden><p class="menu-description">CHANNEL sets the frequency. Change radio settings while the station is disconnected.</p><div id="radioFieldsSlot" class="dialog-grid"></div><p class="power-explainer" data-station-role="tx" hidden><strong>APWR: 0 = maximum power · 191 = minimum power.</strong><br>Start at 191 and increase power only as needed. Use a heatsink if the module gets hot.<br>This setting is not a measurement in dBm.</p><div id="radioStatusSlot"></div></section>
+  <section data-menu-panel="port" hidden><p class="menu-description">Choose the ESP in the Web Serial picker, then use START on the console.</p><div id="portChooseSlot" class="dialog-section"><h3>USB CONNECTION</h3></div><details class="dialog-section"><summary>Manual connection</summary><div id="portManualSlot" class="row"></div><p class="mini">Directly opens the port selected in the browser dialog.</p></details><div id="portStatusSlot"></div><p class="mini">ESP8266 · 160 MHz CPU · supplied V3 firmware · 1,500,000 baud · MPX4 / MPX3.</p></section>
+  <section data-menu-panel="advanced" hidden><nav class="dialog-tabs" aria-label="Advanced functions"><button data-advanced="image" aria-pressed="true">RX IMAGE</button><button data-advanced="sync" aria-pressed="false">SYNC</button><button data-advanced="diagnostics" aria-pressed="false">DIAGNOSTICS</button><button data-advanced="journal" aria-pressed="false">LOG</button></nav><div data-advanced-panel="image" id="advancedImageSlot" class="dialog-section"></div><div data-advanced-panel="sync" id="advancedSyncSlot" class="dialog-section" hidden></div><div data-advanced-panel="diagnostics" id="advancedDiagnosticsSlot" class="dialog-section" hidden></div><div data-advanced-panel="journal" id="advancedJournalSlot" class="dialog-section" hidden></div></section>
+</div></dialog>
+
+<div id="legacyRoot" hidden aria-hidden="true">
+
+<main id="appRoot" class="easy-view easy-rx easy-video">
+<header>
+<div><div class="eyebrow">ESP8266 · AnalogAV 1.5 · CB FM STEREO V12 radio · USB Serial</div><h1>ESP <span style="color:var(--teal)">AnalogAV</span></h1><p class="subtitle">Continuous analog audio and full-resolution video · Video only, audio only, or both · Actual radio samples</p></div>
+<div class="badge">120,000 samples/s · 21 video profiles · 14 audio profiles · analog</div>
+</header>
+
+<nav class="viewTabs" role="tablist" aria-label="Control view">
+ <button type="button" id="easyTabEasy" role="tab" aria-controls="easyPanel" aria-selected="true" tabindex="0">EASY</button>
+ <button type="button" id="easyTabAdvanced" role="tab" aria-controls="advancedPanel" aria-selected="false" tabindex="-1">ADVANCED</button>
+</nav>
+<section class="panel easyPanel" id="easyPanel" role="tabpanel" aria-labelledby="easyTabEasy" aria-hidden="false">
+ <div class="easySectionTitle"><span>YOUR STATION</span><span id="easyChannel" class="easyChannel">Default channel</span></div>
+ <div class="easyRoleGroup" role="group" aria-label="Station role">
+  <button type="button" id="easyRoleTX" aria-pressed="false"><span aria-hidden="true">↗</span> Transmit</button>
+  <button type="button" id="easyRoleRX" aria-pressed="true"><span aria-hidden="true">↙</span> Receive</button>
+ </div>
+ <div class="easySectionTitle"><span>STREAM TYPE</span></div>
+ <div class="easyUsageGroup" role="group" aria-label="Stream type">
+  <button type="button" id="easyUsageAV" aria-pressed="true">Audio + video</button>
+  <button type="button" id="easyUsageVideo" aria-pressed="false">Video only</button>
+  <button type="button" id="easyUsageAudio" aria-pressed="false">Audio only</button>
+ </div>
+ <div class="easyDivider"></div>
+ <div class="easySectionTitle"><span>ESP CONNECTION</span></div>
+ <div class="easyPortRow"><div><b id="easyPortLabel">No ESP selected</b><div id="easyConnection" class="mini">Not connected</div></div><button type="button" id="easyChooseESP">Choose ESP</button></div>
+ <button type="button" id="easyDisconnect" class="easyDisconnect hidden">Disconnect ESP</button>
+ <p class="easyHint">Choose ESP opens the browser serial-port picker.</p>
+ <div id="easySourceControls">
+  <div class="easyDivider"></div>
+  <div class="easySectionTitle"><span>YOUR SOURCES</span><button type="button" id="easyRefreshSources" class="easyLink">Refresh</button></div>
+  <div class="field" id="easyCameraField"><label for="easyCamera">Camera or test pattern</label><select id="easyCamera"><option value="pattern">Test pattern · no camera needed</option><option value="camera:" selected>Default webcam</option></select></div>
+  <div class="field" id="easyMicrophoneField"><label for="easyMicrophone">Microphone / audio input</label><select id="easyMicrophone"><option value="">Default microphone</option></select><meter id="easyMicMeter" class="avMeter" min="0" max="1" value="0" aria-label="Current transmit microphone level">0%</meter></div>
+  <p class="easyHint">Camera and microphone permissions are requested when you start.</p>
+ </div>
+ <div id="easyQualityControls">
+  <div class="easyDivider"></div>
+  <div class="easySectionTitle"><span id="easyQualityTitle">STREAM QUALITY</span></div>
+  <div class="field" id="easyVideoQualityField"><label for="easyVideoQuality" id="easyVideoQualityLabel">Video quality</label><select id="easyVideoQuality"><option value="bw128">Fast · 128 × 96 B&amp;W</option><option value="bw320">Balanced · 320 × 240 B&amp;W</option><option value="bw640">Detailed · 640 × 480 B&amp;W</option><option value="col256">Color · 256 × 192 YUV</option><option value="custom" selected>Custom · 320 × 240 color</option></select></div>
+  <div class="field" id="easyAudioQualityField"><label for="easyAudioQuality">Audio bandwidth</label><select id="easyAudioQuality"><option value="8000:1">Speech · 8 kHz mono</option><option value="16000:1">Clear voice · 16 kHz mono</option><option value="24000:1">Music · 24 kHz mono</option><option value="48000:1">Full band · 48 kHz mono</option><option value="custom" selected>Custom · 44.1 kHz mono</option></select></div>
+ </div>
+ <div class="easyReceivedCard hidden" id="easyReceivedCard"><div class="easySectionTitle"><span>RECEIVED FORMAT</span></div><b id="easyReceivedFormat">Waiting for signal</b><p class="easyHint">Read from the received A/V metadata.</p></div>
+ <div class="easyForecast" aria-live="polite"><div><span id="easyFpsLabel">Predicted video</span><strong id="easyFps">Waiting for settings</strong></div><div><span>Analog audio</span><b id="easyAudioSummary">Off</b></div><div><span>Playback delay</span><b id="easyDelay">—</b></div><p id="easyCapacity" class="easyHint">Fixed radio bandwidth: 120,000 samples/s.</p></div>
+ <div id="easyVolumeField" class="sliderField hidden"><label for="easyVolume">Listening volume <output id="easyVolumeOut">70%</output></label><input id="easyVolume" type="range" min="0" max="1" step="0.01" value="0.7"></div>
+ <button type="button" id="easyStart" class="primary easyMainAction">Start receiving</button>
+ <button type="button" id="easyStop" class="danger easyMainAction hidden">Stop</button>
+ <div id="easyRFState" class="easySignalStatus" role="status" aria-live="polite">Waiting for signal</div>
+ <div id="easyMessage" class="easyHint" role="status" aria-live="polite">Select your ESP to begin.</div>
+</section>
+
+<div id="advancedPanel" role="tabpanel" aria-labelledby="easyTabAdvanced" aria-hidden="true">
+<section class="panel controlBar">
+<h2>1 · Radio setup and shared video format</h2>
+<div class="controlsRow">
+ <div class="field"><label for="role">Role</label><select id="role"><option value="rx">Receiver</option><option value="tx">Transmitter</option></select></div>
+ <div class="field"><label for="mode">Video format (video-only RX must match TX)</label><select id="mode"></select></div>
+ <div class="field"><label for="grayLevels">B&W grayscale levels (TX)</label><select id="grayLevels"><option value="256">256 gray levels</option><option value="16">16 gray levels</option><option value="2">Black and white (2 levels)</option></select></div>
+ <div class="field"><label for="frequency">RF frequency (MHz)</label><input type="number" id="frequency" min="2401" max="2482.5" step="0.0001" value="2442.3125"></div>
+ <div class="field"><label for="fine">RX frequency correction (Hz)</label><input type="number" id="fine" min="-50000" max="50000" step="100" value="0"></div>
+ <div class="field"><label for="apwr">TX power (0=max, 191=min)</label><input type="number" id="apwr" min="0" max="191" step="1" value="191" required></div>
+</div>
+<div class="switchrow"><div class="row"><button id="connect" class="primary">Connect USB serial</button><button id="disconnect" disabled>Disconnect</button></div>
+<div class="mini">TX/RX: one ESP8266 per computer · V12 radio processing · MPX4 CRC32 / legacy MPX3 · 160 MHz CPU · HQ 120 kHz</div></div>
+<div id="status" class="statusbar">Not connected. Select the same video format on both computers.</div>
+</section>
+<section class="panel avPanel" id="avPanel" aria-labelledby="avHeading">
+ <h2 id="avHeading">2 · Usage, sources, and audio/video bandwidth</h2>
+ <div class="avGrid">
+  <div class="field"><label for="avUsage">Stream type (match TX and RX)</label><select id="avUsage"><option value="video">Video only · original signal</option><option value="av" selected>Video + continuous analog audio</option><option value="audio">Analog audio only</option></select></div>
+  <div class="field"><label for="avFpsPolicy">Video frame-rate policy</label><select id="avFpsPolicy"><option value="auto" selected>Automatic · preserve every pixel</option><option value="floor">Require a minimum FPS</option></select></div>
+  <div class="field"><label for="avMinFps">Minimum requested FPS</label><input id="avMinFps" type="number" min="0.001" max="120" step="0.001" value="1" disabled></div>
+ </div>
+ <p class="mini">For a mixed transmission, select Video + continuous analog audio on both stations. A video-only receiver does not separate the audio slots.</p>
+ <div class="avSourceRow avSources" style="margin-top:12px">
+  <div class="field"><label for="avCameraDevice">Webcam used by Enable webcam</label><select id="avCameraDevice"><option value="">Default webcam</option></select></div>
+  <button id="avRefreshDevices">Refresh webcams and microphones</button>
+ </div>
+ <div id="avAudioSettings" class="avAudioControls hidden">
+  <div class="avGrid">
+   <div class="field"><label for="avMicDevice">Microphone / audio input</label><select id="avMicDevice"><option value="">Default microphone</option></select></div>
+   <div class="field"><label for="avRate">Transmitted audio sample rate</label><select id="avRate"><option value="8000">8 kHz · speech</option><option value="12000">12 kHz · speech</option><option value="16000">16 kHz · wideband speech</option><option value="24000">24 kHz · music, limited treble</option><option value="32000">32 kHz · extended bandwidth</option><option value="44100" selected>44.1 kHz · audible bandwidth</option><option value="48000">48 kHz · audible bandwidth</option></select></div>
+   <div class="field"><label for="avChannels">Transmitted audio channels</label><select id="avChannels"><option value="1" selected>Mono · 1 channel</option><option value="2">Stereo · 2 channels if provided by the source</option></select></div>
+  </div>
+  <div class="avGrid" style="margin-top:12px">
+   <div class="row"><button id="avMicEnable">Enable microphone</button><button id="avMicStop" disabled>Stop microphone</button></div>
+   <div class="sliderField"><label for="avMicGain">TX audio gain <output id="avMicGainOut">1.00×</output></label><input id="avMicGain" type="range" min="0" max="4" step="0.05" value="1"></div>
+   <div><label class="mini" for="avMute"><input id="avMute" type="checkbox"> Mute TX</label><meter id="avMicMeter" class="avMeter" min="0" max="1" value="0" aria-label="Current microphone level">0%</meter></div>
+  </div>
+  <p class="mini">Sound is carried by analog amplitudes. A sample rate in kHz does not imply 16-bit precision or CD quality. Audio-only mode does not use a webcam.</p>
+ </div>
+ <div class="avPlan" aria-live="polite">
+  <div class="mini">Predicted video frame rate for the selected settings</div>
+  <strong id="avExpectedFps">Calculating video frame rate…</strong>
+  <div id="avBudget" class="mini">Waiting for the bandwidth calculation.</div>
+  <div id="avPlanStatus" class="mini avPolicyHint"></div>
+  <div id="avSyncState" class="mini">Video only: original analog signal path.</div>
+ </div>
+ <div id="avRFStats" class="mini" aria-live="off">RF A/V metadata counters are separate from USB serial CRC counters.</div>
+ <div id="avAudioPlayback" class="avAudioControls hidden">
+  <div class="avGrid">
+   <div class="row"><button id="avListen" class="primary" disabled>Listen to received audio</button><button id="avPause" disabled>Pause listening</button></div>
+   <div class="sliderField"><label for="avVolume">Playback volume <output id="avVolumeOut">70%</output></label><input id="avVolume" type="range" min="0" max="1" step="0.01" value="0.7"></div>
+   <div class="mini" id="avRxConfig">No audio stream identified.</div>
+  </div>
+  <p id="avAudioStats" class="mini">Waiting for received audio. Continuous playback is delayed to match complete frames in audio + video mode.</p>
+ </div>
+ <div id="avMediaStatus" class="statusbar" role="status" aria-live="polite">Choose the content to transmit. The microphone starts only when Enable microphone is clicked.</div>
+ <div class="row" style="margin-top:12px"><button id="startTx" class="primary" disabled>▶ Start TX</button><button id="stopTx" class="danger" disabled>■ Stop TX</button></div>
+</section>
+<section class="panel" style="margin-bottom:14px" id="maxPanel">
+ <h2>Video signal · all samples preserved</h2>
+ <p id="maxInfo" class="mini"></p>
+ <p class="mini" id="maxTxTransport"></p><p class="mini" id="maxPrepState"></p><p class="mini" id="maxSourceInfo"></p>
+ <p class="mini">Every Y/U/V sample and line guard is preserved. No additional spatial reduction, lossy image compression, or previous-frame substitution is applied. Video-only mode retains the original signal.</p>
+</section>
+<div class="under">
+<section class="panel"><h2>Live counters (read-only)</h2>
+ <div class="metrics">
+  <div class="metric"><b id="txRate">0</b><span>PCM TX kB/s</span></div>
+  <div class="metric"><b id="rxRate">0</b><span>PCM RX kB/s</span></div>
+  <div class="metric"><b id="rxFps">0.00</b><span>Displayed RX frames/s</span></div>
+  <div class="metric"><b id="missed">0</b><span>Total unavailable PCM samples</span></div>
+  <div class="metric"><b id="invalidSamples">0</b><span>Firmware invalid PCM (0x80)</span></div>
+  <div class="metric"><b id="gapSamples">0</b><span>Missing serial timeline samples</span></div>
+  <div class="metric"><b id="wirePackets">0</b><span>Validated serial packets</span></div>
+  <div class="metric"><b id="wireCrcErrors">0</b><span>MPX4 CRC failures</span></div>
+  <div class="metric"><b id="wireShortPackets">0</b><span>Truncated legacy packets</span></div>
+  <div class="metric"><b id="wireBadHeaders">0</b><span>Rejected serial headers</span></div>
+  <div class="metric"><b id="wireResyncs">0</b><span>Serial resynchronizations</span></div>
+  <div class="metric"><b id="wireDiscardedBytes">0</b><span>Discarded received bytes</span></div>
+  <div class="metric"><b id="rxSync">0</b><span>V-sync pulses detected</span></div>
+  <div class="metric"><b id="rxHSync">0</b><span>H-sync pulses detected</span></div>
+  <div class="metric"><b id="txJitter">0</b><span>Maximum TX scheduling delay (ms)</span></div>
+ </div>
+ <div class="rateStrip"><span>Average line rate: <b id="lineHz">309 Hz</b></span><span>Frame duration: <b id="fieldDuration">777.6 ms</b></span><span>Signal: <b id="modeKind">Progressive B&W</b></span></div>
+ <p class="mini">Counters do not alter RF pixels. Red indicates missing or unavailable PCM, not FM noise. The radio signal itself is never fabricated.</p>
+</section>
+<section class="panel"><h2>Local test, diagnostics, and event log</h2>
+ <div class="row"><button id="selfTest">Local missing-pixel test (NO RF)</button></div>
+ <div class="row" style="margin-top:8px"><button id="saveRxCapture" disabled>Save RX diagnostic capture</button></div>
+ <p class="small">Contains received audio/video samples. Saved locally only when clicked.</p>
+ <p id="selfTestResult" class="small">Local waveform test injects 0x80 sample losses marked RED. It does not simulate real-world RF quality.</p>
+ <details style="margin:9px 0 10px"><summary>How color and H/V sync pulses work</summary>
+  <p class="mini"><b>YUV 4:2:0 color:</b> Full-resolution Y (luminance), followed by U and V at half horizontal and vertical resolution. These are analog PCM8 amplitudes, not JPEG data. The 256 × 192 Color Stable mode sends every Y, U and V sample twice for smoother analog reconstruction (about 0.69 FPS). More samples per frame means fewer FPS. Signal defects appear as color shifts or noise.</p>
+  <p class="mini"><b>H-SYNC:</b> A 24-sample pulse starts EVERY line, with progressive lock and a narrow search window to reject false pulses. <b>V-SYNC:</b> A 168-sample signature starts EVERY frame: 48 low / 12 high / 48 low / 12 high / 48 low. Total frame length is unchanged.</p>
+  <p class="mini">Every line starts with a 24-sample H pulse. Each frame starts with a distinctive 168-sample V marker using reserved extreme levels. 640×480 mono: 1 spp ≈ 0.353 FPS (2.834 s/frame); 2 spp ≈ 0.185 FPS (5.394 s/frame). Both retain V12 radio processing at 120.000 PCM8 samples/s, with validated MPX4 transport when supported and legacy MPX3 compatibility.</p>
+ </details>
+ <div id="log" aria-live="polite"></div>
+</section>
+</div>
+</div>
+<div class="videoGrid" id="videoGrid">
+<section class="panel videoPanel" id="txVideoPanel">
+ <h2>Video source (TX) <span>Webcam or test pattern</span></h2>
+ <div class="screen"><canvas role="img" aria-label="Transmitted video preview" id="preview" width="320" height="240"></canvas><div class="screenLabel" id="sourceLabel">LOCAL SOURCE</div></div>
+ <div class="rateStrip"><span>Resolution: <b id="srcRes">320 × 240</b></span><span>Frame rate: <b id="targetFps">1.29 FPS</b></span><span>Scan: <b id="fieldFps">Progressive</b></span></div>
+ <div class="nearControls">
+  <div class="row"><button id="camera">Enable webcam</button><button id="pattern">Analog test pattern</button></div>
+  <div class="sliderField" style="margin-top:12px"><label for="contrast">TX source contrast <output id="contrastOut">1.00×</output></label><input type="range" id="contrast" min="0.5" max="2.0" step="0.05" value="1"></div>
+  <p class="mini">One webcam capture per transmitted frame. Select the same format on TX and RX. Auto switching applies ONLY to the two 320×240 B&W modes (not 640×480). The original video signal and analog decoding are preserved; missing pixels remain red.</p>
+ </div>
+</section>
+<section class="panel videoPanel" id="rxVideoPanel">
+ <h2>Analog television (RX) <span>RF defects displayed directly</span></h2>
+ <div class="screen"><canvas role="img" aria-label="Received analog video" id="received" width="320" height="240"></canvas><div class="screenLabel" id="rxLabel">RX · B&W</div></div>
+ <div class="rxLossLegend" role="note" aria-label="Red missing-data pixel legend">
+  <span class="lossSwatch" aria-hidden="true"></span>
+  <div><strong>RED = MISSING VIDEO DATA</strong><div class="lossExplain">Unavailable firmware PCM8 (0x80), rejected or missing serial packets, or unfilled scan positions. Red is NOT RF noise. Pixels come from received PCM; missing positions remain red.</div><div id="rxLossStatus" class="lossStatus" aria-live="polite">Waiting for an analog raster. Missing positions are red.</div><div class="lossStatus">Red pixels: <b id="redPixels">0 / 0</b></div></div>
+ </div>
+ <div class="nearControls">
+  <label class="mini" for="auto320" style="display:flex;align-items:center;gap:9px;margin:0 0 9px;color:#b9e9e0">
+   <input type="checkbox" id="auto320" checked style="width:17px;height:17px;accent-color:var(--teal)" title="Video-only mode. Audio/video metadata selects the format when audio is enabled.">
+   Auto-detect 320×240 in video-only RX: Fast (1.29 FPS) / Stable (0.71 FPS)
+  </label>
+  <div class="rateStrip" style="margin:0 0 10px"><span>Synchronization: <b id="lockStatus">Searching for H / V</b></span><span>H pulse: 1/line · V pulse: 1/frame</span><span id="syncDetails" aria-live="polite">H: 0 · V: 0 · Rejected H: 0</span></div>
+  <div class="controlHeading">Image controls — directly below the screen <button id="resetHold" style="min-height:30px;padding:4px 9px;font-size:.76rem">Reset H/V position</button></div>
+  <div class="sliderGrid">
+   <div class="sliderField"><label for="hPosition" title="Circular horizontal offset: pixels leaving one edge reappear on the opposite edge.">H-POSITION <output id="hPositionOut">0 px</output></label><input id="hPosition" type="range" min="-320" max="320" step="1" value="0"></div>
+   <div class="sliderField"><label for="hHold">H-HOLD <output id="hHoldOut">0.00 samples/line</output></label><input id="hHold" type="range" min="-3" max="3" step="0.05" value="0"></div>
+   <div class="sliderField"><label for="vHold">V-HOLD <output id="vHoldOut">0 samples/frame</output></label><input id="vHold" type="range" min="-180" max="600" step="5" value="0"></div>
+   <div class="sliderField"><label for="hLock">H sync lock strength <output id="hLockOut">85%</output></label><input id="hLock" type="range" min="0" max="100" step="1" value="85"></div>
+   <div class="sliderField"><label for="rxBrightness">Brightness <output id="rxBrightnessOut">0</output></label><input id="rxBrightness" type="range" min="-100" max="100" step="1" value="0"></div>
+   <div class="sliderField"><label for="rxContrast">RX contrast <output id="rxContrastOut">1.00×</output></label><input id="rxContrast" type="range" min="0.2" max="3" step="0.05" value="1"></div>
+   <div class="sliderField"><label for="autoLevel">RX video levels (analog)</label>
+    <label style="display:flex;gap:7px;align-items:center;font-weight:400"><input type="checkbox" id="autoLevel" checked> Automatic black/white level restoration from porches</label>
+    <div id="markerLevels" class="mini">Received reference levels: searching for H/V…</div>
+   </div>
+   <div class="sliderField" id="saturationRow"><label for="saturation">Color saturation <output id="saturationOut">1.00×</output></label><input id="saturation" type="range" min="0" max="2.5" step="0.05" value="1"></div>
+  </div>
+  <p class="mini">Direct analog TV: every available PCM8 sample is displayed (real RF distortion is kept); one H marker per line (24 low samples + black + white references) and one reserved V signature per frame. H can lock before V and stays locked between frames. No video error correction; RF defects remain visible.</p>
+ </div>
+</section>
+</div>
+<aside id="easyAudioPanel" class="panel easyAudioPanel hidden" aria-labelledby="easyAudioHeading"><div class="easyAudioIcon" aria-hidden="true">♫</div><h2 id="easyAudioHeading">Analog audio</h2><p id="easyAudioDetail">Continuous audio without a video stream.</p><div id="easyAudioSignal" class="badge">Waiting for signal</div></aside>
+<video id="cameraVideo" playsinline autoplay muted hidden></video>
+<footer class="advanced-only">ESP AnalogAV · analog audio and video over 2.4 GHz FM. Actual received samples retain their RF defects; missing video samples are red. V12 radio processing, 1,500,000 baud serial, and MPX4 CRC32 / MPX3 transport are retained. Simultaneous audio/video requires the new decoder; video-only mode keeps the original signal. Start RF testing through a shielded or attenuated link and use only authorized frequencies and power levels. Open this page from http://localhost for microphone access and the audio engine.</footer>
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<script src="js/engine/video-codec.js"></script>
+<script src="js/engine/strict-video.js"></script>
+<script src="js/engine/source-wave-cache.js"></script>
+<script src="js/engine/tx7-codec.js"></script>
+<script src="js/engine/av-dc-restoration.js"></script>
+<script src="js/engine/av-control-restoration.js"></script>
+<script src="js/engine/analog-av.js"></script>
+<script src="js/engine/analog-audio.js"></script>
+<script src="js/engine/av-controls.js"></script>
+<script src="js/engine/av-session.js"></script>
+<script src="js/engine/rx-capture.js"></script>
+<script src="js/engine/easy-controls.js"></script>
+<script src="js/rx-progress.js"></script>
+<script src="js/engine/application.js"></script>
+
+<script src="js/receiving-view.js"></script>
+<script src="js/console-ui.js"></script>
+</body>
+</html>
