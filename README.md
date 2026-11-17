@@ -1,3 +1,5 @@
+ESP32-C5 SUPPORTED SOON....
+
 <img width="1880" height="819" alt="Capture d’écran 2026-11-16 181555" src="https://github.com/user-attachments/assets/59251074-957a-43f9-ac83-9f57cf7ec78a" />
 <img width="1405" height="808" alt="Capture d’écran 2026-11-13 203929" src="https://github.com/user-attachments/assets/c9bab4b3-cc48-4ba5-8551-b7aa0ed3c53b" />
 <img width="1897" height="979" alt="333" src="https://github.com/user-attachments/assets/23648d5b-0537-4ea8-a0d1-f956b442701f" />
