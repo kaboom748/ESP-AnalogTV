@@ -1,0 +1,114 @@
+/* Selected quality and TX power presentation; no radio or DSP behavior. */
+.power-control { width: 100%; }
+.mic-control { width: 100%; }
+.mic-control > .mic-level-left { width: 100%; max-width: 160px; margin-top: 4px; padding: 5px 7px; gap: 5px; }
+.mic-control > .mic-level-left meter { flex: 1; min-width: 0; width: 0; }
+.power-endpoints {
+  display: flex; justify-content: space-between; gap: 8px;
+  width: min(100%, 144px); margin-top: 1px;
+  color: #c8cdbe; font-size: .56rem; font-weight: 700;
+  line-height: 1.35; white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+.power-lock-note {
+  max-width: 150px; margin: 4px 0 0; color: #aeb69e;
+  font-size: .57rem; line-height: 1.4; text-align: center;
+}
+.amber-display { row-gap: 3px; }
+.lcd-quality { grid-column: 1/-1; min-width: 0; margin-top: 7px; }
+.lcd-quality-title {
+  display: block; margin-bottom: 4px;
+  font-size: .56rem; font-weight: 850; letter-spacing: .07em;
+}
+.lcd-quality-row {
+  display: grid; grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline; gap: 8px; padding: 3px 6px;
+  border: 1px solid #6741006b; border-radius: 3px;
+  background: #ffe99518;
+}
+.lcd-quality-row + .lcd-quality-row { margin-top: 3px; }
+.lcd-quality-row > span {
+  font-size: .65rem; font-weight: 850; letter-spacing: .015em;
+}
+.lcd-quality-row > strong {
+  min-width: 0; text-align: right; font-size: clamp(.73rem, 1vw, 1rem);
+  font-weight: 850; line-height: 1.4; white-space: nowrap;
+  font-variant-numeric: tabular-nums; letter-spacing: -.02em;
+}
+.lcd-quality-row > strong.quality-inactive { opacity: .5; }
+.lcd-power-level {
+  grid-column: 1/-1; justify-self: center;
+  max-width: 100%; padding: 2px 11px; margin-top: 5px;
+  border-radius: 4px; color: #ffcf64; background: #332403;
+  font-size: .61rem; line-height: 1.4; font-weight: 850;
+  letter-spacing: .055em; text-align: center;
+}
+.power-advice {
+  display: flex; align-items: center; gap: 12px;
+  margin: 24px 8px 0; padding: 12px 17px;
+  border: 1px solid #a17e39; border-radius: 10px;
+  color: #dfc992; background: linear-gradient(120deg, #292b1d, #1b2016);
+  box-shadow: inset 0 1px #fff4b80a;
+}
+.power-advice-icon {
+  display: flex; justify-content: center; align-items: center;
+  flex: 0 0 25px; width: 25px; height: 25px;
+  border: 2px solid #e1b657; border-radius: 50%;
+  color: #e9bf63; font: 800 17px/1 Georgia, serif;
+}
+.power-advice > div { min-width: 0; }
+.power-advice strong {
+  display: block; color: #f0ce83; font-size: .79rem;
+  font-weight: 700; line-height: 1.45;
+}
+.power-advice p { margin: 3px 0 0; color: #bfbea8; font-size: .73rem; line-height: 1.45; }
+
+@media (min-width: 1151px) {
+  .radio-face { grid-template-columns: minmax(130px, .75fr) minmax(0, 2.35fr) minmax(270px, 1.45fr); }
+  .amber-display { padding: 13px 14px; }
+  .lcd-quality-row { padding: 4px 7px; }
+}
+@media (max-width: 1150px) and (min-width: 721px) {
+  .lcd-quality-title { font-size: .48rem; }
+  .lcd-quality-row { padding: 3px 4px; gap: 5px; }
+  .lcd-quality-row > span { font-size: .55rem; }
+  .lcd-quality-row > strong { font-size: .73rem; }
+  .lcd-power-level { font-size: .54rem; padding-inline: 8px; }
+  .power-endpoints { font-size: .5rem; max-width: 112px; }
+}
+@media (max-width: 900px) and (min-width: 721px) {
+  .lcd-quality-row > span { font-size: .48rem; }
+  .lcd-quality-row > strong { font-size: .64rem; }
+  .lcd-quality-row { gap: 4px; padding-inline: 3px; }
+  .lcd-quality-title { font-size: .43rem; }
+  .power-endpoints { gap: 4px; font-size: .44rem; max-width: 90px; }
+}
+@media (max-width: 720px) {
+  .rf-stack { grid-template-columns: minmax(0, 1.3fr) minmax(125px, 1fr); align-items: center; }
+  .lcd-quality { margin-top: 5px; }
+  .lcd-quality-title { font-size: .49rem; margin-bottom: 3px; }
+  .lcd-quality-row { gap: 5px; padding: 2px 5px; }
+  .lcd-quality-row > span { font-size: .55rem; }
+  .lcd-quality-row > strong { font-size: clamp(.65rem, 1.9vw, .85rem); }
+  .lcd-power-level { margin-top: 4px; font-size: .53rem; padding: 2px 8px; }
+  .power-endpoints { max-width: 86px; gap: 3px; font-size: .44rem; }
+  .power-lock-note { max-width: 90px; font-size: .45rem; }
+  .power-advice { margin: 20px 3px 0; padding: 10px 12px; gap: 10px; }
+  .power-advice strong { font-size: .7rem; }
+  .power-advice p { font-size: .65rem; }
+}
+@media (max-width: 480px) {
+  .rf-stack { grid-template-columns: minmax(0, 1.35fr) minmax(112px, 1fr); }
+  .amber-display { padding: 9px 7px; }
+  .lcd-frequency { font-size: clamp(1rem, 3.9vw, 1.24rem); }
+  .lcd-quality-title { font-size: .4rem; letter-spacing: .035em; }
+  .lcd-quality-row { padding: 2px 3px; gap: 3px; }
+  .lcd-quality-row > span { font-size: .45rem; }
+  .lcd-quality-row > strong { font-size: .59rem; letter-spacing: -.04em; }
+  .lcd-power-level { font-size: .45rem; letter-spacing: .035em; padding: 2px 6px; }
+  .power-endpoints { max-width: 67px; font-size: .36rem; gap: 2px; }
+  .power-lock-note { max-width: 67px; font-size: .4rem; }
+  .power-advice { padding: 9px 10px; gap: 8px; border-radius: 8px; }
+  .power-advice-icon { flex-basis: 21px; width: 21px; height: 21px; font-size: 14px; }
+  .power-advice strong { font-size: .65rem; }
+  .power-advice p { font-size: .61rem; }
+}

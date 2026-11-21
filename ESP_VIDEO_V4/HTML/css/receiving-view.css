@@ -1,0 +1,42 @@
+/* CLEAN VIEW: acquisition feedback outside the complete displayed picture. */
+.monitor-stack { flex-direction: column; justify-content: center; gap: 10px; }
+.monitor-viewport { position: relative; width: 100%; }
+.monitor-viewport.has-receiving-feedback { padding-right: 10px; }
+.rx-edge-track {
+  position: absolute; right: 1px; top: 17px; bottom: 17px;
+  width: 3px; border-radius: 3px; background: #87897633;
+  pointer-events: none; overflow: visible;
+}
+.rx-edge-fill { display: block; width: 100%; height: var(--rx-progress, 0%); border-radius: inherit; background: #d59b305c; }
+.rx-edge-cursor {
+  position: absolute; top: var(--rx-progress, 0%); right: -2px;
+  width: 7px; height: 3px; transform: translateY(-50%);
+  border-radius: 2px; background: #ffd16b; box-shadow: 0 0 5px #eeae3d55;
+}
+.rx-progress {
+  width: 100%; padding: 8px 11px 9px; border: 1px solid #666c5b;
+  border-radius: 8px; color: #d9ddce; background: #121710;
+  box-shadow: inset 0 1px #ffffff08;
+}
+.rx-progress-caption { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 3px 10px; }
+#rxProgressLabel { color: #9ea68f; font-size: .55rem; letter-spacing: .08em; font-weight: 650; }
+#rxReceivingRow { color: #e4d8b6; font: 500 .68rem/1.5 "Consolas", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+.rx-progress-track { height: 3px; overflow: hidden; margin-top: 6px; border-radius: 3px; background: #444b3a; }
+.rx-progress-track > span { display: block; height: 100%; width: var(--rx-progress, 0%); border-radius: inherit; background: #dca53f; }
+/* No clock-driven animation or transition: position changes only on samples. */
+.rx-progress[data-state="paused"] #rxReceivingRow { color: #b5ad98; }
+.rx-progress[data-state="paused"] .rx-progress-track > span { background: #8c7f55; }
+.rx-edge-track[data-state="paused"] .rx-edge-cursor { background: #a59d81; box-shadow: none; }
+.rx-progress[data-state="searching"] #rxReceivingRow, .rx-progress[data-state="idle"] #rxReceivingRow { color: #9da28f; }
+@media (max-width: 720px) {
+  .monitor-stack { gap: 8px; }
+  .rx-progress { padding: 7px 9px 8px; }
+}
+@media (max-width: 480px) {
+  .monitor-viewport.has-receiving-feedback { padding-right: 7px; }
+  .rx-edge-track { width: 2px; top: 10px; bottom: 10px; }
+  .rx-edge-cursor { width: 5px; }
+  .rx-progress { padding: 6px 8px 7px; }
+  #rxProgressLabel { font-size: .46rem; letter-spacing: .04em; }
+  #rxReceivingRow { font-size: .58rem; }
+}
