@@ -171,9 +171,6 @@ button:disabled, input:disabled, select:disabled { cursor: not-allowed; opacity:
 .lcd-meta span { white-space: nowrap; }
 .rf-dials { display: flex; justify-content: center; align-items: center; gap: 22px; }
 .rf-dials .dial { width: 115px; height: 115px; }
-.rf-dials .dial-block:last-child .dial { width: 82px; height: 82px; }
-.rf-dials .dial-block:last-child label { font-size: .72rem; }
-.rf-dials .dial-block:last-child output { font-size: .78rem; min-width: 65px; }
 .signal-lamps, .signal-row { display: flex; gap: 18px; align-items: center; justify-content: center; font-size: .75rem; font-weight: 800; }
 .signal-lamps span, .signal-row span { display: inline-flex; align-items: center; gap: 7px; }
 .lamp { display: inline-block; width: 13px; height: 13px; border: 1px solid #8d9990; border-radius: 50%; background: #17311a; box-shadow: inset 0 2px 4px #000; }
@@ -275,9 +272,7 @@ label.dial, label.console-knob { margin-top: 36px; }
 .dial-caption small { display: block; margin-top: 5px; color: #9ba690; font-size: .48rem; font-weight: 650; letter-spacing: .06em; }
 .left-controls .dial-block:not([hidden]) ~ .dial-block:not([hidden]) { padding-top: 5px; }
 .rf-dials { gap: 16px; }
-.rf-dials .dial-block:last-child .dial { width: 78px; height: 78px; }
 .rf-dials .dial > .dial-caption { width: 110px; }
-.rf-dials .dial-block:last-child .dial-caption { font-size: .66rem; }
 .dial-edit { padding: 2px 3px; margin: -14px -12px 0; min-height: 26px; border: 0; background: transparent; box-shadow: none; color: #b2baa6; font-size: .57rem; }
 .dial-edit:hover { color: #f1c066; }
 .lcd-top { grid-column: 1/-1; display: flex; justify-content: space-between; align-items: center; gap: 7px; font-size: .59rem; font-weight: 800; white-space: nowrap; }
@@ -393,7 +388,6 @@ label.dial, label.console-knob { margin-top: 36px; }
   .left-controls .dial { width: 128px; height: 128px; }
   .monitor-frame > .screen { min-height: 310px; }
   .rf-dials .dial { width: 128px; height: 128px; }
-  .rf-dials .dial-block:last-child .dial { width: 92px; height: 92px; }
 }
 @media (max-width: 1150px) {
   .console-app { padding: 18px 17px 25px; }
@@ -404,7 +398,6 @@ label.dial, label.console-knob { margin-top: 36px; }
   .dial-block output { font-size: .8rem; }
   .rf-dials { gap: 14px; }
   .rf-dials .dial { width: 92px; height: 92px; }
-  .rf-dials .dial-block:last-child .dial { width: 71px; height: 71px; }
   .amber-display { padding: 12px 9px; }
   .lcd-frequency { font-size: 1.48rem; }
   .lcd-role { font-size: 2rem; }
@@ -418,7 +411,6 @@ label.dial, label.console-knob { margin-top: 36px; }
   .rf-dials { gap: 11px; }
   .indicator-column .indicator { gap: 4px; font-size: .58rem; }
   .indicator-column .indicator i { width: 10px; height: 10px; }
-  .rf-dials .dial-block:last-child .dial { width: 62px; height: 62px; }
   .dial > .dial-caption { width: 125px; }
 }
 @media (max-width: 900px) {
@@ -436,9 +428,6 @@ label.dial, label.console-knob { margin-top: 36px; }
   .rf-stack { gap: 14px; }
   .rf-dials { gap: 8px; }
   .rf-dials .dial { width: 78px; height: 78px; }
-  .rf-dials .dial-block:last-child .dial { width: 59px; height: 59px; }
-  .rf-dials .dial-block:last-child label { font-size: .6rem; }
-  .rf-dials .dial-block:last-child output { min-width: 56px; font-size: .65rem; }
   .lcd-frequency { font-size: 1.23rem; }
   .lcd-role { font-size: 1.6rem; }
   .lcd-meta { font-size: .51rem; }
@@ -454,7 +443,6 @@ label.dial, label.console-knob { margin-top: 36px; }
   .radio-status { padding-inline: 19px; font-size: .61rem; }
   .console-header { font-size: .65rem; }
   .rf-dials { gap: 9px; }
-  .rf-dials .dial-block:last-child .dial { width: 52px; height: 52px; }
   .rf-dials .dial > .dial-caption { width: 90px; font-size: .57rem; }
   .lcd-top { font-size: .46rem; }
   .lcd-meta { font-size: .42rem; }
@@ -482,7 +470,6 @@ label.dial, label.console-knob { margin-top: 36px; }
   .lcd-meta { font-size: .58rem; }
   .rf-dials { gap: 12px; }
   .rf-dials .dial { width: 81px; height: 81px; }
-  .rf-dials .dial-block:last-child .dial { width: 62px; height: 62px; }
   .signal-lamps, .signal-row { grid-column: 1/-1; margin: -3px 0 -4px; }
   .transport-bar { justify-content: center; padding-inline: 12px; gap: 9px; }
   .transport-actions { flex: 1; justify-content: flex-end; }
@@ -504,7 +491,6 @@ label.dial, label.console-knob { margin-top: 36px; }
   .dial-caption small { font-size: .4rem; }
   .rf-stack { grid-template-columns: minmax(0, 1fr) minmax(150px, 1fr); }
   .rf-dials { gap: 13px; justify-content: flex-end; }
-  .rf-dials .dial-block:last-child .dial { width: 58px; height: 58px; }
   .lcd-top { font-size: .54rem; }
   .lcd-meta { font-size: .45rem; }
   .mic-level { grid-column: 1/-1; }
@@ -540,9 +526,6 @@ label.dial, label.console-knob { margin-top: 36px; }
   .lcd-meta { font-size: .45rem; gap: 2px 6px; }
   .rf-dials { gap: 9px; }
   .rf-dials .dial { width: 59px; height: 59px; }
-  .rf-dials .dial-block:last-child .dial { width: 46px; height: 46px; }
-  .rf-dials .dial-block:last-child label { font-size: .52rem; }
-  .rf-dials .dial-block:last-child output { min-width: 46px; font-size: .58rem; }
   .rf-dials .dial-block { gap: 5px; }
   .transport-bar { padding: 8px 9px; gap: 8px; }
   .segmented { padding: 2px; }

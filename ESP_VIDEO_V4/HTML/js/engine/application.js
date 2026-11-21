@@ -7,6 +7,10 @@ globalThis.CBVideoMAX=C;
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms)),ascii=new TextEncoder();
 const RATE=C.FS,PREBUFFER=12000,WRITE_BLOCK=2400,PREFIX=[77,80,88,51];
 const SERIAL_BAUD=1500000,SERIAL_PACE=150000;
+const {createProbe,compare}=globalThis.CBRadioAcquisition;
+const {detectRadioModel,defaultTxPowerForModel}=globalThis.CBRadioPower;
+const FINE_STEPS=[0,35000,45000,25000,-35000,-45000,-25000,10000,-10000,50000,-50000];
+const lastFineByPort=new WeakMap();
 const rxCapture=new globalThis.CBRXCapture.RXCapture({seconds:16,rate:RATE});
 let modeId='col320',cameraStream=null,cameraActive=false,imageSource='pattern';
 let cameraGeneration=0,cameraPending=false;
@@ -431,7 +435,19 @@ class ByteParser{
  }
 }
 function rxFrame(index,_strength,bytes){
- if(session?.state!=='rx'||$('role').value!=='rx')return;
+ const own=session;
+ if(own?.state!=='rx'||own.disconnecting||$('role').value!=='rx')return;
+ if(own.acquisition?.probe){
+  const attempt=own.acquisition.probe;
+  if(attempt.next!==null){
+   const gap=(index-attempt.next)>>>0;
+   if(gap>0)attempt.decoder.gap(gap);
+  }
+  attempt.next=(index+bytes.length)>>>0;
+  attempt.decoder.feed(bytes);
+  lastRxPacketAt=performance.now();rxBytes+=bytes.length;
+  return;
+ }
  rxCapture.record(index,bytes); // Preserve received PCM before A/V processing.
  lastRxPacketAt=performance.now();rxLossShown=false;rxBytes+=bytes.length;
  if(rxLastIndex!==null){
@@ -450,14 +466,19 @@ function rxFrame(index,_strength,bytes){
    log('Serial sample-timeline discontinuity: video data unavailable, marked RED.');
   }
  }
- if(avApp?.isMixed())avApp.feedBytes(bytes);else feedObservedVideo(bytes); /* RX_PROGRESS_FEED */
+ const mixed=avApp?.isMixed();
+ const before=mixed?avApp.rx?.counters.validHeaders||0:rxDecode.horizontalSyncs;
+ if(mixed)avApp.feedBytes(bytes);else feedObservedVideo(bytes); /* RX_PROGRESS_FEED */
+ const synchronized=mixed?avApp.rx?.state==='locked'&&avApp.rx.counters.validHeaders>before
+  :rxDecode.hLocked&&rxDecode.horizontalSyncs>before;
+ if(synchronized&&own.acquisition)own.acquisition.lastSync=performance.now();
  rxLastIndex=(index+bytes.length)>>>0;
 }
 const radioRxAck=/^OK RX \d+ 120000 HQ$/;
 function response(line){
  log(line);
  const own=session;
- if(own?.state==='tuning'&&radioRxAck.test(line)&&own.tuneCurrent?.()&&!own.disconnecting){
+ if(own?.state==='tuning'&&own.tuneAck?.(line)&&own.tuneCurrent?.()&&!own.disconnecting){
   // An RX acknowledgement starts a new sample-index epoch. A USB read can
   // contain that acknowledgement and the first MPX packets together.
   own.parser.setWireVersion(own.wireVersion);
@@ -478,32 +499,17 @@ function waitLine(test,ms=4500){
  });
  reply.cancel=()=>{clearTimeout(item.timer);pending=pending.filter(x=>x!==item);};return reply;
 }
-function readConfig(){
- for(const [id,label]of [['frequency','RF frequency'],['fine','RX frequency correction'],['apwr','TX power']])
-  if(!String($(id).value).trim())throw Error(label+' is required.');
- const hz=Math.round(Number($('frequency').value)*1e6),fine=Number($('fine').value),apwr=Number($('apwr').value);
+function readFrequency(){
+ const hz=Math.round(Number($('frequency').value)*1e6);
  if(!Number.isSafeInteger(hz)||hz<2401000000||hz>2482500000)throw Error('RF frequency must be 2401–2482.5 MHz');
- if(!Number.isInteger(fine)||Math.abs(fine)>50000)throw Error('RX fine tuning must be within ±50 kHz');
- if(!Number.isInteger(apwr)||apwr<0||apwr>191)throw Error('APWR must be between 0 and 191');
- return {hz,fine,apwr};
+ return hz;
 }
-let txPowerEdited=false;
-$('apwr').addEventListener('input',()=>{txPowerEdited=true;});
-async function selectDefaultTxPower(own){
- if($('role').value!=='tx'||txPowerEdited)return;
- const field=$('apwr');
- field.value=field.defaultValue;
- let info;
- try{
-  info=await commandAwait('HWINFO\n',line=>line.startsWith('OK HWINFO '),900,own);
- }catch(error){
-  if(error.message==='ERR COMMAND'||error.message==='Serial response timed out')return;
-  throw error;
- }
- const target=/^OK HWINFO TARGET (ESP32|ESP32-C6) /.exec(info)?.[1];
- if(!target)return;
- field.value=target==='ESP32-C6'?'63':'127';
- log('Default TX power for '+target+': APWR '+field.value);
+async function identifyRadio(own){
+ own.model=await detectRadioModel((command,match,timeout)=>commandAwait(command,match,timeout,own));
+ own.txPower=defaultTxPowerForModel(own.model);
+ $('apwr').value=own.txPower??'';
+ $('radioModel').textContent=own.model||'Unknown model';
+ if(own.txPower!==null)log('Automatic TX power for '+own.model+': APWR '+own.txPower);
 }
 async function write(bytes,own=session){
  if(!own||own.closing)throw Error('Serial port unavailable');
@@ -529,6 +535,7 @@ async function readSerial(own){
 }
 function serialFault(own,error){
  if(own!==session||own.closing)return;
+ own.acquisition=null;
  own.readError=error;own.txRunning=false;own.state='fault';own.cancelReady?.();own.cancelReady=null;own.ready=null;
  for(const item of pending){clearTimeout(item.timer);item.reject(error);}pending=[];
  avApp?.cancelPacing(error);avApp?.resetReceive();
@@ -614,9 +621,9 @@ async function configureSerialTransport(own){
 function setButtons(){
  const state=session?.state||(connecting?'connecting':'off'),on=state!=='off'&&state!=='connecting';
  $('connect').disabled=state!=='off';$('disconnect').disabled=!on||state==='disconnecting';
- $('startTx').disabled=state!=='rx'||$('role').value!=='tx'||!!(avApp&&!avApp.ready());
+ $('startTx').disabled=state!=='rx'||$('role').value!=='tx'||session?.txPower===null||!!(avApp&&!avApp.ready());
  $('stopTx').disabled=!['tx','keying','stopping'].includes(state);
- $('role').disabled=state!=='off';$('frequency').disabled=state!=='off';$('fine').disabled=state!=='off';$('apwr').disabled=state!=='off'&&state!=='rx';
+ $('role').disabled=state!=='off';$('frequency').disabled=state!=='off';
  $('mode').disabled=['tx','keying','stopping'].includes(state);maxUpdateUI();
  if(avApp){
   const audioOnly=avApp.config().usage==='audio';
@@ -626,40 +633,108 @@ function setButtons(){
  }
  easyApp?.refresh();
 }
-async function tuneRadio(own,cfg,current){
- if($('role').value==='rx'){
-  rxLastIndex=null;lastRxPacketAt=performance.now();rxLossShown=false;rxFramesWindow=[];
-  rxDecode.reset(true);rxDecode.packedClock?.reset();updateRxControls();rxProgress.reset(modeId);
-  autoLineProbe=new Auto320LineProbe(autoDetect320);
-  rxCapture.clear();$('saveRxCapture').disabled=true;
-  receivedCtx.clearRect(0,0,$('received').width,$('received').height);
-  $('lockStatus').textContent='Searching for H / V';
-  $('rxRate').textContent='0';
- }
- own.state='tuning';own.tuneCurrent=current;
+function resetReceiverEpoch(clearPicture){
+ rxLastIndex=null;lastRxPacketAt=performance.now();rxLossShown=false;rxFramesWindow=[];
+ rxDecode.reset(true);rxDecode.packedClock?.reset();updateRxControls();rxProgress.reset(modeId);
+ autoLineProbe=new Auto320LineProbe(autoDetect320);
+ rxCapture.clear();$('saveRxCapture').disabled=true;
+ if(clearPicture)receivedCtx.clearRect(0,0,$('received').width,$('received').height);
+ $('lockStatus').textContent='Searching for H / V';
+}
+async function tuneRadio(own,cfg,current,{initial=true}={}){
+ if(initial&&$('role').value==='rx')resetReceiverEpoch(true);
+ const expected=cfg.hz+cfg.fine;
+ const matches=line=>radioRxAck.test(line)&&Math.abs(Number(line.split(' ')[2])-expected)<2000;
+ own.state='tuning';own.tuneCurrent=current;own.tuneAck=matches;
  try{
-  const reply=await commandAwait('RX '+cfg.hz+' HQ '+cfg.fine+'\n',line=>radioRxAck.test(line),5500,own);
+  const reply=await commandAwait('RX '+cfg.hz+' HQ '+cfg.fine+'\n',matches,5500,own);
   if(!current()||session!==own||own.disconnecting||own.state!=='rx')throw Error('Radio start cancelled');
-  log('Radio RX 120000 HQ: '+reply);
- }finally{own.tuneCurrent=null;}
+  if(initial){
+   log('Radio RX 120000 HQ: '+reply);
+   status($('role').value==='rx'?'RX active · finding the best tuning':'Radio ready · enable webcam or test pattern, then select Start TX');
+  }
+ }finally{own.tuneCurrent=null;own.tuneAck=null;}
+ if(initial)setButtons();
+}
+function makeTuningProbe(){
+ return {decoder:createProbe({C,AV:globalThis.CBAnalogAV,mode:modeId,mixed:avApp.isMixed(),
+  auto320:$('auto320').checked}),next:null};
+}
+function validFine(hz,fine){
+ return hz+fine>=2401000000&&hz+fine<=2482500000;
+}
+async function acquireRadio(own,track,initial){
+ const current=()=>session===own&&own.acquisition===track&&!own.disconnecting&&!own.closing;
+ const startingFine=track.fine;
+ track.searching=true;track.probe=initial?track.probe:makeTuningProbe();
+ $('lockStatus').textContent='Automatic tuning…';
+ status('RX active · finding the best tuning');
+ if(!initial)avApp.resetReceive({preserveListening:true});
  setButtons();
- status($('role').value==='rx'?'RX analog TV active · H/V scanning · RF defects visible':'Radio ready · enable webcam or test pattern, then select Start TX');
+ const candidates=[...new Set([startingFine,...FINE_STEPS])].filter(fine=>validFine(track.hz,fine));
+ let best=null;
+ try{
+  for(const fine of candidates){
+   if(!current())return;
+   if(fine!==track.fine){
+    track.probe=makeTuningProbe();
+    await tuneRadio(own,{hz:track.hz,fine},current,{initial:false});
+    track.fine=fine;
+   }
+   const probe=track.probe.decoder;
+   const enoughSamples=RATE*((initial&&fine===startingFine) ? 0.55 : 0.43);
+   const end=performance.now()+950;
+   let evidence=probe.snapshot();
+   while(current()&&evidence.samples<enoughSamples&&performance.now()<end){
+    await sleep(45);
+    evidence=probe.snapshot();
+   }
+   if(!current())return;
+   log('RX fine '+fine+' Hz · sync '+Math.round(evidence.score*100)+'%'+
+    (evidence.headers===undefined?'':' · '+evidence.headers+' verified headers'));
+   const result={fine,evidence};
+   if(evidence.qualified&&(!best||compare(evidence,best.evidence)<0))best=result;
+   // The ESP8266 needs a comparison with both nearby positive offsets on
+   // first acquisition. A previously verified offset can lock immediately.
+   const checkNearby=own.model==='ESP8266'&&startingFine===0&&[0,35000].includes(fine);
+   if(evidence.strong&&evidence.score>=.90&&!checkNearby)break;
+  }
+  const fine=best?.fine??startingFine;
+  resetReceiverEpoch(false);
+  if(fine!==track.fine)await tuneRadio(own,{hz:track.hz,fine},current,{initial:false});
+  if(!current())return;
+  track.fine=fine;track.probe=null;track.searching=false;track.verified=!!best;
+  track.lastSync=performance.now();track.retryAt=track.lastSync+(best?2500:5000);
+  $('fine').value=fine;
+  if(best)lastFineByPort.set(own.port,{hz:track.hz,fine});
+  log(best?'Automatic RX fine selected: '+fine+' Hz':'Automatic RX fine: waiting for valid sync');
+  status(best?'RX active · tuned automatically':'RX active · waiting for signal');
+  setButtons();
+ }catch(error){
+  if(!current())return;
+  log('Automatic RX tuning: '+error.message);
+  await disconnect();
+  status('Automatic RX tuning failed: '+error.message,true);setButtons();
+ }
 }
 async function connect(options={}){
  if(session||connecting)return session;let own=null;const request=++connectGeneration;activeConnectGeneration=request;
  const current=()=>request===connectGeneration&&(!options.isCurrent||options.isCurrent());
  connecting=true;setButtons();
  try{
-  const cfg=readConfig();
+  const hz=readFrequency();
   if(!navigator.serial)throw Error('Web Serial is unavailable. Use desktop Chrome/Edge, preferably via localhost.');
   const port=options.port||await navigator.serial.requestPort();
   if(!current())throw Error('Serial connection cancelled');
   status('Checking radio serial link...');own=await establishSerialPort(port,current);
   await configureSerialTransport(own);await maxConfigureTX7(own);
-  await selectDefaultTxPower(own);
+  await identifyRadio(own);
   if(!current())throw Error('Serial connection cancelled');
   // TX firmware uses RX to select its channel before accepting TX7.
-  if($('role').value==='tx')await tuneRadio(own,cfg,current);
+  if($('role').value==='tx'){
+   if(own.txPower===null)throw Error('TX power unavailable for this radio model.');
+   await tuneRadio(own,{hz,fine:0},current);
+  }
   else{own.state='idle';status('USB connected · press Start RX to receive.');}
   easySelectedPort=port;
   return own;
@@ -669,6 +744,7 @@ async function connect(options={}){
 async function disconnect(){
  const own=session;if(!own||own.closing||own.disconnecting)return;
  own.disconnecting=true;
+ own.acquisition=null;
  /* RX_PROGRESS_RESET */ rxProgress.reset(modeId);
  ++connectGeneration;
  maxResetFrames();
@@ -728,7 +804,8 @@ async function startTx(){
  const attempt=own.txAttempt=(own.txAttempt||0)+1;
  const current=()=>session===own&&!own.closing&&own.txAttempt===attempt;
  try{
-  const {apwr}=readConfig();
+  const apwr=own.txPower;
+  if(apwr===null)throw Error('TX power unavailable for this radio model.');
   if(avApp&&!avApp.getPlan().admitted)throw Error(avApp.getPlan().reason);
   maxResetFrames();txFieldCount=0;maxAcquisitionSequence=0;
   own.state='keying';setButtons();
@@ -797,13 +874,19 @@ function updateStats(){
  $('rxSync').textContent=rxDecode.verticalSyncs.toLocaleString('en-US');
  $('rxHSync').textContent=rxDecode.horizontalSyncs.toLocaleString('en-US');
  const vRecent=rxDecode.verticalSyncs>0 && rxDecode.totalSamples-rxDecode.lastVAt<rxDecode.p.fieldSamples*1.6;
- $('lockStatus').textContent=rxDecode.hLocked?(vRecent?'H + V locked':'H locked · searching for V'):(vRecent?'Acquiring H · V detected':'Searching for H / V');
+ const own=session,acquisition=own?.acquisition;
+ $('lockStatus').textContent=acquisition?.searching?'Automatic tuning…':
+  rxDecode.hLocked?(vRecent?'H + V locked':'H locked · searching for V'):(vRecent?'Acquiring H · V detected':'Searching for H / V');
  $('syncDetails').textContent=`H: ${rxDecode.horizontalSyncs} · V: ${rxDecode.verticalSyncs} · candidates: ${rxDecode.hCandidates} · false H: ${rxDecode.falseH} · missing H: ${rxDecode.hLost} · sync margin: ${rxDecode.markerContrast.toFixed(0)} PCM`;
  $('lockStatus').style.color=rxDecode.hLocked?'#7de2ae':'#f4c17a';
  $('txJitter').textContent=String(txMaxLate);
  $('markerLevels').textContent=rxDecode.rxSyncMean===null?'Received reference levels: searching for H/V…':`SYNC ${rxDecode.rxSyncMean.toFixed(0)} · Black ${rxDecode.rxBlackMean.toFixed(0)} · White ${rxDecode.rxWhiteMean.toFixed(0)} PCM`;
  $('saveRxCapture').disabled=rxCapture.stats().retainedSamples===0;
- if(session?.state==='rx'&&$('role').value==='rx'&&lastRxPacketAt&&now-lastRxPacketAt>1600&&!rxLossShown){
+ if(own?.state==='rx'&&$('role').value==='rx'&&acquisition&&!acquisition.searching
+    &&now>=acquisition.retryAt&&(!acquisition.verified||now-acquisition.lastSync>1800)){
+  void acquireRadio(own,acquisition,false);
+ }
+ if(own?.state==='rx'&&$('role').value==='rx'&&!acquisition?.searching&&lastRxPacketAt&&now-lastRxPacketAt>1600&&!rxLossShown){
   rxLossShown=true;
   rxDecode.showSignalLoss('no serial packets for more than 1.6 seconds');
   log('RX: serial packets stopped. Marked missing image RED; no RF noise invented.');
@@ -840,7 +923,8 @@ const easyBridge={
   const state=session?.state||(connecting?'connecting':'off'),role=$('role').value;
   const config={usage:$('avUsage').value,audioRate:Number($('avRate').value),audioChannels:Number($('avChannels').value),cameraDeviceId:$('avCameraDevice').value,micDeviceId:$('avMicDevice').value,volume:Number($('avVolume').value)};
   const connected=['idle','tuning','rx','tx','keying','stopping','disconnecting'].includes(state),transmitting=['tx','keying','stopping'].includes(state);
-  const receiving=state==='rx'&&role==='rx';
+  const acquisition=session?.acquisition;
+  const receiving=role==='rx'&&(state==='rx'||state==='tuning'&&!!acquisition);
   const cleanupPending=connecting&&activeConnectGeneration!==connectGeneration;
   const busy=easyAction.busy||(connecting&&!cleanupPending)||['keying','stopping','tuning','disconnecting'].includes(state);
   const running=(state==='tx'&&!!session?.txRunning)||receiving;
@@ -848,7 +932,8 @@ const easyBridge={
   let rfStatus={state:'searching',label:'Waiting for signal'};
   if(transmitting)rfStatus={state:'tx',label:state==='keying'?'Starting transmission…':state==='stopping'?'Stopping transmission…':'Transmitting'};
   else if(receiving){
-   if(config.usage==='video')rfStatus={state:'analog',label:$('lockStatus').textContent||'Searching for H/V'};
+   if(acquisition?.searching)rfStatus={state:'searching',label:'Automatic tuning…'};
+   else if(config.usage==='video')rfStatus={state:'analog',label:$('lockStatus').textContent||'Searching for H/V'};
    else if(avApp?.lastAudioAt&&performance.now()-avApp.lastAudioAt<300){
     if(avApp.rx?.state==='locked')rfStatus={state:'locked',label:'Receiving · metadata verified'};
     else if(avApp.rx?.state==='holdover')rfStatus={state:'holdover',label:'Synchronization degraded · held clock'};
@@ -863,7 +948,7 @@ const easyBridge={
   return {role,usage:config.usage||'video',videoMode:modeId,audioRate:Number(config.audioRate||16000),audioChannels:Number(config.audioChannels||1),
    cameraDeviceId:config.cameraDeviceId||'',micDeviceId:config.micDeviceId||'',videoSource:easyVideoSource,
    devices:{cameras:options('avCameraDevice'),microphones:options('avMicDevice')},
-   portLabel:connected?'ESP · USB Serial':easySelectedPort?'ESP · selected':'No ESP selected',portSelected:!!(easySelectedPort||session?.port),
+   portLabel:connected?(session?.model||'ESP')+' · USB Serial':easySelectedPort?'ESP · selected':'No ESP selected',portSelected:!!(easySelectedPort||session?.port),
    connected,receiving,connecting:connecting&&!cleanupPending,cleanupPending,busy,running,roleLocked:connected||busy||cleanupPending,settingsLocked:running||busy||cleanupPending,
    canStart:!!(easySelectedPort||session?.port)&&!connecting&&!busy&&!running,canChooseESP:!connecting&&!busy&&!running,
    plan:avApp?.getPlan(),rxPlan,rfStatus,listening:!!avApp?.playback,volume:Number(config.volume??.7),micLevel:avApp?.capture?.stats?.().level||0,
@@ -924,7 +1009,13 @@ const easyBridge={
    if(initial.role==='rx'){
     if(session?.state!=='idle')throw Error($('status').textContent||'The ESP is not ready.');
     receiver=session;
-    await tuneRadio(receiver,readConfig(),current);
+    const hz=readFrequency(),previous=lastFineByPort.get(receiver.port);
+    const fine=previous?.hz===hz?previous.fine:0;
+    const track={hz,fine,searching:true,probe:makeTuningProbe(),lastSync:0,retryAt:Infinity};
+    receiver.acquisition=track;
+    $('fine').value=fine;
+    await tuneRadio(receiver,{hz,fine},current);
+    if(current())void acquireRadio(receiver,track,true);
     if(listenTask)await listenTask;
     if(!current())return;easyAction.message='Receiving';
    }else{

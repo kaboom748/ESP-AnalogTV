@@ -46,8 +46,9 @@
     for (const id of ['avRate', 'avChannels']) field(id, 'qualityAudioSlot');
     for (const id of ['avFpsPolicy', 'avMinFps']) field(id, 'qualityFpsSlot');
     place('avExpectedFps', 'qualityPlanSlot', '.avPlan');
-    for (const id of ['frequency', 'fine', 'apwr']) field(id, 'radioFieldsSlot');
-    $('apwr').closest('.field').dataset.stationRole = 'tx';
+    field('frequency', 'radioFieldsSlot');
+    place('radioIdentity', 'advancedDiagnosticsSlot');
+    for (const id of ['fine', 'apwr']) field(id, 'advancedDiagnosticsSlot');
     place('status', 'radioStatusSlot');
 
     place('easyChooseESP', 'portChooseSlot', '.easyPortRow');
@@ -82,7 +83,7 @@
       avMicGain: 'Microphone gain', avVolume: 'Speaker volume', contrast: 'TX source contrast',
       mode: 'Video profile', grayLevels: 'Grayscale levels · TX', avRate: 'Audio sample rate', avChannels: 'Audio channels',
       avFpsPolicy: 'Frame-rate policy', avMinFps: 'Minimum requested FPS', frequency: 'CHANNEL · frequency (MHz)',
-      fine: 'RX correction (Hz)', apwr: 'TX POWER · APWR (0–191)', rxBrightness: 'RX brightness', rxContrast: 'RX contrast',
+      fine: 'Automatic RX correction (Hz)', apwr: 'Automatic TX power (APWR)', rxBrightness: 'RX brightness', rxContrast: 'RX contrast',
       saturation: 'Color saturation', hPosition: 'Horizontal position', hHold: 'H-HOLD · horizontal timing',
       vHold: 'V-HOLD · vertical timing', hLock: 'H-sync lock strength'
     };
@@ -149,7 +150,7 @@
       face.addEventListener('pointercancel',()=>{drag=null;});
       return () => {knob.value=String(convert(Number(target.value)));knob.disabled=target.disabled;const value=Number(target.value),fraction=(Number(knob.value)-Number(knob.min))/(Number(knob.max)-Number(knob.min));knob.closest('.dial').style.setProperty('--angle',(-135+Math.max(0,Math.min(1,fraction))*270)+'deg');if(outId)text(outId,format(value));knob.setAttribute('aria-valuetext',format(value));};
     }
-    const knobs = [bindKnob('knobVolume','avVolume',v=>Math.round(v*100)+' %','knobVolumeOut'),bindKnob('knobPower','apwr',v=>'APWR '+v,'knobPowerOut',{invert:true}),bindKnob('knobMic','avMicGain',v=>v.toFixed(2)+'×','knobMicOut'),bindKnob('knobFrequency','frequency',v=>v.toFixed(4)+' MHz'),bindKnob('knobFine','fine',v=>(v>0?'+':'')+v+' Hz','knobFineOut')];
+    const knobs = [bindKnob('knobVolume','avVolume',v=>Math.round(v*100)+' %','knobVolumeOut'),bindKnob('knobMic','avMicGain',v=>v.toFixed(2)+'×','knobMicOut'),bindKnob('knobFrequency','frequency',v=>v.toFixed(4)+' MHz')];
     // One upstream TX journal entry contains a French phrase. Translate only
     // its displayed text; keep the original engine and radio protocol intact.
     const english = value => String(value ?? '').replaceAll('audio seul', 'audio only');
@@ -176,14 +177,12 @@
       text('consoleStart',tx?'▶ START TX':'▶ START RX');
       text('consoleStop',$('easyStop').textContent==='Cancel'?'✕ CANCEL':'■ STOP');
       text('lcdRole',tx?'TX':'RX');text('lcdUsage',usage==='av'?'AUDIO + VIDEO':usage==='audio'?'AUDIO':'VIDEO');
-      text('lcdFrequency',Number($('frequency').value).toFixed(4));text('lcdPower','APWR '+$('apwr').value);
+      text('lcdFrequency',Number($('frequency').value).toFixed(4));
       const selectedVideo=globalThis.CBAnalogV8.getFormat($('mode').value);
       text('lcdVideoQuality',selectedVideo.w+' × '+selectedVideo.h+(selectedVideo.kind==='color'?' COLOR':' B&W'));
       text('lcdAudioQuality',(Number($('avRate').value)/1000)+' kHz '+($('avChannels').value==='2'?'STEREO':'MONO'));
       $('lcdVideoQuality').classList.toggle('quality-inactive',!hasVideo);
       $('lcdAudioQuality').classList.toggle('quality-inactive',usage==='video');
-      text('lcdPowerLevel',$('apwr').value==='191'?'MIN POWER':$('apwr').value==='0'?'MAX POWER':'TX POWER');
-      $('powerLockNote').hidden=!$('apwr').disabled;
       text('lcdConnection',connected?'USB CONNECTED':$('easyConnection').textContent==='Selected · not connected'?'ESP SELECTED':'USB DISCONNECTED');
       text('consolePortState',connected?'● ESP connected · USB Web Serial':'○ '+english($('easyConnection').textContent));
       $('consolePortState').classList.toggle('is-connected',connected);

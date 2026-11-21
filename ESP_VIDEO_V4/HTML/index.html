@@ -18,7 +18,6 @@
     <div class="radio-face">
       <div class="control-stack left-controls">
         <div class="dial-block" data-station-role="rx"><label class="dial" for="knobVolume"><span class="dial-caption">VOLUME <small>SPEAKER</small></span><span class="dial-face" aria-hidden="true"></span><output id="knobVolumeOut" for="knobVolume">70 %</output><input id="knobVolume" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Speaker volume"></label></div>
-        <div class="dial-block power-control" data-station-role="tx" hidden><label class="dial" for="knobPower"><span class="dial-caption">TX POWER</span><span class="dial-face" aria-hidden="true"></span><output id="knobPowerOut" for="knobPower">APWR 191</output><input id="knobPower" type="range" min="0" max="191" step="1" value="0" aria-label="TX power"></label><div class="power-endpoints"><span>MIN · 191</span><span>MAX · 0</span></div><p id="powerLockNote" class="power-lock-note" hidden>Stop TX to adjust power.</p></div>
         <div class="dial-block mic-control" data-station-role="tx" hidden><label class="dial" for="knobMic"><span class="dial-caption">MIC GAIN <small>AUDIO SOURCE</small></span><span class="dial-face" aria-hidden="true"></span><output id="knobMicOut" for="knobMic">1.00×</output><input id="knobMic" type="range" min="0" max="4" step="0.05" value="1" aria-label="Microphone gain"></label><div class="mic-level mic-level-left"><span>MIC</span><meter id="consoleMicLevel" min="0" max="1" value="0" aria-label="Microphone source level"></meter></div></div>
       </div>
       <div class="monitor-stack" id="monitorStack">
@@ -32,11 +31,10 @@
         </div>
       </div>
       <div class="rf-stack">
-        <div class="amber-display" aria-label="Radio frequency and selected quality"><div class="lcd-top"><strong class="lcd-role" id="lcdRole">RX</strong><span id="lcdUsage">AUDIO + VIDEO</span><span id="lcdPower" data-station-role="tx" hidden>APWR 191</span></div><div class="lcd-frequency"><span id="lcdFrequency">2442.3125</span><small>MHz</small></div><div class="lcd-quality"><span class="lcd-quality-title">SELECTED QUALITY</span><div class="lcd-quality-row"><span>VIDEO</span><strong id="lcdVideoQuality">320 × 240 COLOR</strong></div><div class="lcd-quality-row"><span>AUDIO</span><strong id="lcdAudioQuality">44.1 kHz MONO</strong></div></div><div id="lcdPowerLevel" class="lcd-power-level" data-station-role="tx" hidden>MIN POWER</div><div class="lcd-meta"><span id="lcdConnection">USB DISCONNECTED</span><span id="lcdSync">H / V —</span></div></div>
+        <div class="amber-display" aria-label="Radio frequency and selected quality"><div class="lcd-top"><strong class="lcd-role" id="lcdRole">RX</strong><span id="lcdUsage">AUDIO + VIDEO</span></div><div class="lcd-frequency"><span id="lcdFrequency">2442.3125</span><small>MHz</small></div><div class="lcd-quality"><span class="lcd-quality-title">SELECTED QUALITY</span><div class="lcd-quality-row"><span>VIDEO</span><strong id="lcdVideoQuality">320 × 240 COLOR</strong></div><div class="lcd-quality-row"><span>AUDIO</span><strong id="lcdAudioQuality">44.1 kHz MONO</strong></div></div><div class="lcd-meta"><span id="lcdConnection">USB DISCONNECTED</span><span id="lcdSync">H / V —</span></div></div>
         <div class="rf-dials">
           <div class="indicator-column"><span class="indicator" id="rxIndicator"><i></i>RX</span><span class="indicator tx" id="txIndicator"><i></i>TX</span></div>
           <div class="dial-block"><label class="dial" for="knobFrequency"><span class="dial-caption">CHANNEL</span><span class="dial-face" aria-hidden="true"></span><input id="knobFrequency" type="range" min="2401" max="2482.5" step="0.0001" value="2442.3125" aria-label="Radio frequency in MHz"></label><button class="dial-edit" data-menu="radio" title="Enter an exact frequency">Exact frequency ↗</button></div>
-          <div class="dial-block small-dial"><label class="dial" for="knobFine"><span class="dial-caption">RX FINE</span><span class="dial-face" aria-hidden="true"></span><output id="knobFineOut" for="knobFine">0 Hz</output><input id="knobFine" type="range" min="-50000" max="50000" step="100" value="0" aria-label="RX frequency correction in Hz"></label></div>
         </div>
       </div>
       <div class="transport-bar">
@@ -50,7 +48,6 @@
     </div>
     <div class="radio-status"><span class="port-state" id="consolePortState">○ ESP disconnected</span><span id="consoleSignalState">Waiting for signal</span></div>
   </section>
-  <aside class="power-advice" data-station-role="tx" hidden><span class="power-advice-icon" aria-hidden="true">ⓘ</span><div><strong>Start at minimum power. Increase only as needed.</strong><p>Use a heatsink if the module gets hot.</p></div></aside>
   <div id="stationMessage" class="station-message" role="status">Choose your ESP in PORT to get started.</div>
   <section class="quick-summary" aria-label="Signal summary"><div><span id="summaryVideoLabel">VIDEO FORMAT</span><strong id="summaryVideo">—</strong><small id="summaryFps">Calculated frame rate · —</small></div><div><span>AUDIO</span><strong id="summaryAudio">Off</strong><small id="summarySource">Receiver ready</small></div><div><span>SYNCHRONIZATION</span><strong id="summarySync">No signal</strong><small id="summaryDelay">Predicted delay · —</small></div></section>
   <p class="support-note" id="browserNotice">Open this interface in Chrome or Edge. Choose the USB port before starting.</p>
@@ -62,7 +59,7 @@
   <section data-menu-panel="audio" hidden><p class="menu-description">Microphone gain is shown in TX; speaker volume is shown in RX.</p><div id="audioSourceSlot" class="dialog-section"><h3>AUDIO SOURCE · TX</h3></div><div id="audioLevelSlot" class="dialog-section" data-station-role="tx" hidden><h3>MICROPHONE LEVEL</h3></div><div id="audioPlaybackSlot" class="dialog-section" data-station-role="rx"><h3>SPEAKER · RX</h3></div><div id="audioStatusSlot"></div></section>
   <section data-menu-panel="video" hidden><p class="menu-description">Choose a webcam or test pattern for transmission. The screen shows received video in RX and the video being transmitted in TX.</p><div id="videoSourceSlot" class="dialog-section"><h3>VIDEO SOURCE · TX</h3></div><div id="videoContrastSlot" class="dialog-section"><h3>TRANSMITTED IMAGE</h3></div><div class="submenu-links"><button data-menu="advanced" data-section="image">RX image settings →</button><button data-menu="advanced" data-section="sync">H/V synchronization →</button></div><div id="videoInfoSlot"></div></section>
   <section data-menu-panel="quality" hidden><p class="menu-description">All existing engine profiles. For video-only reception, select the same format as the transmitter.</p><div id="qualityVideoSlot" class="dialog-section"><h3>VIDEO</h3></div><div id="qualityAudioSlot" class="dialog-section"><h3>AUDIO</h3></div><div id="qualityFpsSlot" class="dialog-section"><h3>FRAME RATE</h3></div><div id="qualityPlanSlot" class="dialog-section"><h3>CALCULATED BUDGET AND DELAY</h3></div></section>
-  <section data-menu-panel="radio" hidden><p class="menu-description">Disconnect to change the channel or RX fine tuning.</p><div id="radioFieldsSlot" class="dialog-grid"></div><p class="power-explainer" data-station-role="tx" hidden><strong>APWR: 0 = maximum power · 191 = minimum power.</strong><br>The ESP32 and ESP32-C6 select a default power when connected. You can set your own power before starting TX.<br>This setting is not a measurement in dBm.</p><div id="radioStatusSlot"></div></section>
+  <section data-menu-panel="radio" hidden><p class="menu-description">Set the same channel on both stations. TX power and RX fine tuning are automatic.</p><div id="radioFieldsSlot" class="dialog-grid"></div><div id="radioStatusSlot"></div></section>
   <section data-menu-panel="port" hidden><p class="menu-description">Choose the ESP in the Web Serial picker, then use START on the console.</p><div id="portChooseSlot" class="dialog-section"><h3>USB CONNECTION</h3></div><details class="dialog-section"><summary>Manual connection</summary><div id="portManualSlot" class="row"></div><p class="mini">Directly opens the port selected in the browser dialog.</p></details><div id="portStatusSlot"></div><p class="mini">ESP8266 · ESP32 · ESP32-C5 · ESP32-C6 · 1,500,000 baud · MPX4 / MPX3.</p></section>
   <section data-menu-panel="advanced" hidden><nav class="dialog-tabs" aria-label="Advanced functions"><button data-advanced="image" aria-pressed="true">RX IMAGE</button><button data-advanced="sync" aria-pressed="false">SYNC</button><button data-advanced="diagnostics" aria-pressed="false">DIAGNOSTICS</button><button data-advanced="journal" aria-pressed="false">LOG</button></nav><div data-advanced-panel="image" id="advancedImageSlot" class="dialog-section"></div><div data-advanced-panel="sync" id="advancedSyncSlot" class="dialog-section" hidden></div><div data-advanced-panel="diagnostics" id="advancedDiagnosticsSlot" class="dialog-section" hidden></div><div data-advanced-panel="journal" id="advancedJournalSlot" class="dialog-section" hidden></div></section>
 </div></dialog>
@@ -126,8 +123,9 @@
  <div class="field"><label for="mode">Video format (video-only RX must match TX)</label><select id="mode"></select></div>
  <div class="field"><label for="grayLevels">B&W grayscale levels (TX)</label><select id="grayLevels"><option value="256">256 gray levels</option><option value="16">16 gray levels</option><option value="2">Black and white (2 levels)</option></select></div>
  <div class="field"><label for="frequency">RF frequency (MHz)</label><input type="number" id="frequency" min="2401" max="2482.5" step="0.0001" value="2442.3125"></div>
- <div class="field"><label for="fine">RX frequency correction (Hz)</label><input type="number" id="fine" min="-50000" max="50000" step="100" value="0"></div>
- <div class="field"><label for="apwr">TX power (0=max, 191=min)</label><input type="number" id="apwr" min="0" max="191" step="1" value="191" required></div>
+ <div class="field"><label for="fine">Automatic RX correction (Hz)</label><input type="number" id="fine" value="0" readonly></div>
+ <div class="field"><label for="apwr">Automatic TX power (APWR)</label><input type="number" id="apwr" readonly></div>
+ <p id="radioIdentity">Radio model · <output id="radioModel">—</output></p>
 </div>
 <div class="switchrow"><div class="row"><button id="connect" class="primary">Connect USB serial</button><button id="disconnect" disabled>Disconnect</button></div>
 <div class="mini">TX/RX · MPX4 CRC32 / MPX3 · 120,000 samples/s</div></div>
@@ -293,6 +291,8 @@
 <script src="js/engine/rx-capture.js"></script>
 <script src="js/engine/easy-controls.js"></script>
 <script src="js/rx-progress.js"></script>
+<script src="js/engine/radio-acquisition.js"></script>
+<script src="js/engine/radio-power.js"></script>
 <script src="js/engine/application.js"></script>
 
 <script src="js/receiving-view.js"></script>

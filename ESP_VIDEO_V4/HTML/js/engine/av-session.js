@@ -171,9 +171,10 @@
   }
   cancelPacing(error){for(const item of this.pacing)error?item.reject(error):item.resolve();this.pacing=[];}
   endTransmit(){this.txGeneration++;this.cancelPacing();this.tx=null;this.txPending=null;this.txPendingOffset=0;this.update();}
-  resetReceive(){
+  resetReceive({preserveListening=false}={}){
+   const resume=preserveListening&&this.wantAudio;
    this.rx?.reset();this.rx=null;this.rxPlan=null;this.rxConfigKey='';this.rxSessionId=null;this.lastAudioPTS=null;this.pictures=[];this.framePTS=null;
-   this.pause();this.lastAudioAt=0;
+   this.pause();this.wantAudio=resume;this.lastAudioAt=0;
   }
   ensureReceiver(){
    if(this.rx)return;
@@ -212,7 +213,7 @@
    this.rxPlan=p;this.rxConfigKey=key;this.pictures=[];this.framePTS=null;
    if(epochChanged)this.lastAudioPTS=null;
    this.o.onReceiveConfig?.(p);
-   if(this.playback&&(this.playbackKey!==key||epochChanged||this.lastAudioPTS!==null)){
+   if(this.playback?(this.playbackKey!==key||epochChanged||this.lastAudioPTS!==null):listening){
     this.pause();
     if(listening)void this.listen().catch(error=>this.fail(error));
    }
