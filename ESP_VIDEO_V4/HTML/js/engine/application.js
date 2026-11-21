@@ -11,6 +11,7 @@ const {createProbe,compare}=globalThis.CBRadioAcquisition;
 const {detectRadioModel,defaultTxPowerForModel}=globalThis.CBRadioPower;
 const FINE_STEPS=[0,35000,45000,25000,-35000,-45000,-25000,10000,-10000,50000,-50000];
 const lastFineByPort=new WeakMap();
+const txPowerByPort=new WeakMap();
 const rxCapture=new globalThis.CBRXCapture.RXCapture({seconds:16,rate:RATE});
 let modeId='col320',cameraStream=null,cameraActive=false,imageSource='pattern';
 let cameraGeneration=0,cameraPending=false;
@@ -504,11 +505,43 @@ function readFrequency(){
  if(!Number.isSafeInteger(hz)||hz<2401000000||hz>2482500000)throw Error('RF frequency must be 2401–2482.5 MHz');
  return hz;
 }
+function txPowerSettings(port){
+ if(!port)return null;
+ let settings=txPowerByPort.get(port);
+ if(!settings){
+  settings={model:null,automatic:null,manual:null};
+  txPowerByPort.set(port,settings);
+ }
+ return settings;
+}
+function selectedTxPowerSettings(){
+ return txPowerSettings(session?.port||easySelectedPort);
+}
+function updateTxPowerControls(state){
+ const power=selectedTxPowerSettings(),field=$('apwr');
+ field.value=power?.manual??power?.automatic??'';
+ field.dataset.mode=power?.manual!=null?'manual':'auto';
+ field.disabled=!power||$('role').value!=='tx'||easyAction.busy||!['off','rx'].includes(state);
+ $('txPowerAuto').disabled=field.disabled||power?.manual==null;
+ $('radioModel').textContent=power?.model||'—';
+}
+$('apwr').addEventListener('input',()=>{
+ const field=$('apwr'),power=selectedTxPowerSettings(),value=Number(field.value);
+ if(!field.disabled&&power&&field.value!==''&&Number.isInteger(value)&&value>=0&&value<=191){
+  power.manual=value;
+ }
+ setButtons();
+});
+$('txPowerAuto').addEventListener('click',()=>{
+ if($('txPowerAuto').disabled)return;
+ selectedTxPowerSettings().manual=null;
+ setButtons();
+});
 async function identifyRadio(own){
  own.model=await detectRadioModel((command,match,timeout)=>commandAwait(command,match,timeout,own));
  own.txPower=defaultTxPowerForModel(own.model);
- $('apwr').value=own.txPower??'';
- $('radioModel').textContent=own.model||'Unknown model';
+ const power=txPowerSettings(own.port);
+ power.model=own.model;power.automatic=own.txPower;
  if(own.txPower!==null)log('Automatic TX power for '+own.model+': APWR '+own.txPower);
 }
 async function write(bytes,own=session){
@@ -620,6 +653,7 @@ async function configureSerialTransport(own){
 // END SERIAL CONNECTION
 function setButtons(){
  const state=session?.state||(connecting?'connecting':'off'),on=state!=='off'&&state!=='connecting';
+ updateTxPowerControls(state);
  $('connect').disabled=state!=='off';$('disconnect').disabled=!on||state==='disconnecting';
  $('startTx').disabled=state!=='rx'||$('role').value!=='tx'||session?.txPower===null||!!(avApp&&!avApp.ready());
  $('stopTx').disabled=!['tx','keying','stopping'].includes(state);
@@ -804,8 +838,8 @@ async function startTx(){
  const attempt=own.txAttempt=(own.txAttempt||0)+1;
  const current=()=>session===own&&!own.closing&&own.txAttempt===attempt;
  try{
-  const apwr=own.txPower;
-  if(apwr===null)throw Error('TX power unavailable for this radio model.');
+  if(own.txPower===null)throw Error('TX power unavailable for this radio model.');
+  const apwr=txPowerSettings(own.port).manual??own.txPower;
   if(avApp&&!avApp.getPlan().admitted)throw Error(avApp.getPlan().reason);
   maxResetFrames();txFieldCount=0;maxAcquisitionSequence=0;
   own.state='keying';setButtons();
@@ -998,7 +1032,7 @@ const easyBridge={
   const token=++easyAction.generation,current=()=>token===easyAction.generation;
   const resources={mic:null,camera:null,pendingMic:false,pendingCamera:false};easyAction.resources=resources;
   let opened=null,listenTask=null,receiver=null;
-  easyAction.busy=true;easyAction.error=false;easyAction.message='Starting…';easyApp?.refresh();
+  easyAction.busy=true;easyAction.error=false;easyAction.message='Starting…';setButtons();
   try{
    // Start Web Audio during the click, before awaiting serial configuration.
    if(receiverPlan){listenTask=avApp.listen({plan:receiverPlan});listenTask.catch(()=>{});}

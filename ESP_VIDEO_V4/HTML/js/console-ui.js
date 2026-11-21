@@ -83,7 +83,7 @@
       avMicGain: 'Microphone gain', avVolume: 'Speaker volume', contrast: 'TX source contrast',
       mode: 'Video profile', grayLevels: 'Grayscale levels · TX', avRate: 'Audio sample rate', avChannels: 'Audio channels',
       avFpsPolicy: 'Frame-rate policy', avMinFps: 'Minimum requested FPS', frequency: 'CHANNEL · frequency (MHz)',
-      fine: 'Automatic RX correction (Hz)', apwr: 'Automatic TX power (APWR)', rxBrightness: 'RX brightness', rxContrast: 'RX contrast',
+      fine: 'Automatic RX correction (Hz)', apwr: 'Selected TX power (APWR)', rxBrightness: 'RX brightness', rxContrast: 'RX contrast',
       saturation: 'Color saturation', hPosition: 'Horizontal position', hHold: 'H-HOLD · horizontal timing',
       vHold: 'V-HOLD · vertical timing', hLock: 'H-sync lock strength'
     };
@@ -133,7 +133,7 @@
     // Proxy user actions to the original Easy controller, preserving its
     // cancellation, port selection and media permission/lifecycle semantics.
     for (const el of document.querySelectorAll('[data-legacy]')) el.addEventListener('click', () => { const target = $(el.dataset.legacy); if (!target.disabled) {target.click(); refresh();} });
-    function bindKnob(knobId, targetId, format, outId, {invert = false} = {}) {
+    function bindKnob(knobId, targetId, format, outId, {invert = false, emptyValue = 0} = {}) {
       const knob = $(knobId), target = $(targetId);
       const convert = value => invert ? Number(target.min) + Number(target.max) - value : value;
       knob.addEventListener('input', () => {
@@ -148,9 +148,14 @@
       face.addEventListener('pointermove',event=>{if(!drag||target.disabled)return;const span=Number(knob.max)-Number(knob.min),step=Number(knob.step)||1,delta=(drag.y-event.clientY)+(event.clientX-drag.x);knob.value=String(Math.round((drag.value+delta*span/220)/step)*step);dispatch(knob,'input');});
       face.addEventListener('pointerup',()=>{drag=null;});
       face.addEventListener('pointercancel',()=>{drag=null;});
-      return () => {knob.value=String(convert(Number(target.value)));knob.disabled=target.disabled;const value=Number(target.value),fraction=(Number(knob.value)-Number(knob.min))/(Number(knob.max)-Number(knob.min));knob.closest('.dial').style.setProperty('--angle',(-135+Math.max(0,Math.min(1,fraction))*270)+'deg');if(outId)text(outId,format(value));knob.setAttribute('aria-valuetext',format(value));};
+      return () => {const value=target.value===''?emptyValue:Number(target.value);knob.value=String(convert(value));knob.disabled=target.disabled;const fraction=(Number(knob.value)-Number(knob.min))/(Number(knob.max)-Number(knob.min));knob.closest('.dial').style.setProperty('--angle',(-135+Math.max(0,Math.min(1,fraction))*270)+'deg');if(outId)text(outId,format(value));knob.setAttribute('aria-valuetext',format(value));};
     }
-    const knobs = [bindKnob('knobVolume','avVolume',v=>Math.round(v*100)+' %','knobVolumeOut'),bindKnob('knobMic','avMicGain',v=>v.toFixed(2)+'×','knobMicOut'),bindKnob('knobFrequency','frequency',v=>v.toFixed(4)+' MHz')];
+    const displayPower = value => $('apwr').value === '' ? 'AUTO' :
+      ($('apwr').dataset.mode === 'auto' ? 'AUTO · ' : '') + 'APWR ' + value;
+    const knobs = [bindKnob('knobVolume','avVolume',v=>Math.round(v*100)+' %','knobVolumeOut'),
+      bindKnob('knobPower','apwr',displayPower,'knobPowerOut',{invert:true,emptyValue:191}),
+      bindKnob('knobMic','avMicGain',v=>v.toFixed(2)+'×','knobMicOut'),
+      bindKnob('knobFrequency','frequency',v=>v.toFixed(4)+' MHz')];
     // One upstream TX journal entry contains a French phrase. Translate only
     // its displayed text; keep the original engine and radio protocol intact.
     const english = value => String(value ?? '').replaceAll('audio seul', 'audio only');

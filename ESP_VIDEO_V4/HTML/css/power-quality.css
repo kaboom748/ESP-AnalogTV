@@ -1,5 +1,6 @@
 /* Selected quality and TX power presentation; no radio or DSP behavior. */
 .power-control { width: 100%; }
+.power-control .dial-edit { margin: 0; }
 .mic-control { width: 100%; }
 .mic-control > .mic-level-left { width: 100%; max-width: 160px; margin-top: 4px; padding: 5px 7px; gap: 5px; }
 .mic-control > .mic-level-left meter { flex: 1; min-width: 0; width: 0; }
